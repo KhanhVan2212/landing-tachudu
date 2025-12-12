@@ -6,6 +6,7 @@ import { routing } from "@/i18n/routing";
 import Header from "@/components/Layout/Header";
 import Footer from "@/components/Layout/Footer";
 import "./globals.css";
+import FloatingContact from "@/components/Layout/FloatingContact";
 
 const vietnamPro = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
@@ -122,6 +123,7 @@ export default async function RootLayout({
             <div className="min-h-screen bg-slate-50 selection:bg-orange-100 selection:text-orange-900">
               <Header />
               <main>{children}</main>
+              <FloatingContact />
               <Footer />
             </div>
           </AppProvider>
