@@ -1,0 +1,4 @@
+export enum COMMON_STATUS {
+  SUCCESS = "SUCCESS",
+  CANCEL = "CANCEL",
+}
