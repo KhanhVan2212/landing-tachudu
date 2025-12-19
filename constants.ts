@@ -11,7 +11,7 @@ import {
 import { ServiceItem, AdvantageItem, TestimonialItem, PartnerItem } from './types';
 
 export const COMPANY_NAME = "TACHUDU";
-export const SLOGAN = "One step at a time. You’ll get there.";
+export const SLOGAN = "Cùng chu du thế giới.";
 
 export const SERVICES: ServiceItem[] = [
   {
