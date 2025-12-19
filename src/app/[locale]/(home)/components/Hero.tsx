@@ -8,7 +8,7 @@ const Hero: React.FC = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <Image
-          src="https://picsum.photos/1920/1080?random=99"
+          src="/images/hero-home.jpg"
           alt="Travel Background"
           fill
           className="object-cover"

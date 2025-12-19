@@ -19,28 +19,28 @@ export const SERVICES: ServiceItem[] = [
     title: 'Đặt vé máy bay',
     description: 'Dịch vụ đặt vé nhanh chóng, giá tốt nhất từ các hãng hàng không uy tín trong và ngoài nước.',
     icon: Plane,
-    image: 'https://picsum.photos/800/600?random=1'
+    image: '/images/ticket.jpg'
   },
   {
     id: 's2',
     title: 'Tour du lịch',
     description: 'Khám phá vẻ đẹp Việt Nam và thế giới với các tour du lịch trọn gói, thiết kế riêng biệt.',
     icon: Map,
-    image: 'https://picsum.photos/800/600?random=2'
+    image: '/images/tour.jpg'
   },
   {
     id: 's3',
     title: 'Tổ chức sự kiện',
     description: 'Chuyên nghiệp trong tổ chức sự kiện doanh nghiệp, teambuilding, hội nghị khách hàng.',
     icon: CalendarDays,
-    image: 'https://picsum.photos/800/600?random=3'
+    image: '/images/event.jpg'
   },
   {
     id: 's4',
     title: 'Visa & Khách sạn',
     description: 'Hỗ trợ thủ tục visa nhanh gọn và hệ thống đặt phòng khách sạn đa dạng toàn cầu.',
     icon: Hotel,
-    image: 'https://picsum.photos/800/600?random=4'
+    image: '/images/visa.jpg'
   }
 ];
 
