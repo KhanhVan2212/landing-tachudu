@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { ArrowRight } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 
 const Hero = () => {
   return (
@@ -33,13 +34,13 @@ const Hero = () => {
           <li>✓ Tổ chức sự kiện & hội nghị</li>
         </ul>
 
-        <a
+        <Link
           href="services"
           className="inline-flex items-center gap-2 mt-12 rounded-full bg-white px-10 py-3 font-bold text-orange-600 hover:bg-orange-50 transition"
         >
           Xem thêm
         <ArrowRight className="h-5 w-5" />
-        </a>
+        </Link>
       </div>
     </section>
   );

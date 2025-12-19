@@ -2,8 +2,8 @@ import React from "react";
 
 const DomesticHero = () => {
   return (
-    <div className="relative overflow-hidden bg-orange-600 py-16 pt-[200px] text-center text-white">
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1528127220108-612460f99740?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')] bg-cover bg-center opacity-20"></div>
+    <div className="relative overflow-hidden  py-16 pt-[200px] text-center text-white">
+      <div className="absolute inset-0 bg-[url('/images/banner.jpg')] bg-cover bg-center"></div>
       <div className="relative z-10">
         <h1 className="text-3xl font-bold uppercase tracking-wide drop-shadow-md md:text-4xl">
           Du Lịch Trong Nước
