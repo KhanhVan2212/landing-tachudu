@@ -51,15 +51,15 @@ const companyLinks = [
 ];
 
 const supportLinks = [
-  { label: "Trung tâm trợ giúp", href: "#" },
-  { label: "Điều khoản sử dụng", href: "#" },
-  { label: "Chính sách bảo mật", href: "#" },
-  { label: "Liên hệ", href: "#contact" },
+  { label: "Trung tâm trợ giúp", href: "/policy" },
+  { label: "Điều khoản sử dụng", href: "/policy" },
+  { label: "Chính sách bảo mật", href: "/policy" },
+  { label: "Liên hệ", href: "/contact" },
 ];
 
 const bottomLinks = [
-  { label: "Privacy Policy", href: "#" },
-  { label: "Terms of Service", href: "#" },
+  { label: "Privacy Policy", href: "/policy" },
+  { label: "Terms of Service", href: "/policy" },
 ];
 
 const Footer: React.FC = () => {

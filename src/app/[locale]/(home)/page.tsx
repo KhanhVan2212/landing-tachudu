@@ -4,8 +4,8 @@ import Hero from "./components/Hero";
 import Services from "./components/Services";
 import Advantages from "./components/Advantages";
 import Testimonials from "./components/Testimonials";
-import Partners from "./components/Partners";
 import Contact from "./components/Contact";
+import AirlinePartners from "./components/AirlinePartners";
 
 const Page = () => {
   const t = useTranslations();
@@ -15,7 +15,7 @@ const Page = () => {
       <Services />
       <Advantages />
       <Testimonials />
-      <Partners />
+      <AirlinePartners />
       <Contact />
     </div>
   );
