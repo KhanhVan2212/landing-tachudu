@@ -13,12 +13,12 @@ const FloatingContact = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <div className="pointer-events-none fixed bottom-6 right-6 z-50 flex flex-col items-end">
       {/* Popup Content */}
       <div
         className={`mb-4 w-80 origin-bottom-right rounded-2xl border border-slate-100 bg-orange-500 p-6 shadow-2xl transition-all duration-300 ${
           isOpen
-            ? "translate-y-0 scale-100 opacity-100"
+            ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
             : "pointer-events-none translate-y-10 scale-0 opacity-0"
         }`}
       >
@@ -88,7 +88,7 @@ const FloatingContact = () => {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`group flex h-14 w-14 items-center justify-center rounded-full shadow-lg shadow-orange-600/30 transition-all duration-300 hover:scale-110 ${
+        className={`group pointer-events-auto flex h-14 w-14 items-center justify-center rounded-full shadow-lg shadow-orange-600/30 transition-all duration-300 hover:scale-110 ${
           isOpen ? "rotate-90 bg-white" : "animate-bounce-slow bg-orange-600"
         }`}
       >
