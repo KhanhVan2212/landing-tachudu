@@ -7,7 +7,7 @@ import DomesticTours from "./components/DomesticTour";
 import InternationalTours from "./components/InternationalTour";
 import News from "./components/News";
 import Contact from "./components/Contact";
-import Partners from "./components/Partners";
+import AirlinePartners from "../(home)/components/AirlinePartners";
 
 export default function MICEPage() {
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function MICEPage() {
       <DomesticTours />
       <InternationalTours />
       <News />
-      <Partners />
+      <AirlinePartners />
       <Contact />
     </div>
   );
