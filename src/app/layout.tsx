@@ -99,6 +99,11 @@ export const metadata: Metadata = {
     yandex: "",
     yahoo: "",
   },
+  icons: {
+    icon: "/images/favicon.ico",
+    shortcut: "/images/favicon.ico",
+    apple: "/images/favicon.ico",
+  },
 };
 
 export function generateStaticParams() {
