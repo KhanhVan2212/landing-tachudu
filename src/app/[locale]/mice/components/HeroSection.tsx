@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -33,10 +34,11 @@ const Hero = () => {
         </ul>
 
         <a
-          href="#contact"
-          className="inline-block mt-12 rounded-full bg-white px-10 py-3 font-bold text-orange-600 hover:bg-orange-50 transition"
+          href="services"
+          className="inline-flex items-center gap-2 mt-12 rounded-full bg-white px-10 py-3 font-bold text-orange-600 hover:bg-orange-50 transition"
         >
-          Liên hệ với chúng tôi
+          Xem thêm
+        <ArrowRight className="h-5 w-5" />
         </a>
       </div>
     </section>

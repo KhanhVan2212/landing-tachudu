@@ -6,10 +6,36 @@ import EventIntroSection from "./components/EventIntroSection";
 import EventHighlightSection from "./components/EventHighlightSection";
 import FeaturedNewsSection from "./components/FeaturedNewsSection";
 
+import { mockEventPosts } from "@/data/mockEventPosts";
+
 export default function EventPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const travelEvents = mockEventPosts
+    .filter((post) => post.category === "Du lịch & Sự kiện")
+    .slice(0, 3)
+    .map((post) => ({
+      slug: post.slug,
+      title: post.title,
+      date: post.date,
+      image: post.cover,
+    }));
+
+  const teamBuildingEvents = mockEventPosts
+    .filter(
+      (post) =>
+        post.category === "Team Building & MICE" ||
+        post.category === "Team Building"
+    )
+    .slice(0, 3)
+    .map((post) => ({
+      slug: post.slug,
+      title: post.title,
+      date: post.date,
+      image: post.cover,
+    }));
 
   return (
     <>
@@ -17,52 +43,17 @@ export default function EventPage() {
       <EventIntroSection />
       <EventHighlightSection />
       <FeaturedNewsSection />
+
       <CategorySection
         title="Du lịch & Sự kiện"
-        items={[
-          {
-            title: "Hành trình khám phá Phú Quốc cùng doanh nghiệp",
-            date: "05/07/2024",
-            image:
-              "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
-          },
-          {
-            title: "Gala dinner doanh nghiệp tại Đà Nẵng",
-            date: "28/06/2024",
-            image:
-              "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
-          },
-          {
-            title: "Du lịch khen thưởng – Động lực phát triển",
-            date: "18/06/2024",
-            image:
-              "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
-          },
-        ]}
+        viewAllHref="/event?category=du-lich-su-kien"
+        items={travelEvents}
       />
 
       <CategorySection
         title="Team building & MICE"
-        items={[
-          {
-            title: "Team building bãi biển gắn kết tập thể",
-            date: "02/06/2024",
-            image:
-              "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70",
-          },
-          {
-            title: "Sự kiện đào tạo kết hợp nghỉ dưỡng",
-            date: "20/05/2024",
-            image:
-              "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
-          },
-          {
-            title: "Xu hướng tổ chức sự kiện doanh nghiệp 2025",
-            date: "10/05/2024",
-            image:
-              "https://images.unsplash.com/photo-1491553895911-0055eca6402d",
-          },
-        ]}
+        viewAllHref="/event?category=team-building-mice"
+        items={teamBuildingEvents}
       />
     </>
   );

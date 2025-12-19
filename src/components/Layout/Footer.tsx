@@ -142,6 +142,15 @@ const Footer: React.FC = () => {
                   Tổ chức sự kiện
                 </Link>
               </li>
+              <li>
+                <a
+                  href="mice"
+                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
+                >
+                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
+                  MICE
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -186,6 +195,15 @@ const Footer: React.FC = () => {
                   <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
                   Ưu đãi
                 </Link>
+              </li>
+              <li>
+                <a
+                  href="event"
+                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
+                >
+                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
+                  Sự kiện
+                </a>
               </li>
             </ul>
           </div>
