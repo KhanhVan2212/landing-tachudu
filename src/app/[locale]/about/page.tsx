@@ -6,7 +6,7 @@ import History from "./components/History";
 import CoreValues from "./components/CoreValues";
 import Intro from "./components/Intro";
 import Contact from "../(home)/components/Contact";
-import Partners from "../(home)/components/Partners";
+import AirlinePartners from "../(home)/components/AirlinePartners";
 
 const Page: React.FC = () => {
   useEffect(() => {
@@ -26,7 +26,7 @@ const Page: React.FC = () => {
       {/* Core Values */}
       <CoreValues />
       {/* Partners List */}
-      <Partners />
+      <AirlinePartners />
       <Contact />
     </div>
   );
