@@ -1,6 +1,7 @@
 // src/app/[locale]/event/[slug]/page.tsx
 import { notFound } from "next/navigation";
 import { mockEventPosts } from "@/data/mockEventPosts";
+import Image from "next/image";
 
 interface PageProps {
   params: {
@@ -23,9 +24,11 @@ export default function EventDetailPage({ params }: PageProps) {
     <section className="py-20 bg-white">
       <div className="max-w-4xl mx-auto px-4">
         {/* COVER */}
-        <img
+        <Image
           src={post.cover}
           alt={post.title}
+          width={600}
+          height={600}
           className="w-full h-[420px] object-cover rounded-2xl mb-8"
         />
 
@@ -49,9 +52,11 @@ export default function EventDetailPage({ params }: PageProps) {
               case "image":
                 return (
                   <figure key={i}>
-                    <img
+                    <Image
                       src={block.src}
                       alt={block.caption ?? ""}
+                      width={600}
+                      height={600}
                       className="rounded-xl my-8 mx-auto max-w-3xl"
                     />
                     {block.caption && (

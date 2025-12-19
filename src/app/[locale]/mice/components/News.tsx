@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React from "react";
 
 const news = [
@@ -45,7 +46,9 @@ const News = () => {
             >
               {/* Image */}
               <div className="h-40 overflow-hidden">
-                <img
+                <Image
+                  width={600}
+                  height={400}
                   src={item.image}
                   alt={item.title}
                   className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"

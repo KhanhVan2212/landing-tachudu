@@ -1,6 +1,7 @@
 import React from "react";
 import { Quote } from "lucide-react";
 import { TESTIMONIALS } from "../../../../../constants";
+import Image from "next/image";
 
 const Testimonials: React.FC = () => {
   return (
@@ -24,9 +25,11 @@ const Testimonials: React.FC = () => {
                 {testimonial.content}
               </p>
               <div className="flex items-center">
-                <img
+                <Image
                   src={testimonial.avatar}
                   alt={testimonial.name}
+                  width={48}
+                  height={48}
                   className="mr-4 h-12 w-12 rounded-full object-cover ring-2 ring-orange-100"
                 />
                 <div>

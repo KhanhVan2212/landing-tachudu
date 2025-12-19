@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const featuredPost = {
   slug: "du-lich-mice-giai-phap-doanh-nghiep",
@@ -40,7 +41,9 @@ const FeaturedNewsSection = () => {
           className="group block md:col-span-2"
         >
           <div className="mb-6 overflow-hidden rounded-xl">
-            <img
+            <Image
+              width={600}
+              height={600}
               src={featuredPost.image}
               alt={featuredPost.title}
               className="h-[360px] w-full object-cover transition-transform duration-300 group-hover:scale-105"

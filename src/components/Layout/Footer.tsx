@@ -3,7 +3,6 @@ import {
   Facebook,
   Instagram,
   Linkedin,
-  Twitter,
   Phone,
   Mail,
   MapPin,
@@ -11,6 +10,57 @@ import {
 import { COMPANY_NAME, SLOGAN } from "../../../constants";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
+
+const socialLinks = [
+  { icon: Facebook, href: "#" },
+  { icon: Instagram, href: "#" },
+  {
+    icon: () => (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M19 7.5c-1.333-3-3.667-4.5-7-4.5-5 0-7.5 3.5-7.5 7.5s2.5 7.5 7.5 7.5c3.333 0 5.667-1.5 7-4.5"></path>
+        <path d="M12 12c0 2.5 2 4.5 4.5 4.5s4.5-2 4.5-4.5-2-4.5-4.5-4.5"></path>
+      </svg>
+    ),
+    href: "https://www.threads.net/@tachudu.vn",
+  },
+  { icon: Linkedin, href: "#" },
+];
+
+const serviceLinks = [
+  { label: "Du lịch trong nước", href: "/domestic-tours" },
+  { label: "Du lịch nước ngoài", href: "/foreign-tours" },
+  { label: "Tổ chức sự kiện", href: "/event" },
+  { label: "MICE", href: "/mice" },
+  { label: "Dịch vụ", href: "/services" },
+];
+
+const companyLinks = [
+  { label: "Về chúng tôi", href: "/about" },
+  { label: "Ưu đãi", href: "/deals" },
+  { label: "Sự kiện", href: "/event" },
+];
+
+const supportLinks = [
+  { label: "Trung tâm trợ giúp", href: "#" },
+  { label: "Điều khoản sử dụng", href: "#" },
+  { label: "Chính sách bảo mật", href: "#" },
+  { label: "Liên hệ", href: "#contact" },
+];
+
+const bottomLinks = [
+  { label: "Privacy Policy", href: "#" },
+  { label: "Terms of Service", href: "#" },
+];
 
 const Footer: React.FC = () => {
   return (
@@ -58,45 +108,21 @@ const Footer: React.FC = () => {
 
             {/* Social Media */}
             <div className="flex space-x-3">
-              <a
-                href="#"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-all duration-300 hover:scale-110 hover:bg-orange-600"
-              >
-                <Facebook size={18} />
-              </a>
-              <a
-                href="#"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-all duration-300 hover:scale-110 hover:bg-orange-600"
-              >
-                <Instagram size={18} />
-              </a>
-              <a
-                href="https://www.threads.net/@tachudu.vn"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-all duration-300 hover:scale-110 hover:bg-orange-600"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+              {socialLinks.map((item, index) => (
+                <Link
+                  key={index}
+                  href={item.href}
+                  target={item.href.startsWith("http") ? "_blank" : undefined}
+                  rel={
+                    item.href.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-all duration-300 hover:scale-110 hover:bg-orange-600"
                 >
-                  <path d="M19 7.5c-1.333-3-3.667-4.5-7-4.5-5 0-7.5 3.5-7.5 7.5s2.5 7.5 7.5 7.5c3.333 0 5.667-1.5 7-4.5"></path>
-                  <path d="M12 12c0 2.5 2 4.5 4.5 4.5s4.5-2 4.5-4.5-2-4.5-4.5-4.5"></path>
-                </svg>
-              </a>
-              <a
-                href="#"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-all duration-300 hover:scale-110 hover:bg-orange-600"
-              >
-                <Linkedin size={18} />
-              </a>
+                  <item.icon size={18} />
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -106,51 +132,17 @@ const Footer: React.FC = () => {
               Dịch vụ
             </h3>
             <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/services"
-                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
-                >
-                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
-                  Vé máy bay
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services"
-                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
-                >
-                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
-                  Tour trong nước
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services"
-                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
-                >
-                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
-                  Tour quốc tế
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services"
-                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
-                >
-                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
-                  Tổ chức sự kiện
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="mice"
-                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
-                >
-                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
-                  MICE
-                </a>
-              </li>
+              {serviceLinks.map((link, index) => (
+                <li key={index}>
+                  <Link
+                    href={link.href}
+                    className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
+                  >
+                    <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -160,51 +152,17 @@ const Footer: React.FC = () => {
               Công ty
             </h3>
             <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/about"
-                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
-                >
-                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
-                  Về chúng tôi
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
-                >
-                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
-                  Đội ngũ
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
-                >
-                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
-                  Tuyển dụng
-                </a>
-              </li>
-              <li>
-                <Link
-                  href="/deals"
-                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
-                >
-                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
-                  Ưu đãi
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="event"
-                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
-                >
-                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
-                  Sự kiện
-                </a>
-              </li>
+              {companyLinks.map((link, index) => (
+                <li key={index}>
+                  <Link
+                    href={link.href}
+                    className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
+                  >
+                    <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -214,42 +172,17 @@ const Footer: React.FC = () => {
               Hỗ trợ
             </h3>
             <ul className="space-y-3">
-              <li>
-                <a
-                  href="#"
-                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
-                >
-                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
-                  Trung tâm trợ giúp
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
-                >
-                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
-                  Điều khoản sử dụng
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
-                >
-                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
-                  Chính sách bảo mật
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#contact"
-                  className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
-                >
-                  <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
-                  Liên hệ
-                </a>
-              </li>
+              {supportLinks.map((link, index) => (
+                <li key={index}>
+                  <Link
+                    href={link.href}
+                    className="group flex items-center text-gray-300 transition-colors duration-200 hover:text-orange-500"
+                  >
+                    <span className="mr-2 h-1 w-1 rounded-full bg-orange-500 transition-all group-hover:w-2"></span>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -262,15 +195,15 @@ const Footer: React.FC = () => {
               reserved.
             </p>
             <div className="flex space-x-6">
-              <a href="#" className="transition-colors hover:text-orange-500">
-                Privacy Policy
-              </a>
-              <a href="#" className="transition-colors hover:text-orange-500">
-                Terms of Service
-              </a>
-              <a href="#" className="transition-colors hover:text-orange-500">
-                Sitemap
-              </a>
+              {bottomLinks.map((link, index) => (
+                <Link
+                  key={index}
+                  href={link.href}
+                  className="transition-colors hover:text-orange-500"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { ADVANTAGES } from "../../../../../constants";
+import Image from "next/image";
 
 const Advantages: React.FC = () => {
   return (
@@ -9,9 +10,11 @@ const Advantages: React.FC = () => {
           <div className="relative mb-12 lg:mb-0">
             <div className="animate-blob absolute -left-4 -top-4 h-72 w-72 rounded-full bg-orange-200 opacity-70 mix-blend-multiply blur-xl filter"></div>
             <div className="animate-blob animation-delay-2000 absolute -bottom-4 -right-4 h-72 w-72 rounded-full bg-yellow-200 opacity-70 mix-blend-multiply blur-xl filter"></div>
-            <img
+            <Image
               src="https://picsum.photos/600/800?random=50"
               alt="Team working"
+              width={600}
+              height={800}
               className="relative z-10 h-[600px] w-full rounded-3xl object-cover shadow-2xl"
             />
             <div className="absolute -right-5 bottom-10 z-20 hidden max-w-xs rounded-xl bg-white p-6 shadow-xl md:block">

@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React from "react";
 
 const tours = [
@@ -29,7 +30,9 @@ const InternationalTours = () => {
             >
               {/* Image */}
               <div className="h-40 overflow-hidden">
-                <img
+                <Image
+                  width={600}
+                  height={400}
                   src={tour.image}
                   alt={tour.name}
                   className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"

@@ -45,8 +45,8 @@ const VoucherSection = () => {
           </div>
 
           {/* Voucher 2 */}
-          <div className="relative flex flex-col overflow-hidden rounded-xl border border-blue-100 bg-gradient-to-r from-blue-50 to-white shadow-sm transition-shadow hover:shadow-md sm:flex-row">
-            <div className="flex w-full items-center justify-center bg-blue-500 p-2 sm:w-8 sm:p-0">
+          <div className="relative flex flex-col overflow-hidden rounded-xl border border-orange-100 bg-gradient-to-r from-orange-50 to-white shadow-sm transition-shadow hover:shadow-md sm:flex-row">
+            <div className="flex w-full items-center justify-center bg-orange-500 p-2 sm:w-8 sm:p-0">
               <span className="whitespace-nowrap text-sm font-bold tracking-widest text-white sm:-rotate-90">
                 COUPON
               </span>
@@ -65,7 +65,7 @@ const VoucherSection = () => {
               </div>
               <div className="mt-6 flex items-center justify-between border-t border-dashed border-gray-300 pt-4">
                 <span className="text-xs text-gray-500">HSD: 15/08/2024</span>
-                <button className="text-sm font-bold text-blue-600 hover:underline">
+                <button className="text-sm font-bold text-orange-600 hover:underline">
                   Lưu mã
                 </button>
               </div>

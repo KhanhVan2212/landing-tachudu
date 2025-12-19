@@ -12,6 +12,7 @@ import {
   Heart,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 
 const ServicesPage: React.FC = () => {
   useEffect(() => {
@@ -41,7 +42,9 @@ const ServicesPage: React.FC = () => {
       {/* Hero Banner */}
       <div className="relative flex h-[400px] items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <img
+          <Image
+            width={1920}
+            height={800}
             src="https://picsum.photos/1920/800?random=service_hero"
             alt="Services Banner"
             className="h-full w-full object-cover"
@@ -64,7 +67,9 @@ const ServicesPage: React.FC = () => {
         <div className="flex flex-col items-center gap-12 md:flex-row">
           <div className="group relative md:w-1/2">
             <div className="absolute -inset-4 rotate-3 transform rounded-xl bg-orange-100 transition-transform group-hover:rotate-6"></div>
-            <img
+            <Image
+              width={800}
+              height={600}
               src="https://picsum.photos/800/600?random=flight"
               alt="Flight Booking"
               className="relative h-[400px] w-full rounded-lg object-cover shadow-xl"
@@ -110,8 +115,10 @@ const ServicesPage: React.FC = () => {
         {/* Service 2: Tours */}
         <div className="flex flex-col items-center gap-12 md:flex-row-reverse">
           <div className="group relative md:w-1/2">
-            <div className="absolute -inset-4 -rotate-3 transform rounded-xl bg-blue-100 transition-transform group-hover:-rotate-6"></div>
-            <img
+            <div className="absolute -inset-4 -rotate-3 transform rounded-xl bg-orange-100 transition-transform group-hover:-rotate-6"></div>
+            <Image
+              width={800}
+              height={600}
               src="https://picsum.photos/800/600?random=tour"
               alt="Tours"
               className="relative h-[400px] w-full rounded-lg object-cover shadow-xl"
@@ -119,7 +126,7 @@ const ServicesPage: React.FC = () => {
           </div>
           <div className="md:w-1/2">
             <div className="mb-4 flex items-center space-x-3">
-              <div className="rounded-lg bg-blue-100 p-3 text-blue-600">
+              <div className="rounded-lg bg-orange-100 p-3 text-orange-600">
                 <Map size={24} />
               </div>
               <h2 className="text-3xl font-bold text-gray-900">Tour Du Lịch</h2>
@@ -130,7 +137,7 @@ const ServicesPage: React.FC = () => {
               mạo hiểm, đáp ứng mọi sở thích của khách hàng.
             </p>
             <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div className="rounded-lg border-l-4 border-blue-500 bg-white p-4 shadow">
+              <div className="rounded-lg border-l-4 border-orange-500 bg-white p-4 shadow">
                 <h4 className="font-bold text-gray-900">Tour Trong Nước</h4>
                 <p className="text-sm text-gray-500">
                   Phú Quốc, Đà Nẵng, Sapa, Hạ Long...
@@ -145,7 +152,7 @@ const ServicesPage: React.FC = () => {
             </div>
             <Link
               href="/deals"
-              className="inline-flex items-center font-bold text-blue-600 hover:underline"
+              className="inline-flex items-center font-bold text-orange-600 hover:underline"
             >
               Xem các tour ưu đãi <ArrowRight size={20} className="ml-2" />
             </Link>
@@ -155,8 +162,10 @@ const ServicesPage: React.FC = () => {
         {/* Service 3: Events (MICE) */}
         <div className="flex flex-col items-center gap-12 md:flex-row">
           <div className="group relative md:w-1/2">
-            <div className="absolute -inset-4 rotate-3 transform rounded-xl bg-purple-100 transition-transform group-hover:rotate-6"></div>
-            <img
+            <div className="absolute -inset-4 rotate-3 transform rounded-xl bg-red-100 transition-transform group-hover:rotate-6"></div>
+            <Image
+              width={800}
+              height={600}
               src="https://picsum.photos/800/600?random=event"
               alt="Events"
               className="relative h-[400px] w-full rounded-lg object-cover shadow-xl"
@@ -164,7 +173,7 @@ const ServicesPage: React.FC = () => {
           </div>
           <div className="md:w-1/2">
             <div className="mb-4 flex items-center space-x-3">
-              <div className="rounded-lg bg-purple-100 p-3 text-purple-600">
+              <div className="rounded-lg bg-red-100 p-3 text-red-600">
                 <CalendarDays size={24} />
               </div>
               <h2 className="text-3xl font-bold text-gray-900">
@@ -178,21 +187,21 @@ const ServicesPage: React.FC = () => {
             </p>
             <ul className="mb-8 space-y-3">
               <li className="flex items-center text-gray-700">
-                <CheckCircle2 size={20} className="mr-3 text-purple-500" />
+                <CheckCircle2 size={20} className="mr-3 text-red-500" />
                 Du lịch kết hợp hội nghị, hội thảo (MICE)
               </li>
               <li className="flex items-center text-gray-700">
-                <CheckCircle2 size={20} className="mr-3 text-purple-500" />
+                <CheckCircle2 size={20} className="mr-3 text-red-500" />
                 Teambuilding gắn kết nhân sự
               </li>
               <li className="flex items-center text-gray-700">
-                <CheckCircle2 size={20} className="mr-3 text-purple-500" />
+                <CheckCircle2 size={20} className="mr-3 text-red-500" />
                 Tiệc Gala Dinner, Year End Party
               </li>
             </ul>
             <Link
               href="/event"
-              className="inline-flex items-center font-bold text-blue-600 hover:underline"
+              className="inline-flex items-center font-bold text-red-600 hover:underline"
             >
               Xem các sự kiện <ArrowRight size={20} className="ml-2" />
             </Link>
@@ -203,7 +212,9 @@ const ServicesPage: React.FC = () => {
         <div className="flex flex-col items-center gap-12 md:flex-row-reverse">
           <div className="group relative md:w-1/2">
             <div className="absolute -inset-4 -rotate-3 transform rounded-xl bg-green-100 transition-transform group-hover:-rotate-6"></div>
-            <img
+            <Image
+              width={800}
+              height={600}
               src="https://picsum.photos/800/600?random=hotel"
               alt="Visa Hotel"
               className="relative h-[400px] w-full rounded-lg object-cover shadow-xl"
@@ -243,7 +254,7 @@ const ServicesPage: React.FC = () => {
       </div>
 
       {/* Why Choose Us Icons */}
-      <div className="bg-gradient-to-r from-blue-50 to-orange-50 py-16">
+      <div className="bg-gradient-to-r from-orange-50 to-red-50 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 text-center md:grid-cols-3">
             {features.map((feature, idx) => (

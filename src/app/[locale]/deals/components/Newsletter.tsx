@@ -5,7 +5,7 @@ const Newsletter = () => {
     <section className="mx-auto max-w-5xl px-4 py-20">
       <div className="relative overflow-hidden rounded-3xl bg-gray-900 p-8 text-center md:p-12">
         <div className="absolute right-0 top-0 -mr-16 -mt-16 h-64 w-64 rounded-full bg-orange-600 opacity-20 blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 -mb-16 -ml-16 h-64 w-64 rounded-full bg-blue-600 opacity-20 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 -mb-16 -ml-16 h-64 w-64 rounded-full bg-orange-600 opacity-20 blur-3xl"></div>
 
         <div className="relative z-10">
           <h2 className="mb-4 text-3xl font-bold text-white">

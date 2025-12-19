@@ -1,4 +1,5 @@
 import { Award, Globe } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
 const History = () => {
@@ -22,8 +23,8 @@ const History = () => {
               chức sự kiện.
             </p>
             <div className="mt-8 flex items-start">
-              <div className="mr-4 rounded-full bg-blue-100 p-3">
-                <Globe className="h-8 w-8 text-blue-600" />
+              <div className="mr-4 rounded-full bg-orange-100 p-3">
+                <Globe className="h-8 w-8 text-orange-600" />
               </div>
               <div>
                 <h3 className="mb-2 text-xl font-bold text-gray-900">
@@ -38,9 +39,11 @@ const History = () => {
             </div>
           </div>
           <div className="relative mt-10 lg:mt-0">
-            <img
+            <Image
               src="https://picsum.photos/600/400?random=history"
               alt="History"
+              width={600}
+              height={400}
               className="w-full rounded-2xl object-cover shadow-xl"
             />
             <div className="absolute -bottom-6 -left-6 rounded-xl border-l-4 border-orange-500 bg-white p-6 shadow-lg">

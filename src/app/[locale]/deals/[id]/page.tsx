@@ -137,8 +137,8 @@ const DealDetail = () => {
               <p className="mb-6 leading-relaxed text-gray-600">
                 {deal.description}
               </p>
-              <div className="flex items-start gap-4 rounded-xl border border-blue-100 bg-blue-50 p-6">
-                <ShieldCheck className="h-8 w-8 flex-shrink-0 text-blue-600" />
+              <div className="flex items-start gap-4 rounded-xl border border-orange-100 bg-orange-50 p-6">
+                <ShieldCheck className="h-8 w-8 flex-shrink-0 text-orange-600" />
                 <div>
                   <h4 className="font-bold text-gray-900">
                     Cam kết chất lượng
@@ -225,7 +225,7 @@ const DealDetail = () => {
                     href="#"
                     className="group flex flex-col items-center gap-2"
                   >
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-50 text-orange-600 transition-colors group-hover:bg-orange-600 group-hover:text-white">
                       <Phone className="h-5 w-5" />
                     </div>
                     <span className="text-xs text-gray-500">Hotline</span>

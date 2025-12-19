@@ -3,6 +3,7 @@ import NextImage from "next/image";
 import { ArrowRight } from "lucide-react";
 import { SERVICES } from "../../../../../constants";
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 
 const Services: React.FC = () => {
   return (
@@ -29,9 +30,11 @@ const Services: React.FC = () => {
             >
               <div className="relative h-48 overflow-hidden">
                 <div className="absolute inset-0 z-10 bg-orange-500/20 transition-colors group-hover:bg-transparent"></div>
-                <img
+                <Image
                   src={service.image}
                   alt={service.title}
+                  width={600}
+                  height={600}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>

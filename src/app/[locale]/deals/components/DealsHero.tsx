@@ -1,11 +1,14 @@
+import Image from "next/image";
 import React from "react";
 
 const DealsHero = () => {
   return (
     <div className="relative h-[500px] overflow-hidden">
-      <img
+      <Image
         src="https://picsum.photos/1920/600?random=deals"
         alt="Deals Banner"
+        width={1920}
+        height={600}
         className="h-full w-full object-cover"
       />
       <div className="absolute inset-0 flex items-center bg-gradient-to-r from-orange-900/80 to-transparent">

@@ -1,6 +1,7 @@
 import React from "react";
 import { Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const FlashSales = () => {
   const flashSales = [
@@ -62,15 +63,17 @@ const FlashSales = () => {
                 <div className="absolute left-4 top-4 z-10 rounded-md bg-red-600 px-3 py-1 font-bold text-white shadow-md">
                   {deal.discount}
                 </div>
-                <img
+                <Image
                   src={deal.image}
                   alt={deal.title}
+                  width={600}
+                  height={600}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               <div className="p-6">
                 <div className="mb-2 flex items-start justify-between">
-                  <span className="rounded bg-blue-50 px-2 py-1 text-xs font-bold uppercase text-blue-600">
+                  <span className="rounded bg-orange-50 px-2 py-1 text-xs font-bold uppercase text-orange-600">
                     {deal.type}
                   </span>
                   <span className="flex items-center text-xs font-medium text-red-500">

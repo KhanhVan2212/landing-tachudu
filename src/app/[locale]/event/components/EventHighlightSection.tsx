@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { mockEventPosts } from "@/data/mockEventPosts";
+import Image from "next/image";
 
 const HIGHLIGHT_SLUGS = [
   "tachudu-to-chuc-hoi-nghi-khach-hang-2024",
@@ -29,9 +30,11 @@ const EventHighlightSection = () => {
               href={`/event/${event.slug}`}
               className="block overflow-hidden rounded-xl bg-white shadow transition hover:shadow-lg"
             >
-              <img
+              <Image
                 src={event.cover}
                 alt={event.title}
+                width={600}
+                height={600}
                 className="h-56 w-full object-cover"
               />
               <div className="p-4 text-center font-semibold text-gray-800">

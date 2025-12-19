@@ -81,7 +81,7 @@ const Partners: React.FC = () => {
         {/* Clients Slider */}
         <div>
           <div className="mb-6 flex items-center justify-center">
-            <Building2 className="mr-2 h-6 w-6 text-blue-600" />
+            <Building2 className="mr-2 h-6 w-6 text-orange-600" />
             <h4 className="text-lg font-semibold text-gray-700">
               Khách hàng Doanh Nghiệp
             </h4>
