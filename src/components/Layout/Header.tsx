@@ -39,7 +39,9 @@ const Header: React.FC = () => {
     { name: "Dịch vụ", href: "/services", type: "anchor" },
     { name: "Về chúng tôi", href: "/about", type: "link" },
     { name: "Ưu đãi", href: "/deals", type: "link" },
-    { name: "Chính sách", href: "/policy", type: "link" },
+    { name: "Chính sách", href: "/policy", type: "link" }, 
+    { name: "MICE", href :"/mice", type: "link" },
+    { name: "sự kiện", href :"/event", type: "link"},
   ];
 
   return (
@@ -57,8 +59,8 @@ const Header: React.FC = () => {
             </Link>
           </div>
 
-          <div className="hidden md:block">
-            <div className="flex items-baseline gap-8">
+          <div className="hidden md:block flex-1">
+            <div className="flex flex-wrap justify-center items-baseline gap-6">
               {navLinks.map((link) => {
                 const isActive =
                   location === link.href ||
