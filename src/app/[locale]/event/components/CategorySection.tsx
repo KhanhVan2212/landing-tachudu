@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import NextImage from "next/image";
 
 interface Props {
   title: string;
@@ -12,29 +13,32 @@ interface Props {
 
 const CategorySection: React.FC<Props> = ({ title, items }) => {
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between mb-10">
+    <section className="bg-gray-50 py-20">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="mb-10 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-900">{title}</h2>
-          <a href="#" className="text-orange-600 font-semibold">
+          <a href="#" className="font-semibold text-orange-600">
             Xem tất cả →
           </a>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid gap-8 md:grid-cols-3">
           {items.map((item, i) => (
             <div
               key={i}
-              className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden"
+              className="overflow-hidden rounded-xl bg-white shadow transition hover:shadow-lg"
             >
-              <img
-                src={item.image}
-                alt={item.title}
-                className="h-52 w-full object-cover"
-              />
+              <div className="relative h-52 w-full">
+                <NextImage
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
               <div className="p-5">
-                <p className="text-sm text-gray-500 mb-2">{item.date}</p>
-                <h3 className="font-bold text-gray-900 line-clamp-2">
+                <p className="mb-2 text-sm text-gray-500">{item.date}</p>
+                <h3 className="line-clamp-2 font-bold text-gray-900">
                   {item.title}
                 </h3>
               </div>

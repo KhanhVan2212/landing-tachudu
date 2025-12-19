@@ -13,26 +13,26 @@ const tours = [
 const DomesticTours = () => {
   return (
     <section className="py-20">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="mx-auto max-w-7xl px-4">
         <div className="mb-8 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-900">Tour Nội Địa</h2>
-          <span className="text-sm font-semibold text-orange-600 cursor-pointer">
+          <span className="cursor-pointer text-sm font-semibold text-orange-600">
             Xem tất cả →
           </span>
         </div>
 
-        <div className="grid md:grid-cols-6 gap-6">
+        <div className="grid gap-6 md:grid-cols-6">
           {tours.map((tour, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden"
+              className="overflow-hidden rounded-xl bg-white shadow transition hover:shadow-lg"
             >
               {/* Image */}
               <div className="h-40 overflow-hidden">
                 <img
                   src={tour.image}
                   alt={tour.name}
-                  className="h-full w-full object-cover hover:scale-105 transition-transform duration-300"
+                  className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                 />
               </div>
 

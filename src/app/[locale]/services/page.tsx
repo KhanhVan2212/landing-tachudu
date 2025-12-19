@@ -99,7 +99,7 @@ const ServicesPage: React.FC = () => {
               ))}
             </ul>
             <Link
-              href="/#contact"
+              href="/deals"
               className="inline-flex items-center font-bold text-orange-600 hover:underline"
             >
               Đặt vé ngay <ArrowRight size={20} className="ml-2" />
@@ -190,6 +190,12 @@ const ServicesPage: React.FC = () => {
                 Tiệc Gala Dinner, Year End Party
               </li>
             </ul>
+            <Link
+              href="/event"
+              className="inline-flex items-center font-bold text-blue-600 hover:underline"
+            >
+              Xem các sự kiện <ArrowRight size={20} className="ml-2" />
+            </Link>
           </div>
         </div>
 

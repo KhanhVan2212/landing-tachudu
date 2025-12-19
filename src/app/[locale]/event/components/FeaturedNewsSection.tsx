@@ -1,27 +1,29 @@
 "use client";
 import React from "react";
+import NextImage from "next/image";
 
 const FeaturedNewsSection = () => {
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-12">
+    <section className="bg-white py-20">
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 md:grid-cols-3">
         {/* LEFT */}
         <div className="md:col-span-2">
-          <img
-            src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80"
-            className="rounded-xl mb-6 w-full h-[360px] object-cover"
-            alt="featured"
-          />
+          <div className="relative mb-6 h-[360px] w-full overflow-hidden rounded-xl">
+            <NextImage
+              src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80"
+              alt="featured"
+              fill
+              className="object-cover"
+            />
+          </div>
 
-          <p className="text-sm text-gray-500 mb-2">
-            18/07/2024 · Tin nổi bật
-          </p>
+          <p className="mb-2 text-sm text-gray-500">18/07/2024 · Tin nổi bật</p>
 
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="mb-4 text-2xl font-bold text-gray-900 md:text-3xl">
             Du lịch MICE – Giải pháp nâng cao hiệu suất & gắn kết doanh nghiệp
           </h2>
 
-          <p className="text-gray-600 leading-relaxed">
+          <p className="leading-relaxed text-gray-600">
             MICE Tourism đang trở thành xu hướng chiến lược của nhiều doanh
             nghiệp hiện đại. Việc kết hợp du lịch, đào tạo và sự kiện không chỉ
             mang lại trải nghiệm mới mẻ mà còn góp phần nâng cao hiệu quả làm
@@ -30,7 +32,7 @@ const FeaturedNewsSection = () => {
 
           <a
             href="#"
-            className="inline-block mt-6 text-orange-600 font-semibold"
+            className="mt-6 inline-block font-semibold text-orange-600"
           >
             Đọc bài viết →
           </a>
@@ -45,13 +47,10 @@ const FeaturedNewsSection = () => {
           ].map((title, i) => (
             <div key={i} className="border-b pb-4">
               <p className="text-sm text-gray-500">12/07/2024</p>
-              <h4 className="font-semibold text-gray-800 leading-snug">
+              <h4 className="font-semibold leading-snug text-gray-800">
                 {title}
               </h4>
-              <a
-                href="#"
-                className="text-sm text-orange-600 font-medium"
-              >
+              <a href="#" className="text-sm font-medium text-orange-600">
                 Xem thêm →
               </a>
             </div>

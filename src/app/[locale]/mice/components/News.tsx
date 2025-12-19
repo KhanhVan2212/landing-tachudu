@@ -26,34 +26,34 @@ const news = [
 
 const News = () => {
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="bg-gray-50 py-20">
+      <div className="mx-auto max-w-7xl px-4">
         <div className="mb-8 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-900">
             Tin tức & Cẩm nang du lịch
           </h2>
-          <span className="text-sm font-semibold text-orange-600 cursor-pointer">
+          <span className="cursor-pointer text-sm font-semibold text-orange-600">
             Xem tất cả →
           </span>
         </div>
 
-        <div className="grid md:grid-cols-5 gap-6">
+        <div className="grid gap-6 md:grid-cols-5">
           {news.map((item, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden"
+              className="overflow-hidden rounded-xl bg-white shadow transition hover:shadow-lg"
             >
               {/* Image */}
               <div className="h-40 overflow-hidden">
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="h-full w-full object-cover hover:scale-105 transition-transform duration-300"
+                  className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                 />
               </div>
 
               {/* Content */}
-              <div className="p-4 text-sm font-medium text-gray-800 line-clamp-2">
+              <div className="line-clamp-2 p-4 text-sm font-medium text-gray-800">
                 {item.title}
               </div>
             </div>

@@ -36,12 +36,13 @@ const Header: React.FC = () => {
 
   const navLinks = [
     { name: "Trang chủ", href: "/", type: "link" },
+    { name: "Du lịch trong nước", href: "/domestic-tours", type: "link" },
+    { name: "Du lịch nước ngoài", href: "/foreign-tours", type: "link" },
+    { name: "MICE", href: "/mice", type: "link" },
+    { name: "Sự kiện", href: "/event", type: "link" },
     { name: "Dịch vụ", href: "/services", type: "anchor" },
     { name: "Về chúng tôi", href: "/about", type: "link" },
-    { name: "Ưu đãi", href: "/deals", type: "link" },
-    { name: "Chính sách", href: "/policy", type: "link" }, 
-    { name: "MICE", href :"/mice", type: "link" },
-    { name: "sự kiện", href :"/event", type: "link"},
+    { name: "Liên hệ", href: "/contact", type: "link" },
   ];
 
   return (
@@ -51,16 +52,19 @@ const Header: React.FC = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex flex-shrink-0 items-center">
-            <Link
-              href="/"
-              className=""
-            >
-              <Image src="/images/logo.png" alt="Logo" width={150} height={100} className="w-[100px] h-[60px] sm:w-[150px] sm:h-[80px]" />
+            <Link href="/" className="">
+              <Image
+                src="/images/logo.png"
+                alt="Logo"
+                width={150}
+                height={100}
+                className="h-[60px] w-[100px] sm:h-[80px] sm:w-[150px]"
+              />
             </Link>
           </div>
 
-          <div className="hidden md:block flex-1">
-            <div className="flex flex-wrap justify-center items-baseline gap-6">
+          <div className="hidden flex-1 md:block">
+            <div className="flex flex-wrap items-baseline justify-center gap-6">
               {navLinks.map((link) => {
                 const isActive =
                   location === link.href ||
@@ -76,7 +80,7 @@ const Header: React.FC = () => {
                     <Link
                       key={link.name}
                       href={link.href}
-                      className={`rounded-md  text-sm font-medium transition-colors duration-200 ${textColor} ${isActive ? "font-bold text-orange-500" : ""}`}
+                      className={`rounded-md text-sm font-medium transition-colors duration-200 ${textColor} ${isActive ? "font-bold text-orange-500" : ""}`}
                     >
                       {link.name}
                     </Link>
@@ -87,22 +91,21 @@ const Header: React.FC = () => {
                   <a
                     key={link.name}
                     href={getLink(link.href)}
-                    className={`rounded-md  text-sm font-medium transition-colors duration-200 ${textColor}`}
+                    className={`rounded-md text-sm font-medium transition-colors duration-200 ${textColor}`}
                   >
                     {link.name}
                   </a>
                 );
               })}
-              
             </div>
           </div>
           <div className="hidden md:block">
             <a
-                href={getLink("#contact")}
-                className="rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:bg-orange-600 hover:shadow-orange-500/30"
-              >
-                Đặt ngay
-              </a>
+              href={getLink("#contact")}
+              className="rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:bg-orange-600 hover:shadow-orange-500/30"
+            >
+              Đặt ngay
+            </a>
           </div>
 
           <div className="md:hidden">
