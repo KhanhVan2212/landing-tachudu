@@ -18,7 +18,7 @@ const DealsCategories: React.FC<DealsCategoriesProps> = ({
   ];
 
   return (
-    <section className="relative z-10 mx-auto -mt-16 max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="relative z-10 mx-auto -mt-6 sm:-mt-16 max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {categories.map((cat, idx) => {
           const isSelected = selectedCategory === cat.name;

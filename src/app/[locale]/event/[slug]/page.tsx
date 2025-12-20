@@ -22,7 +22,7 @@ export default function EventDetailPage({ params }: PageProps) {
 
   return (
     <section className="py-20 bg-white">
-      <div className="max-w-4xl mx-auto px-4">
+      <div className="max-w-4xl mx-auto px-4 overflow-hidden">
         {/* COVER */}
         <Image
           src={post.cover}
@@ -57,7 +57,7 @@ export default function EventDetailPage({ params }: PageProps) {
                       alt={block.caption ?? ""}
                       width={600}
                       height={600}
-                      className="rounded-xl my-8 mx-auto max-w-3xl"
+                      className="rounded-xl my-8 mx-auto w-full"
                     />
                     {block.caption && (
                       <figcaption className="text-center text-sm text-gray-500">
