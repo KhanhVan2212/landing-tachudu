@@ -62,7 +62,7 @@ const Header: React.FC = () => {
             </Link>
           </div>
 
-          <div className="hidden flex-1 md:block">
+          <div className="hidden flex-1 lg:block">
             <div className="flex flex-wrap items-baseline justify-center gap-6">
               {navLinks.map((link) => {
                 const isActive =
@@ -98,7 +98,7 @@ const Header: React.FC = () => {
               })}
             </div>
           </div>
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <a
               href={getLink("#contact")}
               className="rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:bg-orange-600 hover:shadow-orange-500/30"
@@ -107,7 +107,7 @@ const Header: React.FC = () => {
             </a>
           </div>
 
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className={`inline-flex items-center justify-center rounded-md p-2 ${
@@ -126,7 +126,7 @@ const Header: React.FC = () => {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="bg-white shadow-xl md:hidden">
+        <div className="bg-white shadow-xl lg:hidden">
           <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
             {navLinks.map((link) => {
               if (link.type === "link") {
