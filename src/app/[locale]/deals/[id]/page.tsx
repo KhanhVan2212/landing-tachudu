@@ -221,7 +221,7 @@ const DealDetail = () => {
                   Liên hệ hỗ trợ
                 </h4>
                 <div className="flex justify-center gap-4">
-                  <a
+                  <Link
                     href="#"
                     className="group flex flex-col items-center gap-2"
                   >
@@ -229,8 +229,8 @@ const DealDetail = () => {
                       <Phone className="h-5 w-5" />
                     </div>
                     <span className="text-xs text-gray-500">Hotline</span>
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="#"
                     className="group flex flex-col items-center gap-2"
                   >
@@ -238,7 +238,7 @@ const DealDetail = () => {
                       <Mail className="h-5 w-5" />
                     </div>
                     <span className="text-xs text-gray-500">Email</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

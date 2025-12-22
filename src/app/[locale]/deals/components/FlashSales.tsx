@@ -47,12 +47,12 @@ const FlashSales = () => {
           </h2>
           <p className="mt-2 text-gray-500">Cơ hội cuối cùng, đừng bỏ lỡ!</p>
         </div>
-        <a
+        <Link
           href="#"
           className="hidden font-medium text-orange-600 hover:underline sm:block"
         >
           Xem tất cả
-        </a>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">

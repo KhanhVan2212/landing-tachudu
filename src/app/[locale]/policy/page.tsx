@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@/i18n/navigation";
 import React from "react";
 import {
   FaRightLeft,
@@ -127,12 +128,12 @@ export default function PolicyPage() {
                     Liên hệ nhân viên tư vấn qua Box Chat hoặc Hotline:
                   </p>
                   <div className="flex flex-col gap-2">
-                    <a
+                    <Link
                       href="tel:02439351122"
                       className="flex w-fit items-center gap-2 rounded-full bg-orange-50 px-3 py-1 font-bold text-orange-600 hover:bg-orange-100"
                     >
                       <FaPhone className="text-sm" /> 024.39351122
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

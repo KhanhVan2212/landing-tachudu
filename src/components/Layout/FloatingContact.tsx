@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@/i18n/navigation";
 import React, { useState } from "react";
 import {
   FaPhone,
@@ -40,12 +41,12 @@ const FloatingContact = () => {
             </div>
             <div>
               <p className="text-sm font-medium text-white/90">Hotline</p>
-              <a
+              <Link
                 href="tel:02439351122"
                 className="block text-lg font-bold leading-tight text-white hover:underline"
               >
                 024.39351122
-              </a>
+              </Link>
               <span className="text-xs text-white/80">Hỗ trợ 24/7</span>
             </div>
           </div>
@@ -57,12 +58,12 @@ const FloatingContact = () => {
             </div>
             <div>
               <p className="text-sm font-medium text-white/90">Email</p>
-              <a
+              <Link
                 href="mailto:tachuduvn@gmail.com"
                 className="block break-all text-sm font-bold leading-tight text-white transition hover:text-white/90"
               >
                 tachuduvn@gmail.com
-              </a>
+              </Link>
               <span className="text-xs text-white/80">
                 Phản hồi trong vòng 24h
               </span>

@@ -1,6 +1,7 @@
 import React from "react";
 import { SLOGAN } from "../../../../../constants";
 import Image from "next/image";
+import { Link } from "@/i18n/navigation";
 
 const Hero: React.FC = () => {
   return (
@@ -26,18 +27,18 @@ const Hero: React.FC = () => {
           {SLOGAN}
         </p>
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
-          <a
+          <Link
             href="#services"
             className="transform rounded-full bg-orange-500 px-8 py-4 text-lg font-semibold text-white shadow-xl transition-all duration-300 hover:scale-105 hover:bg-orange-600 hover:shadow-orange-500/50"
           >
             Khám phá dịch vụ
-          </a>
-          <a
+          </Link>
+          <Link
             href="#contact"
             className="rounded-full border-2 border-white bg-transparent px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:bg-white hover:text-orange-600"
           >
             Liên hệ ngay
-          </a>
+          </Link>
         </div>
       </div>
     </div>

@@ -87,24 +87,24 @@ const Header: React.FC = () => {
                 }
 
                 return (
-                  <a
+                  <Link
                     key={link.name}
                     href={getLink(link.href)}
                     className={`rounded-md text-sm font-medium transition-colors duration-200 ${textColor}`}
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 );
               })}
             </div>
           </div>
           <div className="hidden lg:block">
-            <a
+            <Link
               href={getLink("#contact")}
               className="rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:bg-orange-600 hover:shadow-orange-500/30"
             >
               Đặt ngay
-            </a>
+            </Link>
           </div>
 
           <div className="lg:hidden">
@@ -142,23 +142,23 @@ const Header: React.FC = () => {
                 );
               }
               return (
-                <a
+                <Link
                   key={link.name}
                   href={getLink(link.href)}
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600"
                   onClick={() => setIsOpen(false)}
                 >
                   {link.name}
-                </a>
+                </Link>
               );
             })}
-            <a
+            <Link
               href={getLink("#contact")}
               className="block rounded-md px-3 py-2 text-base font-bold text-orange-600"
               onClick={() => setIsOpen(false)}
             >
               Đặt ngay
-            </a>
+            </Link>
           </div>
         </div>
       )}
