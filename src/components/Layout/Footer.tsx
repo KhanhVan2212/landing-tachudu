@@ -41,7 +41,7 @@ const serviceLinks = [
   { label: "Du lịch nước ngoài", href: "/foreign-tours" },
   { label: "Tổ chức sự kiện", href: "/event" },
   { label: "MICE", href: "/mice" },
-  { label: "Dịch vụ", href: "/services" },
+  { label: "Dịch vụ", href: "/tour-services" },
 ];
 
 const companyLinks = [

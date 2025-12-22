@@ -40,8 +40,8 @@ const Header: React.FC = () => {
     { name: "Du lịch nước ngoài", href: "/foreign-tours", type: "link" },
     { name: "MICE", href: "/mice", type: "link" },
     { name: "Sự kiện", href: "/event", type: "link" },
+    { name: "Dịch vụ du lịch", href: "/tour-services", type: "link" },
     { name: "Về chúng tôi", href: "/about", type: "link" },
-    { name: "Liên hệ", href: "/contact", type: "link" },
   ];
 
   return (

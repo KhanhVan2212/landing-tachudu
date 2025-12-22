@@ -15,7 +15,7 @@ const Advantages: React.FC = () => {
               alt="Team working"
               width={600}
               height={800}
-              className="relative z-10 h-[600px] w-full rounded-3xl object-cover shadow-2xl"
+              className="rounded-3xl object-contain shadow-2xl"
             />
             <div className="absolute -right-5 bottom-10 z-20 hidden max-w-xs rounded-xl bg-white p-6 shadow-xl md:block">
               <p className="mb-2 text-4xl font-bold text-orange-600">10+</p>
