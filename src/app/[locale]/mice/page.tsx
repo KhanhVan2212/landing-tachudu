@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useEffect } from "react";
-
-import Hero from "./components/HeroSection";
-import DomesticTours from "./components/DomesticTour";
-import InternationalTours from "./components/InternationalTour";
-import News from "./components/News";
-import Contact from "./components/Contact";
+import MiceHero from "./components/MiceHero";
+import MiceIntro from "./components/MiceIntro";
+import MiceServices from "./components/MiceServices";
+import MiceAdvantages from "./components/MiceAdvantages";
+import MiceProcess from "./components/MiceProcess";
+import { JourneyDiary } from "./components/JourneyDiary";
+import Contact from "../(home)/components/Contact";
 import AirlinePartners from "../(home)/components/AirlinePartners";
 
 export default function MICEPage() {
@@ -15,11 +16,13 @@ export default function MICEPage() {
   }, []);
 
   return (
-    <div className="pt-20 bg-white">
-      <Hero />
-      <DomesticTours />
-      <InternationalTours />
-      <News />
+    <div className="bg-white">
+      <MiceHero />
+      <MiceIntro />
+      {/* <MiceServices /> */}
+      <MiceAdvantages />
+      <JourneyDiary />  
+      <MiceProcess />
       <AirlinePartners />
       <Contact />
     </div>
