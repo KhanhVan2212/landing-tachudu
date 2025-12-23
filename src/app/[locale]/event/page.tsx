@@ -44,7 +44,7 @@ export default function EventPage() {
       <EventHighlightSection />
       <FeaturedNewsSection />
 
-      <CategorySection
+      {/* <CategorySection
         title="Du lịch & Sự kiện"
         viewAllHref="/event?category=du-lich-su-kien"
         items={travelEvents}
@@ -54,7 +54,7 @@ export default function EventPage() {
         title="Team building & MICE"
         viewAllHref="/event?category=team-building-mice"
         items={teamBuildingEvents}
-      />
+      /> */}
     </>
   );
 }

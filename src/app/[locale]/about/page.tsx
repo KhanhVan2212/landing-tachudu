@@ -7,6 +7,7 @@ import CoreValues from "./components/CoreValues";
 import Intro from "./components/Intro";
 import Contact from "../(home)/components/Contact";
 import AirlinePartners from "../(home)/components/AirlinePartners";
+import MissionVision from "./components/MissionVision";
 
 const Page: React.FC = () => {
   useEffect(() => {
@@ -25,6 +26,7 @@ const Page: React.FC = () => {
       <History />   
       {/* Core Values */}
       <CoreValues />
+      <MissionVision />
       {/* Partners List */}
       <AirlinePartners />
       <Contact />

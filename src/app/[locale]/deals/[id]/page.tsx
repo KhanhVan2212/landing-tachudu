@@ -209,9 +209,12 @@ const DealDetail = () => {
                 </div>
               </div>
 
-              <button className="mb-4 w-full rounded-xl bg-orange-600 py-4 text-lg font-bold text-white shadow-lg shadow-orange-600/30 transition-all hover:bg-orange-700">
+              <Link
+                href="/contact"
+                className="mb-4 block w-full rounded-xl bg-orange-600 py-4 text-center text-lg font-bold text-white shadow-lg shadow-orange-600/30 transition-all hover:bg-orange-700"
+              >
                 Đặt ngay
-              </button>
+              </Link>
               <button className="w-full rounded-xl border-2 border-orange-600 bg-white py-3 font-bold text-orange-600 transition-colors hover:bg-orange-50">
                 Tư vấn miễn phí
               </button>
@@ -222,7 +225,7 @@ const DealDetail = () => {
                 </h4>
                 <div className="flex justify-center gap-4">
                   <Link
-                    href="#"
+                    href="tel:02439351122"
                     className="group flex flex-col items-center gap-2"
                   >
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-50 text-orange-600 transition-colors group-hover:bg-orange-600 group-hover:text-white">
@@ -231,7 +234,7 @@ const DealDetail = () => {
                     <span className="text-xs text-gray-500">Hotline</span>
                   </Link>
                   <Link
-                    href="#"
+                    href="mailto:tachuduvn@gmail.com"
                     className="group flex flex-col items-center gap-2"
                   >
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-50 text-green-600 transition-colors group-hover:bg-green-600 group-hover:text-white">

@@ -7,33 +7,12 @@ import {
   Mail,
   MapPin,
 } from "lucide-react";
-import { COMPANY_NAME, SLOGAN } from "../../../constants";
+import { COMPANY_NAME, SLOGAN, CONTACT_INFO } from "../../../constants";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 
 const socialLinks = [
-  { icon: Facebook, href: "#" },
-  { icon: Instagram, href: "#" },
-  {
-    icon: () => (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M19 7.5c-1.333-3-3.667-4.5-7-4.5-5 0-7.5 3.5-7.5 7.5s2.5 7.5 7.5 7.5c3.333 0 5.667-1.5 7-4.5"></path>
-        <path d="M12 12c0 2.5 2 4.5 4.5 4.5s4.5-2 4.5-4.5-2-4.5-4.5-4.5"></path>
-      </svg>
-    ),
-    href: "https://www.threads.net/@tachudu.vn",
-  },
-  { icon: Linkedin, href: "#" },
+  { icon: Facebook, href: "https://www.facebook.com/Tachudu.vn" },
 ];
 
 const serviceLinks = [
@@ -88,11 +67,21 @@ const Footer: React.FC = () => {
             <div className="mb-6 space-y-3">
               <div className="flex items-center text-sm text-gray-300">
                 <Phone size={16} className="mr-2 text-orange-500" />
-                <span>024.39351122</span>
+                <Link
+                  href={`tel:${CONTACT_INFO.hotlineUrl}`}
+                  className="transition-colors hover:text-orange-500"
+                >
+                  {CONTACT_INFO.hotline}
+                </Link>
               </div>
               <div className="flex items-center text-sm text-gray-300">
                 <Mail size={16} className="mr-2 text-orange-500" />
-                <span>tachuduvn@gmail.com</span>
+                <Link
+                  href={`mailto:${CONTACT_INFO.email}`}
+                  className="transition-colors hover:text-orange-500"
+                >
+                  {CONTACT_INFO.email}
+                </Link>
               </div>
               <div className="flex items-start text-sm text-gray-300">
                 <MapPin

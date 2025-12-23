@@ -40,8 +40,8 @@ const Header: React.FC = () => {
     { name: "Du lịch nước ngoài", href: "/foreign-tours", type: "link" },
     { name: "MICE", href: "/mice", type: "link" },
     { name: "Sự kiện", href: "/event", type: "link" },
+    { name: "Dịch vụ du lịch", href: "/services", type: "link" },
     { name: "Về chúng tôi", href: "/about", type: "link" },
-    { name: "Liên hệ", href: "/contact", type: "link" },
   ];
 
   return (
@@ -100,7 +100,7 @@ const Header: React.FC = () => {
           </div>
           <div className="hidden lg:block">
             <Link
-              href={getLink("#contact")}
+              href="/contact"
               className="rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:bg-orange-600 hover:shadow-orange-500/30"
             >
               Đặt ngay
@@ -153,7 +153,7 @@ const Header: React.FC = () => {
               );
             })}
             <Link
-              href={getLink("#contact")}
+              href="/contact"
               className="block rounded-md px-3 py-2 text-base font-bold text-orange-600"
               onClick={() => setIsOpen(false)}
             >

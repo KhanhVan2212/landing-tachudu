@@ -2,14 +2,15 @@
 import React, { useEffect } from "react";
 import {
   Plane,
-  Map,
-  CalendarDays,
   Hotel,
+  Car,
+  Ticket,
+  FileCheck,
+  Camera,
+  Shield,
+  Map,
   CheckCircle2,
   ArrowRight,
-  ShieldCheck,
-  Clock,
-  Heart,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
@@ -19,21 +20,126 @@ const ServicesPage: React.FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const features = [
+  const services = [
     {
-      title: "Hỗ trợ 24/7",
-      desc: "Luôn sẵn sàng giải quyết mọi vấn đề phát sinh.",
-      icon: Clock,
+      id: "flight",
+      title: "Đặt Vé Máy Bay",
+      description:
+        "Đặt vé máy bay nội địa và quốc tế với giá ưu đãi. Hỗ trợ đặt vé khứ hồi, một chiều với tất cả các hãng hàng không.",
+      features: [
+        "Giá vé cạnh tranh",
+        "Nhiều hãng bay",
+        "Hỗ trợ 24/7",
+        "Hoàn/đổi vé linh hoạt",
+      ],
+      icon: Plane,
+      image: "/images/sevices/plane.webp",
+      color: "orange",
     },
     {
-      title: "Giá tốt nhất",
-      desc: "Cam kết giá cạnh tranh và nhiều ưu đãi độc quyền.",
-      icon: ShieldCheck,
+      id: "hotel",
+      title: "Đặt Phòng Khách Sạn",
+      description:
+        "Hệ thống khách sạn đối tác từ 3-5 sao trên toàn quốc và quốc tế. Cam kết giá tốt nhất với nhiều ưu đãi hấp dẫn.",
+      features: [
+        "Khách sạn 3-5 sao",
+        "Giá cam kết tốt nhất",
+        "Miễn phí hủy phòng",
+        "Điểm thưởng thành viên",
+      ],
+      icon: Hotel,
+      image: "/images/sevices/hotel.jpg",
+      color: "blue", // Keeping variety but will style with orange theme predominantly
     },
     {
-      title: "Tận tâm",
-      desc: "Đặt lợi ích và trải nghiệm khách hàng lên hàng đầu.",
-      icon: Heart,
+      id: "car",
+      title: "Thuê Xe Du Lịch",
+      description:
+        "Dịch vụ cho thuê xe du lịch từ 4-45 chỗ với tài xế kinh nghiệm. Xe đời mới, sạch sẽ, an toàn tuyệt đối.",
+      features: [
+        "Xe 4-45 chỗ",
+        "Tài xế chuyên nghiệp",
+        "Xe đời mới 2022-2024",
+        "Bảo hiểm đầy đủ",
+      ],
+      icon: Car,
+      image: "/images/sevices/car.webp",
+      color: "green",
+    },
+    {
+      id: "ticket",
+      title: "Vé Tham Quan",
+      description:
+        "Đặt trước vé tham quan các điểm du lịch nổi tiếng trong và ngoài nước với giá ưu đãi, không cần xếp hàng.",
+      features: [
+        "Không cần xếp hàng",
+        "Giá ưu đãi",
+        "E-ticket tiện lợi",
+        "Nhiều điểm đến",
+      ],
+      icon: Ticket,
+      image: "/images/sevices/ticket.webp",
+      color: "purple",
+    },
+    {
+      id: "visa",
+      title: "Làm Visa",
+      description:
+        "Dịch vụ làm visa du lịch, công tác cho tất cả các quốc gia. Tư vấn hồ sơ miễn phí, tỷ lệ đậu cao.",
+      features: [
+        "Tư vấn miễn phí",
+        "Tỷ lệ đậu cao",
+        "Xử lý nhanh",
+        "Hỗ trợ toàn diện",
+      ],
+      icon: FileCheck,
+      image: "/images/sevices/visa.webp",
+      color: "red",
+    },
+    {
+      id: "photo",
+      title: "Chụp Ảnh Du Lịch",
+      description:
+        "Dịch vụ chụp ảnh chuyên nghiệp tại các điểm du lịch. Lưu giữ những khoảnh khắc đẹp nhất của chuyến đi.",
+      features: [
+        "Nhiếp ảnh gia chuyên nghiệp",
+        "Thiết bị hiện đại",
+        "Chỉnh sửa chuyên nghiệp",
+        "Giao ảnh nhanh",
+      ],
+      icon: Camera,
+      image: "/images/sevices/photo.jpg",
+      color: "pink",
+    },
+    {
+      id: "insurance",
+      title: "Bảo Hiểm Du Lịch",
+      description:
+        "Gói bảo hiểm du lịch toàn diện, bảo vệ bạn trong suốt hành trình với mức phí hợp lý và quyền lợi tối đa.",
+      features: [
+        "Chi phí y tế",
+        "Mất hành lý",
+        "Hủy/hoãn chuyến",
+        "Hỗ trợ 24/7",
+      ],
+      icon: Shield,
+      image: "/images/sevices/bao-hiem.webp",
+      color: "teal",
+    },
+    {
+      id: "custom-tour",
+      title: "Tour Theo Yêu Cầu",
+      description:
+        "Thiết kế tour riêng theo yêu cầu của khách hàng. Lịch trình linh hoạt, trải nghiệm độc đáo, phù hợp mọi ngân sách.",
+      features: [
+        "Lịch trình tùy chỉnh",
+        "Hướng dẫn riêng",
+        "Linh hoạt thời gian",
+        "Trải nghiệm độc đáo",
+      ],
+      icon: Map,
+      image: "/images/sevices/tour.jpg",
+      color: "indigo",
     },
   ];
 
@@ -45,7 +151,7 @@ const ServicesPage: React.FC = () => {
           <Image
             width={1920}
             height={800}
-            src="https://picsum.photos/1920/800?random=service_hero"
+            src="/images/sevices/banner.avif"
             alt="Services Banner"
             className="h-full w-full object-cover"
           />
@@ -56,224 +162,63 @@ const ServicesPage: React.FC = () => {
             Dịch Vụ Của TACHUDU
           </h1>
           <p className="mx-auto max-w-2xl text-xl font-light text-gray-200">
-            Giải pháp toàn diện cho mọi nhu cầu du lịch và sự kiện của bạn.
+            Trải nghiệm trọn vẹn với hệ sinh thái dịch vụ du lịch đẳng cấp.
           </p>
         </div>
       </div>
 
       {/* Main Services Detail */}
       <div className="mx-auto max-w-7xl space-y-24 px-4 py-20 sm:px-6 lg:px-8">
-        {/* Service 1: Flight Booking */}
-        <div className="flex flex-col items-center gap-12 md:flex-row">
-          <div className="group relative md:w-1/2">
-            <div className="absolute -inset-4 rotate-3 transform rounded-xl bg-orange-100 transition-transform group-hover:rotate-6"></div>
-            <Image
-              width={800}
-              height={600}
-              src="https://picsum.photos/800/600?random=flight"
-              alt="Flight Booking"
-              className="relative h-[400px] w-full rounded-lg object-cover shadow-xl"
-            />
-          </div>
-          <div className="md:w-1/2">
-            <div className="mb-4 flex items-center space-x-3">
-              <div className="rounded-lg bg-orange-100 p-3 text-orange-600">
-                <Plane size={24} />
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900">
-                Đặt Vé Máy Bay
-              </h2>
-            </div>
-            <p className="mb-6 text-lg leading-relaxed text-gray-600">
-              Là đại lý cấp 1 của các hãng hàng không hàng đầu như Vietnam
-              Airlines, Bamboo Airways, Vietjet Air và hơn 50 hãng hàng không
-              quốc tế. Chúng tôi cam kết mang đến hành trình bay thuận lợi nhất
-              với chi phí tối ưu.
-            </p>
-            <ul className="mb-8 space-y-3">
-              {[
-                "Săn vé rẻ, vé khuyến mãi 0đ",
-                "Hỗ trợ đổi vé, hoàn hủy nhanh chóng",
-                "Check-in online, chọn chỗ ngồi đẹp",
-                "Xử lý các ca khó: giờ chót, sai tên",
-              ].map((item, i) => (
-                <li key={i} className="flex items-center text-gray-700">
-                  <CheckCircle2 size={20} className="mr-3 text-orange-500" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/deals"
-              className="inline-flex items-center font-bold text-orange-600 hover:underline"
-            >
-              Đặt vé ngay <ArrowRight size={20} className="ml-2" />
-            </Link>
-          </div>
-        </div>
-
-        {/* Service 2: Tours */}
-        <div className="flex flex-col items-center gap-12 md:flex-row-reverse">
-          <div className="group relative md:w-1/2">
-            <div className="absolute -inset-4 -rotate-3 transform rounded-xl bg-orange-100 transition-transform group-hover:-rotate-6"></div>
-            <Image
-              width={800}
-              height={600}
-              src="https://picsum.photos/800/600?random=tour"
-              alt="Tours"
-              className="relative h-[400px] w-full rounded-lg object-cover shadow-xl"
-            />
-          </div>
-          <div className="md:w-1/2">
-            <div className="mb-4 flex items-center space-x-3">
-              <div className="rounded-lg bg-orange-100 p-3 text-orange-600">
-                <Map size={24} />
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900">Tour Du Lịch</h2>
-            </div>
-            <p className="mb-6 text-lg leading-relaxed text-gray-600">
-              Khám phá vẻ đẹp bất tận của Việt Nam và thế giới. TACHUDU thiết kế
-              các tour du lịch đa dạng, từ nghỉ dưỡng sang trọng đến khám phá
-              mạo hiểm, đáp ứng mọi sở thích của khách hàng.
-            </p>
-            <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div className="rounded-lg border-l-4 border-orange-500 bg-white p-4 shadow">
-                <h4 className="font-bold text-gray-900">Tour Trong Nước</h4>
-                <p className="text-sm text-gray-500">
-                  Phú Quốc, Đà Nẵng, Sapa, Hạ Long...
-                </p>
-              </div>
-              <div className="rounded-lg border-l-4 border-orange-500 bg-white p-4 shadow">
-                <h4 className="font-bold text-gray-900">Tour Quốc Tế</h4>
-                <p className="text-sm text-gray-500">
-                  Thái Lan, Hàn Quốc, Nhật Bản, Châu Âu...
-                </p>
-              </div>
-            </div>
-            <Link
-              href="/deals"
-              className="inline-flex items-center font-bold text-orange-600 hover:underline"
-            >
-              Xem các tour ưu đãi <ArrowRight size={20} className="ml-2" />
-            </Link>
-          </div>
-        </div>
-
-        {/* Service 3: Events (MICE) */}
-        <div className="flex flex-col items-center gap-12 md:flex-row">
-          <div className="group relative md:w-1/2">
-            <div className="absolute -inset-4 rotate-3 transform rounded-xl bg-red-100 transition-transform group-hover:rotate-6"></div>
-            <Image
-              width={800}
-              height={600}
-              src="https://picsum.photos/800/600?random=event"
-              alt="Events"
-              className="relative h-[400px] w-full rounded-lg object-cover shadow-xl"
-            />
-          </div>
-          <div className="md:w-1/2">
-            <div className="mb-4 flex items-center space-x-3">
-              <div className="rounded-lg bg-red-100 p-3 text-red-600">
-                <CalendarDays size={24} />
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900">
-                Tổ Chức Sự Kiện (MICE)
-              </h2>
-            </div>
-            <p className="mb-6 text-lg leading-relaxed text-gray-600">
-              Chúng tôi cung cấp giải pháp tổ chức sự kiện trọn gói cho doanh
-              nghiệp. Từ ý tưởng sáng tạo đến khâu vận hành chuyên nghiệp, đảm
-              bảo sự kiện của bạn để lại dấu ấn sâu sắc.
-            </p>
-            <ul className="mb-8 space-y-3">
-              <li className="flex items-center text-gray-700">
-                <CheckCircle2 size={20} className="mr-3 text-red-500" />
-                Du lịch kết hợp hội nghị, hội thảo (MICE)
-              </li>
-              <li className="flex items-center text-gray-700">
-                <CheckCircle2 size={20} className="mr-3 text-red-500" />
-                Teambuilding gắn kết nhân sự
-              </li>
-              <li className="flex items-center text-gray-700">
-                <CheckCircle2 size={20} className="mr-3 text-red-500" />
-                Tiệc Gala Dinner, Year End Party
-              </li>
-            </ul>
-            <Link
-              href="/event"
-              className="inline-flex items-center font-bold text-red-600 hover:underline"
-            >
-              Xem các sự kiện <ArrowRight size={20} className="ml-2" />
-            </Link>
-          </div>
-        </div>
-
-        {/* Service 4: Visa & Hotel */}
-        <div className="flex flex-col items-center gap-12 md:flex-row-reverse">
-          <div className="group relative md:w-1/2">
-            <div className="absolute -inset-4 -rotate-3 transform rounded-xl bg-green-100 transition-transform group-hover:-rotate-6"></div>
-            <Image
-              width={800}
-              height={600}
-              src="https://picsum.photos/800/600?random=hotel"
-              alt="Visa Hotel"
-              className="relative h-[400px] w-full rounded-lg object-cover shadow-xl"
-            />
-          </div>
-          <div className="md:w-1/2">
-            <div className="mb-4 flex items-center space-x-3">
-              <div className="rounded-lg bg-green-100 p-3 text-green-600">
-                <Hotel size={24} />
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900">
-                Visa & Khách Sạn
-              </h2>
-            </div>
-            <p className="mb-6 text-lg leading-relaxed text-gray-600">
-              Xóa tan nỗi lo về thủ tục hành chính và nơi lưu trú. Dịch vụ Visa
-              nhanh gọn với tỷ lệ đậu cao và hệ thống đặt phòng khách sạn toàn
-              cầu với giá ưu đãi.
-            </p>
-            <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
-              <h4 className="mb-2 font-bold text-gray-900">
-                Tại sao chọn chúng tôi?
-              </h4>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col text-sm text-gray-600">
-                  <span className="text-2xl font-bold text-green-600">99%</span>
-                  Tỷ lệ đậu Visa
-                </div>
-                <div className="flex flex-col text-sm text-gray-600">
-                  <span className="text-2xl font-bold text-green-600">1M+</span>
-                  Khách sạn liên kết
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Why Choose Us Icons */}
-      <div className="bg-gradient-to-r from-orange-50 to-red-50 py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-8 text-center md:grid-cols-3">
-            {features.map((feature, idx) => (
+        {services.map((service, index) => (
+          <div
+            key={service.id}
+            className={`flex flex-col items-center gap-12 ${
+              index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
+            }`}
+          >
+            <div className="group relative md:w-1/2">
               <div
-                key={idx}
-                className="rounded-2xl border border-gray-100 bg-white p-6 shadow-lg transition-shadow hover:shadow-xl"
-              >
-                <feature.icon
-                  size={48}
-                  className="mx-auto mb-4 text-orange-600"
-                />
-                <h3 className="mb-2 text-xl font-bold text-gray-900">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">{feature.desc}</p>
+                className={`absolute -inset-4 transform rounded-xl transition-transform group-hover:rotate-6 ${
+                  index % 2 === 0 ? "rotate-3" : "-rotate-3"
+                } bg-orange-100 opacity-70`}
+              ></div>
+              <Image
+                width={800}
+                height={600}
+                src={service.image}
+                alt={service.title}
+                className="relative h-[400px] w-full rounded-lg object-cover shadow-xl transition-transform duration-300 group-hover:scale-[1.01]"
+              />
+            </div>
+            <div className="md:w-1/2">
+              <div className="mb-4 flex items-center space-x-3">
+                <div className="rounded-lg bg-orange-100 p-3 text-orange-600">
+                  <service.icon size={24} />
+                </div>
+                <h2 className="text-3xl font-bold text-gray-900">
+                  {service.title}
+                </h2>
               </div>
-            ))}
+              <p className="mb-6 text-lg leading-relaxed text-gray-600">
+                {service.description}
+              </p>
+              <ul className="mb-8 grid grid-cols-1 gap-y-3 sm:grid-cols-2">
+                {service.features.map((feature, i) => (
+                  <li key={i} className="flex items-center text-gray-700">
+                    <CheckCircle2 size={20} className="mr-3 text-orange-500" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/contact"
+                className="inline-flex items-center font-bold text-orange-600 transition-colors hover:text-orange-700 hover:underline"
+              >
+                Liên hệ tư vấn <ArrowRight size={20} className="ml-2" />
+              </Link>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
 
       {/* CTA Section */}
@@ -282,11 +227,11 @@ const ServicesPage: React.FC = () => {
         <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-red-500/20 blur-3xl"></div>
         <div className="relative z-10 mx-auto max-w-3xl">
           <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">
-            Bạn đã sẵn sàng cho chuyến đi tiếp theo?
+            Bạn cần hỗ trợ thêm?
           </h2>
           <p className="mb-8 text-lg text-orange-50">
-            Liên hệ với TACHUDU ngay hôm nay để nhận tư vấn miễn phí và báo giá
-            tốt nhất.
+            Đội ngũ tư vấn viên của TACHUDU luôn sẵn sàng giải đáp mọi thắc mắc
+            của bạn 24/7.
           </p>
           <Link
             href="/contact"

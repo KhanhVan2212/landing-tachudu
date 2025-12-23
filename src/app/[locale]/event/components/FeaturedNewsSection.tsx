@@ -4,30 +4,32 @@ import Link from "next/link";
 import Image from "next/image";
 
 const featuredPost = {
-  slug: "du-lich-mice-giai-phap-doanh-nghiep",
-  title: "Du lịch MICE – Giải pháp nâng cao hiệu suất & gắn kết doanh nghiệp",
-  date: "18/07/2024",
+  slug: "dai-hoi-hoi-nong-dan-ha-noi-lan-thu-xi",
+  title:
+    "Đại hội đại biểu Hội Nông dân Thành phố Hà Nội lần thứ XI diễn ra thành công tốt đẹp",
+  date: "25/11/2025",
   excerpt:
-    "MICE Tourism đang trở thành xu hướng chiến lược của nhiều doanh nghiệp hiện đại, kết hợp du lịch – đào tạo – sự kiện nhằm gia tăng hiệu quả làm việc và xây dựng văn hóa đội nhóm.",
+    "Đại hội đại biểu Hội Nông dân Thành phố Hà Nội lần thứ XI, nhiệm kỳ 2025–2030 đã diễn ra trang trọng với sự tham gia của 288 đại biểu chính thức, đại diện cho hơn 400.000 hội viên nông dân Thủ đô.",
   image:
-    "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80",
+    "/images/events/1.jpg",
 };
 
 const sidePosts = [
   {
-    slug: "tachudu-to-chuc-hoi-nghi-khach-hang-2024",
-    title: "Tachudu tổ chức hội nghị khách hàng toàn quốc 2024",
-    date: "12/07/2024",
+    slug: "le-tuyen-duong-thu-khoa-xuat-sac-2025",
+    title: "Lễ tuyên dương thủ khoa xuất sắc 2025: Hành trình tri thức rực rỡ",
+    date: "14/11/2025",
   },
   {
-    slug: "team-building-dong-luc-doi-nhom",
-    title: "Team building – Chìa khóa tạo động lực & gắn kết nội bộ",
-    date: "10/07/2024",
+    slug: "vinh-danh-80-guong-mat-thap-lua-thi-dua-yeu-nuoc",
+    title:
+      "Vinh danh 80 gương mặt tiêu biểu “Thắp lửa” phong trào thi đua yêu nước",
+    date: "26/10/2025",
   },
   {
-    slug: "xu-huong-su-kien-doanh-nghiep-2025",
-    title: "Xu hướng tổ chức sự kiện doanh nghiệp năm 2025",
-    date: "08/07/2024",
+    slug: "weilaiya-hanh-trinh-ruc-ro-2025",
+    title: "Weilaiya - Hành trình rực rỡ: Dấu ấn 2025",
+    date: "23/02/2025",
   },
 ];
 

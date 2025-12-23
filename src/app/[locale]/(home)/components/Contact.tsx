@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { CONTACT_INFO } from "../../../../../constants";
 
 const Contact: React.FC = () => {
   const [formState, setFormState] = useState({
@@ -68,7 +69,12 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-lg font-bold text-gray-900">Hotline</h4>
-                  <p className="text-gray-600">024.39351122</p>
+                  <a
+                    href={`tel:${CONTACT_INFO.hotlineUrl}`}
+                    className="text-gray-600 hover:text-orange-600"
+                  >
+                    {CONTACT_INFO.hotline}
+                  </a>
                 </div>
               </div>
 
@@ -78,7 +84,12 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-lg font-bold text-gray-900">Email</h4>
-                  <p className="text-gray-600">tachuduvn@gmail.com</p>
+                  <a
+                    href={`mailto:${CONTACT_INFO.email}`}
+                    className="text-gray-600 hover:text-orange-600"
+                  >
+                    {CONTACT_INFO.email}
+                  </a>
                 </div>
               </div>
             </div>

@@ -11,6 +11,7 @@ const ContactInfo = () => {
           info: "024.39351122",
           subInfo: "Hỗ trợ đặt tour & vé",
           color: "bg-orange-50 text-orange-600",
+          href: "tel:02439351122",
         },
         {
           icon: Mail,
@@ -18,6 +19,7 @@ const ContactInfo = () => {
           info: "tachuduvn@gmail.com",
           subInfo: "Phản hồi trong 24h",
           color: "bg-orange-50 text-orange-600",
+          href: "mailto:tachuduvn@gmail.com",
         },
         {
           icon: MapPin,
@@ -44,7 +46,16 @@ const ContactInfo = () => {
             <item.icon size={28} />
           </div>
           <h3 className="mb-2 text-lg font-bold text-gray-900">{item.title}</h3>
-          <p className="text-xl font-bold text-gray-900">{item.info}</p>
+          {item.href ? (
+            <a
+              href={item.href}
+              className="text-xl font-bold text-gray-900 hover:text-orange-600"
+            >
+              {item.info}
+            </a>
+          ) : (
+            <p className="text-xl font-bold text-gray-900">{item.info}</p>
+          )}
           <p className="mt-1 text-sm text-gray-500">{item.subInfo}</p>
         </div>
       ))}

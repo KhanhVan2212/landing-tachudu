@@ -25,14 +25,6 @@ const MiceHero = () => {
           Giải pháp tổ chức sự kiện, hội nghị, hội thảo kết hợp du lịch nghỉ
           dưỡng chuyên nghiệp và đẳng cấp.
         </p>
-        <div className="animate-fade-in-up flex flex-wrap gap-4 delay-200">
-          <button className="transform rounded-lg bg-orange-600 px-8 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-orange-700">
-            Nhận Báo Giá
-          </button>
-          <button className="rounded-lg border border-white/30 bg-white/10 px-8 py-3 font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20">
-            Tìm Hiểu Thêm
-          </button>
-        </div>
       </div>
     </div>
   );
