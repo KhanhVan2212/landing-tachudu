@@ -7,6 +7,7 @@ import CoreValues from "./components/CoreValues";
 import Intro from "./components/Intro";
 import Contact from "../(home)/components/Contact";
 import AirlinePartners from "../(home)/components/AirlinePartners";
+import MapLocation from "@/components/Layout/MapLocation";
 
 const Page: React.FC = () => {
   useEffect(() => {
@@ -22,12 +23,13 @@ const Page: React.FC = () => {
       {/* Intro */}
       <Intro />
       {/* History & Experience */}
-      <History />   
+      <History />
       {/* Core Values */}
       <CoreValues />
       {/* Partners List */}
       <AirlinePartners />
       <Contact />
+      <MapLocation />
     </div>
   );
 };
