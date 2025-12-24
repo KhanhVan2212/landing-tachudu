@@ -22,7 +22,7 @@ export default function MICEPage() {
       {/* <MiceServices /> */}
       <MiceAdvantages />
       <JourneyDiary />  
-      <MiceProcess />
+      {/* <MiceProcess /> */}
       <AirlinePartners />
       <Contact />
     </div>

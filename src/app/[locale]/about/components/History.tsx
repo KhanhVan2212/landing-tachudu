@@ -40,7 +40,7 @@ const History = () => {
           </div>
           <div className="relative mt-10 lg:mt-0">
             <Image
-              src="https://picsum.photos/600/400?random=history"
+              src="/images/about.jpg"
               alt="History"
               width={600}
               height={400}

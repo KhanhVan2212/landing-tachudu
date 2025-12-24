@@ -215,9 +215,11 @@ const DealDetail = () => {
               >
                 Đặt ngay
               </Link>
-              <button className="w-full rounded-xl border-2 border-orange-600 bg-white py-3 font-bold text-orange-600 transition-colors hover:bg-orange-50">
-                Tư vấn miễn phí
-              </button>
+              <Link href="/contact">
+                <button className="w-full rounded-xl border-2 border-orange-600 bg-white py-3 font-bold text-orange-600 transition-colors hover:bg-orange-50">
+                  Tư vấn miễn phí
+                </button>
+              </Link>
 
               <div className="mt-8 border-t border-gray-100 pt-6">
                 <h4 className="mb-4 text-center font-bold text-gray-900">

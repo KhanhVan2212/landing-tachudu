@@ -25,10 +25,15 @@ const ASIA_REGIONS = [
   { id: "Middle East", label: "Trung Đông" },
 ];
 
+import { useSearchParams } from "next/navigation";
+
 const ForeignToursPage = () => {
+  const searchParams = useSearchParams();
+  const initialSearch = searchParams.get("search") || "";
+
   const [activeContinent, setActiveContinent] = useState("ALL");
   const [activeSubRegion, setActiveSubRegion] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [currentPage, setCurrentPage] = useState(1);
 
   // Reset sub-region when continent changes

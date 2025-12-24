@@ -2,12 +2,13 @@ import React from "react";
 import { SLOGAN } from "../../../../../constants";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
+import HomeSearch from "./HomeSearch";
 
 const Hero: React.FC = () => {
   return (
-    <div className="relative flex h-screen min-h-[600px] items-center justify-center overflow-hidden">
+    <div className="relative flex min-h-[600px] items-center justify-center">
       {/* Background Image with Overlay */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 overflow-hidden">
         <Image
           src="/images/hero-home.jpg"
           alt="Travel Background"
@@ -19,9 +20,11 @@ const Hero: React.FC = () => {
       </div>
 
       <div className="relative z-10 mx-auto mt-16 max-w-4xl px-4 text-center">
-        <h1 className="mb-6 text-4xl font-bold tracking-tight text-white drop-shadow-lg flex flex-col gap-4 sm:text-6xl">
+        <h1 className="mb-6 flex flex-col gap-4 text-4xl font-bold tracking-tight text-white drop-shadow-lg sm:text-6xl">
           <p>Khám phá thế giới cùng</p>
-          <span className="text-orange-500">TA<span className="text-red-600">CHU</span>DU</span>
+          <span className="text-orange-500">
+            TA<span className="text-red-600">CHU</span>DU
+          </span>
         </h1>
         <p className="mb-10 font-[family-name:var(--font-inter)] text-xl font-light italic text-gray-100 drop-shadow-md sm:text-2xl md:text-3xl">
           {SLOGAN}
@@ -41,6 +44,8 @@ const Hero: React.FC = () => {
           </Link>
         </div>
       </div>
+
+      <HomeSearch />
     </div>
   );
 };

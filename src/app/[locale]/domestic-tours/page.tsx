@@ -16,9 +16,14 @@ const REGIONS = [
   { id: "Highlands", label: "Tây Nguyên" },
 ];
 
+import { useSearchParams } from "next/navigation";
+
 const DomesticToursPage = () => {
+  const searchParams = useSearchParams();
+  const initialSearch = searchParams.get("search") || "";
+
   const [activeFilter, setActiveFilter] = useState("ALL");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [currentPage, setCurrentPage] = useState(1);
 
   // Reset page when filter or search changes

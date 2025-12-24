@@ -8,13 +8,12 @@ import Intro from "./components/Intro";
 import Contact from "../(home)/components/Contact";
 import AirlinePartners from "../(home)/components/AirlinePartners";
 import MissionVision from "./components/MissionVision";
+import { DreamDestination } from "./components/DreamDestination";
 
 const Page: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-
 
   return (
     <div className="bg-white pt-20">
@@ -23,11 +22,12 @@ const Page: React.FC = () => {
       {/* Intro */}
       <Intro />
       {/* History & Experience */}
-      <History />   
+      <History />
       {/* Core Values */}
       <CoreValues />
       <MissionVision />
       {/* Partners List */}
+      <DreamDestination />
       <AirlinePartners />
       <Contact />
     </div>
