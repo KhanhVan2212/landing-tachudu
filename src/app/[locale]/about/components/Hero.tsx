@@ -3,16 +3,17 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className="relative overflow-hidden bg-orange-600 px-4 py-24 sm:px-6 lg:px-8">
-      <div className="absolute inset-0 opacity-20">
+    <div className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8">
+      <div className="absolute inset-0">
         <Image
-          src="https://picsum.photos/1920/600?random=about"
+          src="/images/aboutus.jpg"
           alt="Background"
-          className="h-full w-full object-cover"
-          width={1920}
-          height={600}
+          className="object-cover object-center"
+          fill
+          quality={100}
         />
       </div>
+      <div className="absolute inset-0 bg-black/50" />
       <div className="relative mx-auto max-w-7xl text-center">
         <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
           Về Chúng Tôi

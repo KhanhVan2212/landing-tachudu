@@ -144,7 +144,7 @@ const ServicesPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-20">
+    <div className="min-h-screen bg-slate-50">
       {/* Hero Banner */}
       <div className="relative flex h-[400px] items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
@@ -153,12 +153,12 @@ const ServicesPage: React.FC = () => {
             height={800}
             src="/images/sevices/banner.avif"
             alt="Services Banner"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover object-bottom"
           />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
         <div className="relative z-10 px-4 text-center text-white">
-          <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
+          <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl pt-10">
             Dịch Vụ Của TACHUDU
           </h1>
           <p className="mx-auto max-w-2xl text-xl font-light text-gray-200">

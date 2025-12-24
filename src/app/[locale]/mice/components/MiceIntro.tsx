@@ -12,7 +12,7 @@ const MiceIntro = () => {
               <div className="space-y-4 pt-12">
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-lg">
                   <Image
-                    src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop"
+                    src="/images/mice/mice1.jpg"
                     alt="Conference"
                     fill
                     className="object-cover transition-transform duration-500 hover:scale-110"
@@ -20,7 +20,7 @@ const MiceIntro = () => {
                 </div>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-lg">
                   <Image
-                    src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop"
+                    src="/images/mice/mice2.avif"
                     alt="Event details"
                     fill
                     className="object-cover transition-transform duration-500 hover:scale-110"
@@ -30,7 +30,7 @@ const MiceIntro = () => {
               <div className="space-y-4">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-lg">
                   <Image
-                    src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop"
+                    src="/images/mice/mice3.avif"
                     alt="Team building"
                     fill
                     className="object-cover transition-transform duration-500 hover:scale-110"
@@ -38,7 +38,7 @@ const MiceIntro = () => {
                 </div>
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-lg">
                   <Image
-                    src="https://images.unsplash.com/photo-1551818255-e6e10975bc17?q=80&w=2070&auto=format&fit=crop"
+                    src="/images/mice/mice4.avif"
                     alt="Presentation"
                     fill
                     className="object-cover transition-transform duration-500 hover:scale-110"

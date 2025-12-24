@@ -3,15 +3,15 @@ import React from "react";
 
 const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden pt-20 min-h-[400px]">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage:
-            "url(https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1920&q=80)",
+            "url('/images/hoinghi.png')",
         }}
       />
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-black/50"></div>
 
       <div className="relative max-w-7xl mx-auto px-4 py-28 text-center text-white">
         <h1 className="text-4xl md:text-5xl font-extrabold">
