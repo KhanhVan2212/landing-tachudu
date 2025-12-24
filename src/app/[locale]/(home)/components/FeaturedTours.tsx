@@ -22,7 +22,7 @@ const FeaturedTours = () => {
               Điểm đến hấp dẫn
             </span>
             <h2 className="mt-2 text-3xl font-bold text-gray-900 sm:text-4xl">
-              Tour Nổi Bật
+              Tour Mới - Deal Hời
             </h2>
             <p className="mt-3 max-w-2xl text-lg text-gray-500">
               Khám phá những điểm đến được yêu thích nhất với chi phí tối ưu.

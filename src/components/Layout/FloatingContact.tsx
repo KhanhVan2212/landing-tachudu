@@ -6,7 +6,7 @@ import {
   FaPhone,
   FaXmark,
   FaEnvelope,
-  FaLocationDot,
+  FaFacebook,
   FaHeadset,
 } from "react-icons/fa6";
 
@@ -17,7 +17,7 @@ const FloatingContact = () => {
     <div className="pointer-events-none fixed bottom-6 right-6 z-50 flex flex-col items-end">
       {/* Popup Content */}
       <div
-        className={`mb-4 w-80 origin-bottom-right rounded-2xl border border-slate-100 bg-orange-500 p-6 shadow-2xl transition-all duration-300 ${
+        className={`mb-4 w-80 origin-bottom-right rounded-2xl bg-orange-500 p-6 shadow-2xl transition-all duration-300 ${
           isOpen
             ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
             : "pointer-events-none translate-y-10 scale-0 opacity-0"
@@ -70,17 +70,22 @@ const FloatingContact = () => {
             </div>
           </div>
 
-          {/* Address */}
+          {/* Facebook */}
           <div className="flex items-start gap-4">
             <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-white text-orange-600">
-              <FaLocationDot />
+              <FaFacebook />
             </div>
             <div>
-              <p className="text-sm font-medium text-white/90">Văn phòng</p>
-              <p className="text-sm font-semibold leading-snug text-white">
-                Số 4 ngõ 230/31 Phố Định Công Thượng, Phường Định Công, Quận
-                Hoàng Mai, HN
-              </p>
+              <p className="text-sm font-medium text-white/90">Facebook</p>
+              <Link
+                href="https://www.facebook.com/Tachudu.vn"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block break-all text-sm font-bold leading-tight text-white transition hover:text-white/90"
+              >
+                facebook.com/Tachudu.vn
+              </Link>
+              <span className="text-xs text-white/80">Theo dõi fanpage</span>
             </div>
           </div>
         </div>

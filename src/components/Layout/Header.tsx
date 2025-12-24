@@ -98,7 +98,7 @@ const Header: React.FC = () => {
               })}
             </div>
           </div>
-          <div className="hidden lg:block">
+          <div className="hidden xl:block">
             <Link
               href="/contact"
               className="rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:bg-orange-600 hover:shadow-orange-500/30"

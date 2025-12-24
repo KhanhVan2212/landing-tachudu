@@ -6,6 +6,7 @@ import {
   Phone,
   Mail,
   MapPin,
+  MessageCircle,
 } from "lucide-react";
 import { COMPANY_NAME, SLOGAN, CONTACT_INFO } from "../../../constants";
 import { Link } from "@/i18n/navigation";
@@ -13,6 +14,9 @@ import Image from "next/image";
 
 const socialLinks = [
   { icon: Facebook, href: "https://www.facebook.com/Tachudu.vn" },
+  { icon: MessageCircle, href: "https://zalo.me/02439351122" },
+  { icon: Phone, href: "tel:02439351122" },
+  { icon: Mail, href: "mailto:tachuduvn@gmail.com" },
 ];
 
 const serviceLinks = [
