@@ -10,7 +10,7 @@ const ForeignHero = () => {
           Du Lịch Nước Ngoài
         </h1>
         <p className="mx-auto mt-4 max-w-2xl px-4 font-medium text-orange-50 drop-shadow sm:text-lg">
-          Khám phá 5 châu, trải nghiệm văn hóa và kỳ quan thế giới
+          Khám phá 5 châu, trải nghiệm văn hoá
         </p>
       </div>
     </div>

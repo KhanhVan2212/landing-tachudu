@@ -157,12 +157,13 @@ const ServicesPage: React.FC = () => {
           />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
-        <div className="relative z-10 px-4 text-center text-white">
-          <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl pt-10">
-            Dịch Vụ Của TACHUDU
+        <div className="relative z-10 px-4 text-center text-white pt-10">
+          <h1 className="text-3xl font-bold capitalize tracking-wide drop-shadow-md md:text-5xl">
+            Dịch Vụ Du Lịch
           </h1>
-          <p className="mx-auto max-w-2xl text-xl font-light text-gray-200">
-            Trải nghiệm trọn vẹn với hệ sinh thái dịch vụ du lịch đẳng cấp.
+          <p className="mx-auto mt-4 max-w-3xl px-4 font-medium text-orange-50 drop-shadow sm:text-lg">
+            Tachudu cung cấp các dịch vụ đi kèm cho
+            cả khách lẻ và khách đoàn
           </p>
         </div>
       </div>

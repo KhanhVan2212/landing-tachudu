@@ -3,7 +3,7 @@ import { Send } from "lucide-react";
 
 const ContactForm = () => {
   return (
-    <div className="rounded-3xl bg-white p-8 shadow-xl lg:p-12">
+    <div className="rounded-3xl bg-white p-6 shadow-xl lg:p-12">
       <h2 className="mb-2 text-3xl font-bold text-gray-900">Gửi tin nhắn</h2>
       <p className="mb-8 text-gray-600">
         Bạn có thắc mắc hoặc cần tư vấn? Điền thông tin bên dưới, chúng tôi sẽ

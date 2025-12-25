@@ -42,6 +42,7 @@ const Header: React.FC = () => {
     { name: "Sự kiện", href: "/event", type: "link" },
     { name: "Dịch vụ du lịch", href: "/services", type: "link" },
     { name: "Về chúng tôi", href: "/about", type: "link" },
+    { name: "Liên hệ", href: "/contact", type: "link" },
   ];
 
   return (

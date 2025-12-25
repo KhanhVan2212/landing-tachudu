@@ -20,7 +20,7 @@ const EventHighlightSection = () => {
   if (!highlightPosts.length) return null;
 
   return (
-    <section className="bg-gray-50">
+    <section className="bg-gray-50 pt-20">
       <div className="mx-auto max-w-7xl px-4">
         <h3 className="mb-10 text-center text-2xl font-bold text-gray-900">
           Sự kiện & Hoạt động nổi bật

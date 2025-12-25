@@ -62,23 +62,23 @@ export const SERVICES: ServiceItem[] = [
 export const ADVANTAGES: AdvantageItem[] = [
   {
     id: "a1",
-    title: "Thấu hiểu văn hóa",
+    title: "Hỗ trợ 24/7",
     description:
-      "Văn hóa là linh hồn của mọi chuyến đi. Chúng tôi kết nối và tôn vinh giá trị văn hóa của từng địa phương, tạo nên câu chuyện cảm xúc sống động nơi quá khứ và hiện đại giao hòa.",
+      "Đội ngũ tư vấn viên luôn sẵn sàng hỗ trợ bạn mọi lúc, mọi nơi trong suốt chuyến đi.",
     icon: HeartHandshake,
   },
   {
     id: "a2",
-    title: "Sáng tạo phù hợp",
+    title: "Dịch vụ chuyên nghiệp",
     description:
-      "Trọng tâm vào những sáng tạo mang tính đột phá và độc đáo, tạo ra sự khác biệt cho từng dự án, với từng doanh nghiệp.",
+      "Hướng dẫn viên giàu kinh nghiệm, thông thạo nhiều ngôn ngữ và am hiểu văn hóa địa phương.",
     icon: Lightbulb,
   },
   {
     id: "a3",
-    title: "Giải pháp tùy chỉnh",
+    title: "Trải nghiệm độc đáo",
     description:
-      'Xây dựng giải pháp dựa trên sự tư vấn chuyên sâu và "may đo" chính xác theo yêu cầu của doanh nghiệp, nhằm phản ánh đúng giá trị thương hiệu.',
+      'Tour thiết kế riêng biệt, mang đến những trải nghiệm khác biệt và đáng nhớ.',
     icon: Briefcase,
   },
   {

@@ -22,9 +22,9 @@ const socialLinks = [
 const serviceLinks = [
   { label: "Du lịch trong nước", href: "/domestic-tours" },
   { label: "Du lịch nước ngoài", href: "/foreign-tours" },
-  { label: "Tổ chức sự kiện", href: "/event" },
   { label: "MICE", href: "/mice" },
-  { label: "Dịch vụ", href: "/services" },
+  { label: "Sự kiện", href: "/event" },
+  { label: "Dịch vụ du lịch", href: "/services" },
 ];
 
 const companyLinks = [

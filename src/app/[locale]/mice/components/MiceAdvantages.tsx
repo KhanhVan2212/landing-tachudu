@@ -100,14 +100,10 @@ const MICEAdvantages = () => {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16 text-center">
-          <h2 className="mb-3 font-bold uppercase tracking-wider text-orange-500">
+          <h2 className="mb-6 text-4xl font-bold text-orange-500 uppercase">
             Tại Sao Chọn Chúng Tôi
           </h2>
-          <h3 className="mb-6 text-4xl font-bold text-white">
-            Đồng Hành Cùng <span className="text-orange-500">Thành Công</span>{" "}
-            Của Bạn
-          </h3>
-          <div className="mx-auto h-1 w-24 rounded-full bg-gradient-to-r from-orange-500 to-red-600" />
+          <div className="mx-auto h-1 w-24 rounded-full bg-gradient-to-r from-orange-600 to-red-600" />
         </div>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">

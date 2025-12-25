@@ -26,19 +26,19 @@ const ContactInfo = () => {
           title: "Trụ sở chính",
           info: "Quận Hoàng Mai, HN",
           subInfo: "Số 4 ngõ 230/31 Phố Định Công Thượng",
-          color: "bg-red-50 text-red-600",
+          color: "bg-orange-50 text-orange-600",
         },
         {
           icon: Clock,
           title: "Giờ làm việc",
           info: "Thứ 2 - Thứ 7",
           subInfo: "08:00 - 17:30",
-          color: "bg-orange-100 text-orange-700",
+          color: "bg-orange-50 text-orange-600",
         },
       ].map((item, idx) => (
         <div
           key={idx}
-          className="group rounded-2xl bg-white p-8 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+          className="group rounded-2xl bg-white p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
         >
           <div
             className={`mb-6 flex h-14 w-14 items-center justify-center rounded-xl ${item.color} transition-transform duration-300 group-hover:scale-110`}
