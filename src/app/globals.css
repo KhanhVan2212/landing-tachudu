@@ -2,12 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Reset */
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
 
+/* Biến theme */
 @layer base {
   :root {
     --radius: 0.5rem;

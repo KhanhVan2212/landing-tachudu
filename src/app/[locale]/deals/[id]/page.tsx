@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import NextImage from "next/image";
-import { dealsData, Deal } from "@/data/dealsData";
 import {
   MapPin,
   Clock,
@@ -10,7 +9,6 @@ import {
   Star,
   CheckCircle,
   ArrowLeft,
-  Share2,
   Phone,
   Mail,
   ShieldCheck,
@@ -18,25 +16,87 @@ import {
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
+interface TourItinerary {
+  day: string;
+  title: string;
+  desc: string;
+}
+
+interface Tour {
+  id: string;
+  title: string;
+  slug: string;
+  category: string;
+  type: string;
+  location: string;
+  image: {
+    url: string;
+    alt?: string;
+  } | string;
+  imageUrl?: string;
+  gallery?: Array<{ image: { url: string } }>;
+  description: string;
+  price: string;
+  originalPrice: string;
+  discount?: string;
+  duration?: string;
+  timeLeft?: string;
+  rating: number;
+  reviews: number;
+  highlights?: Array<{ highlight: string }>;
+  itinerary?: Array<TourItinerary>;
+  included?: Array<{ service: string }>;
+  excluded?: Array<{ service: string }>;
+  status: string;
+}
+
 const DealDetail = () => {
   const params = useParams();
-  const [deal, setDeal] = useState<Deal | null>(null);
+  const [tour, setTour] = useState<Tour | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (params?.id) {
-      const foundDeal = dealsData.find((d) => d.id === Number(params.id));
-      if (foundDeal) {
-        setDeal(foundDeal);
-      }
+      fetchTourDetail(params.id as string);
     }
     window.scrollTo(0, 0);
   }, [params]);
 
-  if (!deal) {
+  const fetchTourDetail = async (id: string) => {
+    try {
+      // Try to fetch by slug first, then by ID
+      let response = await fetch(`/api/tours?slug=${id}&limit=1`);
+      let data = await response.json();
+
+      if (!data.success || data.docs.length === 0) {
+        // Try by ID
+        response = await fetch(`/api/tours/${id}`);
+        data = await response.json();
+      }
+
+      if (data.success) {
+        setTour(data.doc || data.docs[0]);
+      }
+    } catch (error) {
+      console.error("Error fetching tour:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 pb-20 pt-32">
+        <div className="text-xl text-gray-600">Đang tải...</div>
+      </div>
+    );
+  }
+
+  if (!tour) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 pb-20 pt-32">
         <h2 className="mb-4 text-2xl font-bold text-gray-800">
-          Không tìm thấy ưu đãi
+          Không tìm thấy tour
         </h2>
         <Link
           href="/deals"
@@ -47,6 +107,10 @@ const DealDetail = () => {
       </div>
     );
   }
+
+  const imageUrl =
+    tour.imageUrl ||
+    (typeof tour.image === "string" ? tour.image : tour.image?.url || "/placeholder.jpg");
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20 pt-20">
@@ -63,7 +127,7 @@ const DealDetail = () => {
             </Link>
             <span className="mx-2">/</span>
             <span className="max-w-xs truncate font-medium text-gray-900">
-              {deal.title}
+              {tour.title}
             </span>
           </div>
         </div>
@@ -71,37 +135,34 @@ const DealDetail = () => {
 
       {/* Hero Section */}
       <div className="relative h-[400px] md:h-[500px]">
-        <NextImage
-          src={deal.image}
-          alt={deal.title}
-          fill
-          className="object-cover"
-        />
+        <NextImage src={imageUrl} alt={tour.title} fill className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
         <div className="absolute left-0 top-1/2 w-full -translate-y-1/2 p-6 text-white md:p-12">
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <div>
                 <span className="mb-3 inline-block rounded bg-orange-600 px-3 py-1 text-sm font-bold uppercase text-white">
-                  {deal.category}
+                  {tour.category}
                 </span>
                 <h1 className="mb-4 text-3xl font-bold leading-tight md:text-5xl">
-                  {deal.title}
+                  {tour.title}
                 </h1>
                 <div className="flex flex-wrap items-center gap-6 text-sm text-gray-200 md:text-base">
-                  {deal.location && (
+                  {tour.location && (
                     <div className="flex items-center">
                       <MapPin className="mr-2 h-5 w-5 text-orange-400" />
-                      {deal.location}
+                      {tour.location}
+                    </div>
+                  )}
+                  {tour.timeLeft && (
+                    <div className="flex items-center">
+                      <Clock className="mr-2 h-5 w-5 text-orange-400" />
+                      {tour.timeLeft}
                     </div>
                   )}
                   <div className="flex items-center">
-                    <Clock className="mr-2 h-5 w-5 text-orange-400" />
-                    {deal.timeLeft}
-                  </div>
-                  <div className="flex items-center">
                     <Star className="mr-2 h-5 w-5 fill-current text-yellow-400" />
-                    {deal.rating?.toFixed(1)} ({deal.reviews} đánh giá)
+                    {tour.rating?.toFixed(1) || "4.5"} ({tour.reviews || 0} đánh giá)
                   </div>
                 </div>
               </div>
@@ -115,50 +176,67 @@ const DealDetail = () => {
           {/* Main Content */}
           <div className="space-y-8 lg:col-span-2">
             {/* Highlights */}
-            <div className="rounded-2xl bg-white p-8 shadow-sm">
-              <h3 className="mb-6 text-2xl font-bold text-gray-900">
-                Điểm nổi bật
-              </h3>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {deal.highlights?.map((item, idx) => (
-                  <div key={idx} className="flex items-start">
-                    <CheckCircle className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-green-500" />
-                    <span className="text-gray-600">{item}</span>
-                  </div>
-                ))}
+            {tour.highlights && tour.highlights.length > 0 && (
+              <div className="rounded-2xl bg-white p-8 shadow-sm">
+                <h3 className="mb-6 text-2xl font-bold text-gray-900">
+                  Điểm nổi bật
+                </h3>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  {tour.highlights.map((item, idx) => (
+                    <div key={idx} className="flex items-start">
+                      <CheckCircle className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-green-500" />
+                      <span className="text-gray-600">{item.highlight}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Description */}
             <div className="rounded-2xl bg-white p-8 shadow-sm">
               <h3 className="mb-4 text-2xl font-bold text-gray-900">
                 Giới thiệu
               </h3>
-              <p className="mb-6 leading-relaxed text-gray-600">
-                {deal.description}
+              <p className="mb-6 whitespace-pre-line leading-relaxed text-gray-600">
+                {tour.description}
               </p>
               <div className="flex items-start gap-4 rounded-xl border border-orange-100 bg-orange-50 p-6">
                 <ShieldCheck className="h-8 w-8 flex-shrink-0 text-orange-600" />
                 <div>
-                  <h4 className="font-bold text-gray-900">
-                    Cam kết chất lượng
-                  </h4>
+                  <h4 className="font-bold text-gray-900">Cam kết chất lượng</h4>
                   <p className="mt-1 text-sm text-gray-600">
-                    TACHUDU cam kết hoàn tiền 100% nếu dịch vụ không đúng như mô
-                    tả. Hỗ trợ khách hàng 24/7 trong suốt chuyến đi.
+                    TACHUDU cam kết hoàn tiền 100% nếu dịch vụ không đúng như mô tả.
+                    Hỗ trợ khách hàng 24/7 trong suốt chuyến đi.
                   </p>
                 </div>
               </div>
             </div>
 
+            {/* Services Included */}
+            {tour.included && tour.included.length > 0 && (
+              <div className="rounded-2xl bg-white p-8 shadow-sm">
+                <h3 className="mb-6 text-2xl font-bold text-gray-900">
+                  Dịch vụ bao gồm
+                </h3>
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                  {tour.included.map((item, idx) => (
+                    <div key={idx} className="flex items-start">
+                      <CheckCircle className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-green-500" />
+                      <span className="text-gray-600">{item.service}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Itinerary */}
-            {deal.itinerary && deal.itinerary.length > 0 && (
+            {tour.itinerary && tour.itinerary.length > 0 && (
               <div className="rounded-2xl bg-white p-8 shadow-sm">
                 <h3 className="mb-6 text-2xl font-bold text-gray-900">
                   Lịch trình dự kiến
                 </h3>
                 <div className="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:w-0.5 before:-translate-x-px before:bg-gray-200">
-                  {deal.itinerary.map((day, idx) => (
+                  {tour.itinerary.map((day, idx) => (
                     <div key={idx} className="relative pl-12">
                       <div className="absolute left-0 top-1 z-10 flex h-10 w-10 items-center justify-center rounded-full border-4 border-white bg-orange-100 shadow-sm">
                         <Calendar className="h-5 w-5 text-orange-600" />
@@ -184,29 +262,37 @@ const DealDetail = () => {
             <div className="sticky top-24 rounded-2xl bg-white p-6 shadow-lg">
               <div className="mb-6">
                 <p className="mb-1 text-sm text-gray-500 line-through">
-                  Giá gốc: {deal.originalPrice}
+                  Giá gốc: {tour.originalPrice}
                 </p>
                 <div className="flex items-end gap-2">
                   <span className="text-3xl font-bold text-orange-600">
-                    {deal.price}
+                    {tour.price}
                   </span>
-                  <span className="mb-1 rounded bg-red-50 px-2 py-0.5 text-sm font-bold text-red-500">
-                    {deal.discount}
-                  </span>
+                  {tour.discount && (
+                    <span className="mb-1 rounded bg-red-50 px-2 py-0.5 text-sm font-bold text-red-500">
+                      {tour.discount}
+                    </span>
+                  )}
                 </div>
               </div>
 
               <div className="mb-6 space-y-4">
                 <div className="rounded-xl border border-gray-100 bg-gray-50 p-4">
-                  <p className="mb-1 text-sm text-gray-500">Loại ưu đãi</p>
-                  <p className="font-bold text-gray-900">{deal.type}</p>
+                  <p className="mb-1 text-sm text-gray-500">Loại tour</p>
+                  <p className="font-bold text-gray-900">{tour.type}</p>
                 </div>
-                <div className="rounded-xl border border-gray-100 bg-gray-50 p-4">
-                  <p className="mb-1 text-sm text-gray-500">
-                    Thời gian còn lại
-                  </p>
-                  <p className="font-bold text-red-500">{deal.timeLeft}</p>
-                </div>
+                {tour.duration && (
+                  <div className="rounded-xl border border-gray-100 bg-gray-50 p-4">
+                    <p className="mb-1 text-sm text-gray-500">Thời gian</p>
+                    <p className="font-bold text-gray-900">{tour.duration}</p>
+                  </div>
+                )}
+                {tour.timeLeft && (
+                  <div className="rounded-xl border border-gray-100 bg-gray-50 p-4">
+                    <p className="mb-1 text-sm text-gray-500">Thời gian còn lại</p>
+                    <p className="font-bold text-red-500">{tour.timeLeft}</p>
+                  </div>
+                )}
               </div>
 
               <Link

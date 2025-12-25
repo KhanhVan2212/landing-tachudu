@@ -9,7 +9,8 @@ const serverFetchApi = {
     headers?: any
   ) => {
     try {
-      const encryptedToken = cookies().get("act")?.value;
+      const cookieStore = await cookies(); // Thêm await
+      const encryptedToken = cookieStore.get("act")?.value;
       const accessToken = encryptedToken && decryptToken(encryptedToken);
       const data = rawData ? decryptObject(rawData) : {};
       const newUrl = `${process.env.API_BASE_URL}${url}`;
@@ -31,8 +32,8 @@ const serverFetchApi = {
       const result = await response.json();
 
       if (result?.code == 401) {
-        cookies().delete("jwt");
-        cookies().delete("act");
+        cookieStore.delete("jwt"); // Sử dụng cookieStore thay vì cookies()
+        cookieStore.delete("act");
         return;
       }
 

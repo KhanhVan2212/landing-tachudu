@@ -1,44 +1,43 @@
-// src/app/[locale]/event/[slug]/page.tsx
 import { notFound } from "next/navigation";
 import { mockEventPosts } from "@/data/mockEventPosts";
 import Image from "next/image";
 
-interface PageProps {
-  params: {
+type PageProps = {
+  params: Promise<{
     slug: string;
     locale: string;
-  };
-}
+  }>;
+};
 
-export default function EventDetailPage({ params }: PageProps) {
-  const post = mockEventPosts.find(
-    (item) => item.slug === params.slug
-  );
+export default async function EventDetailPage({ params }: PageProps) {
+  const { slug } = await params;
+
+  const post = mockEventPosts.find((item) => item.slug === slug);
 
   if (!post) {
     notFound();
-    return null; // ⬅️ QUAN TRỌNG: tránh Next render rỗng
   }
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-4xl mx-auto px-4 overflow-hidden">
+    <section className="bg-white py-20">
+      <div className="mx-auto max-w-4xl overflow-hidden px-4">
         {/* COVER */}
         <Image
           src={post.cover}
           alt={post.title}
-          width={600}
+          width={1200}
           height={600}
-          className="w-full h-[420px] object-cover rounded-2xl mb-8"
+          className="mb-8 h-[420px] w-full rounded-2xl object-cover"
+          priority
         />
 
         {/* META */}
-        <p className="text-sm text-gray-500 mb-2">
+        <p className="mb-2 text-sm text-gray-500">
           {post.date} · {post.category}
         </p>
 
         {/* TITLE */}
-        <h1 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900">
+        <h1 className="mb-8 text-3xl font-bold text-gray-900 md:text-4xl">
           {post.title}
         </h1>
 
@@ -55,9 +54,9 @@ export default function EventDetailPage({ params }: PageProps) {
                     <Image
                       src={block.src}
                       alt={block.caption ?? ""}
-                      width={600}
+                      width={1200}
                       height={600}
-                      className="rounded-xl my-8 mx-auto w-full"
+                      className="mx-auto my-8 w-full rounded-xl"
                     />
                     {block.caption && (
                       <figcaption className="text-center text-sm text-gray-500">
