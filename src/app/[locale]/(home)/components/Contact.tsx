@@ -1,29 +1,55 @@
 import React, { useState } from "react";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { CONTACT_INFO } from "../../../../../constants";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  contactFormSchema,
+  ContactFormData,
+} from "@/lib/schemas/contact-schema";
+import { toast } from "sonner";
 
 const Contact: React.FC = () => {
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      message: "",
+    },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Simulate form submission
-    alert("Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất.");
-    setFormState({ name: "", email: "", phone: "", message: "" });
-  };
+  const onSubmit = async (data: ContactFormData) => {
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setFormState({
-      ...formState,
-      [e.target.name]: e.target.value,
-    });
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      toast.success("Gửi thông tin thành công! Chúng tôi sẽ liên hệ sớm nhất.");
+      reset();
+    } catch (error) {
+      console.error(error);
+      toast.error("Có lỗi xảy ra, vui lòng thử lại sau.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -96,25 +122,31 @@ const Contact: React.FC = () => {
           </div>
 
           <div className="rounded-2xl bg-white p-8 text-gray-800 shadow-2xl">
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div>
                   <label
-                    htmlFor="name"
+                    htmlFor="fullName"
                     className="mb-1 block text-sm font-medium text-gray-700"
                   >
                     Họ tên
                   </label>
                   <input
                     type="text"
-                    name="name"
-                    id="name"
-                    required
-                    value={formState.name}
-                    onChange={handleChange}
-                    className="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 outline-none transition-all focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                    id="fullName"
+                    {...register("fullName")}
+                    className={`w-full rounded-lg border bg-gray-50 px-4 py-3 outline-none transition-all focus:ring-2 focus:ring-orange-200 ${
+                      errors.fullName
+                        ? "border-red-500 focus:border-red-500"
+                        : "border-gray-200 focus:border-orange-500"
+                    }`}
                     placeholder="Nguyễn Văn A"
                   />
+                  {errors.fullName && (
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.fullName.message}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label
@@ -125,14 +157,20 @@ const Contact: React.FC = () => {
                   </label>
                   <input
                     type="tel"
-                    name="phone"
                     id="phone"
-                    required
-                    value={formState.phone}
-                    onChange={handleChange}
-                    className="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 outline-none transition-all focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                    {...register("phone")}
+                    className={`w-full rounded-lg border bg-gray-50 px-4 py-3 outline-none transition-all focus:ring-2 focus:ring-orange-200 ${
+                      errors.phone
+                        ? "border-red-500 focus:border-red-500"
+                        : "border-gray-200 focus:border-orange-500"
+                    }`}
                     placeholder="0909 xxx xxx"
                   />
+                  {errors.phone && (
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.phone.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -145,14 +183,20 @@ const Contact: React.FC = () => {
                 </label>
                 <input
                   type="email"
-                  name="email"
                   id="email"
-                  required
-                  value={formState.email}
-                  onChange={handleChange}
-                  className="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 outline-none transition-all focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                  {...register("email")}
+                  className={`w-full rounded-lg border bg-gray-50 px-4 py-3 outline-none transition-all focus:ring-2 focus:ring-orange-200 ${
+                    errors.email
+                      ? "border-red-500 focus:border-red-500"
+                      : "border-gray-200 focus:border-orange-500"
+                  }`}
                   placeholder="email@example.com"
                 />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -163,22 +207,30 @@ const Contact: React.FC = () => {
                   Nội dung cần tư vấn
                 </label>
                 <textarea
-                  name="message"
                   id="message"
                   rows={4}
-                  required
-                  value={formState.message}
-                  onChange={handleChange}
-                  className="w-full resize-none rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 outline-none transition-all focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                  {...register("message")}
+                  className={`w-full resize-none rounded-lg border bg-gray-50 px-4 py-3 outline-none transition-all focus:ring-2 focus:ring-orange-200 ${
+                    errors.message
+                      ? "border-red-500 focus:border-red-500"
+                      : "border-gray-200 focus:border-orange-500"
+                  }`}
                   placeholder="Tôi muốn đặt tour đi..."
                 ></textarea>
+                {errors.message && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.message.message}
+                  </p>
+                )}
               </div>
 
               <button
                 type="submit"
-                className="flex w-full items-center justify-center rounded-lg bg-orange-600 py-4 font-bold text-white shadow-lg transition-all hover:bg-orange-700 hover:shadow-orange-600/30"
+                disabled={isSubmitting}
+                className="flex w-full items-center justify-center rounded-lg bg-orange-600 py-4 font-bold text-white shadow-lg transition-all hover:bg-orange-700 hover:shadow-orange-600/30 disabled:opacity-70"
               >
-                Gửi thông tin <Send className="ml-2 h-5 w-5" />
+                {isSubmitting ? "Đang gửi..." : "Gửi thông tin"}
+                {!isSubmitting && <Send className="ml-2 h-5 w-5" />}
               </button>
             </form>
           </div>

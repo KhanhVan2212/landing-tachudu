@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
 import Header from "@/components/Layout/Header";
 import Footer from "@/components/Layout/Footer";
+import { Toaster } from "sonner";
 import "./globals.css";
 import FloatingContact from "@/components/Layout/FloatingContact";
 
@@ -131,6 +132,7 @@ export default async function RootLayout({
               <FloatingContact />
               <Footer />
             </div>
+            <Toaster position="top-center" richColors />
           </AppProvider>
         </NextIntlClientProvider>
       </body>
