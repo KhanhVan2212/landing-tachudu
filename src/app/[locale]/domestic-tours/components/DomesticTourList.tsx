@@ -65,9 +65,9 @@ const DomesticTourList = ({
               </div>
               <div className="flex flex-grow flex-col p-6">
                 <div className="mb-3 flex items-start justify-between">
-                  <span className="rounded border border-orange-100 bg-orange-50 px-2 py-1 text-xs font-bold uppercase text-orange-600">
+                  {/* <span className="rounded border border-orange-100 bg-orange-50 px-2 py-1 text-xs font-bold uppercase text-orange-600">
                     {deal.type}
-                  </span>
+                  </span> */}
                   <span className="flex items-center text-xs font-medium text-gray-500">
                     <Clock size={14} className="mr-1 text-orange-500" />{" "}
                     {deal.timeLeft}
