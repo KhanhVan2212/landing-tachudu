@@ -1,16 +1,68 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { MapPin, Star, Clock, ArrowRight } from "lucide-react";
-import { dealsData } from "@/data/dealsData";
+
+interface Tour {
+  id: string;
+  title: string;
+  slug: string;
+  category: string;
+  location: string;
+  image: {
+    url: string;
+    alt?: string;
+  } | string;
+  imageUrl?: string;
+  price: string;
+  originalPrice: string;
+  discount?: string;
+  duration?: string;
+  rating: number;
+  reviews: number;
+  status: string;
+}
 
 const FeaturedTours = () => {
-  // Filter for tours only and limit distinct items
-  const featuredTours = dealsData
-    .filter((deal) => deal.category === "Tour du lịch")
-    .slice(0, 4); // Show 8 tours
+  const [tours, setTours] = useState<Tour[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchFeaturedTours();
+  }, []);
+
+  const fetchFeaturedTours = async () => {
+    try {
+      const response = await fetch(
+        "/api/tours?featured=true&category=Tour du lịch&limit=4&status=active"
+      );
+      const data = await response.json();
+
+      if (data.success) {
+        setTours(data.docs);
+      }
+    } catch (error) {
+      console.error("Error fetching featured tours:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <section className="bg-white pb-24 pt-[100px]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center text-gray-500">Đang tải...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (tours.length === 0) {
+    return null;
+  }
 
   return (
     <section className="bg-white pb-24 pt-[100px]">
@@ -39,16 +91,21 @@ const FeaturedTours = () => {
 
         {/* Grid */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredTours.map((tour) => (
+          {tours.map((tour) => (
             <div
               key={tour.id}
               className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
               {/* Image */}
               <div className="relative aspect-[4/3] w-full overflow-hidden">
-                <Link href={`/deals/${tour.id}`}>
+                <Link href={`/deals/${tour.slug || tour.id}`}>
                   <Image
-                    src={tour.image}
+                    src={
+                      tour.imageUrl ||
+                      (typeof tour.image === "string"
+                        ? tour.image
+                        : tour.image?.url || "/placeholder.jpg")
+                    }
                     alt={tour.title}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -78,20 +135,21 @@ const FeaturedTours = () => {
                       className="fill-yellow-400 text-yellow-400"
                     />
                     <span>{tour.rating?.toFixed(1) || "4.5"}</span>
-                    <span className="text-gray-400">({tour.reviews})</span>
+                    <span className="text-gray-400">({tour.reviews || 0})</span>
                   </div>
                 </div>
 
                 {/* Title */}
                 <h3 className="mb-2 line-clamp-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-orange-600">
-                  <Link href={`/deals/${tour.id}`}>{tour.title}</Link>
+                  <Link href={`/deals/${tour.slug || tour.id}`}>
+                    {tour.title}
+                  </Link>
                 </h3>
 
-                {/* Duration Placeholder (extracted logic could go here if data had it) */}
+                {/* Duration */}
                 <div className="mb-4 flex items-center gap-2 text-xs text-gray-500">
                   <Clock size={14} />
-                  <span>3 ngày 2 đêm</span>{" "}
-                  {/* Placeholder based on title usually */}
+                  <span>{tour.duration || "3 ngày 2 đêm"}</span>
                 </div>
 
                 {/* Price Section - Push to bottom */}
@@ -105,7 +163,7 @@ const FeaturedTours = () => {
                     </span>
                   </div>
                   <Link
-                    href={`/deals/${tour.id}`}
+                    href={`/deals/${tour.slug || tour.id}`}
                     className="rounded-lg bg-orange-50 px-3 py-2 text-sm font-semibold text-orange-600 transition-colors hover:bg-orange-600 hover:text-white"
                   >
                     Xem chi tiết

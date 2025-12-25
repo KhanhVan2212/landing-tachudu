@@ -1,6 +1,7 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
-import { dealsData } from "@/data/dealsData";
+import { useSearchParams } from "next/navigation";
 import DomesticHero from "./components/DomesticHero";
 import DomesticFilter from "./components/DomesticFilter";
 import DomesticResultsInfo from "./components/DomesticResultsInfo";
@@ -10,66 +11,110 @@ const ITEMS_PER_PAGE = 6;
 
 const REGIONS = [
   { id: "ALL", label: "Tất cả" },
-  { id: "North", label: "Miền Bắc" },
-  { id: "Central", label: "Miền Trung" },
-  { id: "South", label: "Miền Nam" },
-  { id: "Highlands", label: "Tây Nguyên" },
+  { id: "NORTH", label: "Miền Bắc" },
+  { id: "CENTRAL", label: "Miền Trung" },
+  { id: "HIGHLANDS", label: "Tây Nguyên" },
+  { id: "SOUTH", label: "Miền Nam" },
 ];
 
-import { useSearchParams } from "next/navigation";
+interface Tour {
+  id: string;
+  title: string;
+  slug: string;
+  category: string;
+  region?: string;
+  continent?: string;
+  type: string;
+  location: string;
+  imageUrl?: string;
+  image: any;
+  price: string;
+  originalPrice: string;
+  discount?: string;
+  duration?: string;
+  timeLeft?: string;
+  rating: number;
+  reviews: number;
+  status: string;
+}
 
 const DomesticToursPage = () => {
   const searchParams = useSearchParams();
   const initialSearch = searchParams.get("search") || "";
 
+  const [tours, setTours] = useState<Tour[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Reset page when filter or search changes
+  useEffect(() => {
+    fetchTours();
+  }, [activeFilter]);
+
   useEffect(() => {
     setCurrentPage(1);
   }, [activeFilter, searchQuery]);
 
-  // Filter logic
-  const filteredDeals = dealsData.filter((deal) => {
-    // Must be a tour
-    if (deal.category !== "Tour du lịch") return false;
+  const fetchTours = async () => {
+    setLoading(true);
+    try {
+      let url = "/api/tours?limit=100&status=active&category=Tour du lịch";
 
-    // Must be domestic (exclude International)
-    // Also excluding explicit foreign regions just in case
-    const foreignRegions = [
-      "Southeast Asia",
-      "China",
-      "Northeast Asia",
-      "Middle East",
-      "Europe",
-      "Australia",
-      "Americas",
-      "International",
-    ];
-    if (deal.region && foreignRegions.includes(deal.region)) return false;
+      if (activeFilter !== "ALL") {
+        url += `&region=${activeFilter}`;
+      }
 
-    // Apply region filter
-    if (activeFilter !== "ALL" && deal.region !== activeFilter) return false;
+      const response = await fetch(url);
+      const data = await response.json();
 
-    // Apply search filter
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      return (
-        deal.title.toLowerCase().includes(query) ||
-        deal.location?.toLowerCase().includes(query)
-      );
+      if (data.success) {
+        // LỌC CHỈ LẤY TOUR TRONG NƯỚC (không có continent hoặc continent = null)
+        const domesticTours = data.docs.filter(
+          (tour: Tour) => !tour.continent || tour.continent === null
+        );
+        setTours(domesticTours);
+      }
+    } catch (error) {
+      console.error("Error fetching tours:", error);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    return true;
+  const filteredTours = tours.filter((tour) => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      tour.title.toLowerCase().includes(query) ||
+      tour.location.toLowerCase().includes(query)
+    );
   });
 
-  const totalPages = Math.ceil(filteredDeals.length / ITEMS_PER_PAGE);
-  const currentDeals = filteredDeals.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE,
-  );
+  const getImageUrl = (tour: Tour) => {
+    return (
+      tour.imageUrl ||
+      (typeof tour.image === "string" ? tour.image : tour.image?.url || "/placeholder.jpg")
+    );
+  };
+
+  const currentDeals = filteredTours
+    .slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
+    .map((tour) => ({
+      id: tour.id as any,
+      title: tour.title,
+      slug: tour.slug,
+      category: tour.category,
+      type: tour.type,
+      location: tour.location,
+      image: getImageUrl(tour),
+      price: tour.price,
+      originalPrice: tour.originalPrice,
+      discount: tour.discount || "",
+      timeLeft: tour.timeLeft || "",
+    })) as any;
+
+  const totalPages = Math.ceil(filteredTours.length / ITEMS_PER_PAGE);
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -91,19 +136,28 @@ const DomesticToursPage = () => {
           regions={REGIONS}
         />
 
-        <DomesticResultsInfo
-          activeFilter={activeFilter}
-          regions={REGIONS}
-          totalCount={filteredDeals.length}
-          searchQuery={searchQuery}
-        />
+        {loading ? (
+          <div className="py-20 text-center">
+            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-orange-600 border-r-transparent"></div>
+            <p className="mt-4 text-gray-500">Đang tải tours...</p>
+          </div>
+        ) : (
+          <>
+            <DomesticResultsInfo
+              activeFilter={activeFilter}
+              regions={REGIONS}
+              totalCount={filteredTours.length}
+              searchQuery={searchQuery}
+            />
 
-        <DomesticTourList
-          currentDeals={currentDeals}
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
+            <DomesticTourList
+              currentDeals={currentDeals}
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          </>
+        )}
       </div>
     </div>
   );

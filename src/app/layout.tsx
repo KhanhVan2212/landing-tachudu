@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Inter } from "next/font/google";
-import AppProvider from "./provider";
-import { NextIntlClientProvider } from "next-intl";
-import { routing } from "@/i18n/routing";
-import Header from "@/components/Layout/Header";
-import Footer from "@/components/Layout/Footer";
 import "./globals.css";
-import FloatingContact from "@/components/Layout/FloatingContact";
 
 const vietnamPro = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
@@ -20,7 +14,6 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-// export const runtime = "edge";
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
@@ -106,34 +99,16 @@ export const metadata: Metadata = {
   },
 };
 
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
-
-export default async function RootLayout({
-  children,
-  params,
-}: Readonly<{
+export default function RootLayout({
+                                     children,
+                                   }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }>) {
-  // Ensure that the incoming `locale` is valid
-  const { locale } = await params;
-
   return (
-    <html lang={locale} className={`${vietnamPro.variable} ${inter.variable}`}>
-      <body className={`${vietnamPro.className} antialiased`}>
-        <NextIntlClientProvider>
-          <AppProvider>
-            <div className="min-h-screen bg-slate-50 selection:bg-orange-100 selection:text-orange-900">
-              <Header />
-              <main>{children}</main>
-              <FloatingContact />
-              <Footer />
-            </div>
-          </AppProvider>
-        </NextIntlClientProvider>
-      </body>
+    <html className={`${vietnamPro.variable} ${inter.variable}`}>
+    <body className={`${vietnamPro.className} antialiased`}>
+    {children}
+    </body>
     </html>
   );
 }
