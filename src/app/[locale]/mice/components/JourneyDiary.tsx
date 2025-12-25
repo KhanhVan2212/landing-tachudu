@@ -157,8 +157,8 @@ export function JourneyDiary() {
               aria-label="Previous page"
             >
               <div className="relative h-24 w-24">
-                <ChevronsLeft className="absolute left-2 top-0 h-full w-full text-gray-300" />
-                <ChevronsLeft className="relative z-10 h-full w-full text-orange-500 transition-transform group-hover:-translate-x-1" />
+                <ChevronLeft className="absolute left-2 top-0 h-full w-full text-gray-300" />
+                <ChevronLeft className="relative z-10 h-full w-full text-orange-500 transition-transform group-hover:-translate-x-1" />
               </div>
             </button>
             <button
@@ -168,8 +168,8 @@ export function JourneyDiary() {
               aria-label="Next page"
             >
               <div className="relative h-24 w-24">
-                <ChevronsRight className="absolute right-2 top-0 h-full w-full text-gray-300" />
-                <ChevronsRight className="relative z-10 h-full w-full text-orange-500 transition-transform group-hover:translate-x-1" />
+                <ChevronRight className="absolute right-2 top-0 h-full w-full text-gray-300" />
+                <ChevronRight className="relative z-10 h-full w-full text-orange-500 transition-transform group-hover:translate-x-1" />
               </div>
             </button>
           </div>

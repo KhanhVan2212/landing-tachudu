@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import HeroSection from "./components/HeroSection";
 import CategorySection from "./components/CategorySection";
-import EventIntroSection from "./components/EventIntroSection";
+// import EventIntroSection from "./components/EventIntroSection";
 import EventHighlightSection from "./components/EventHighlightSection";
 import FeaturedNewsSection from "./components/FeaturedNewsSection";
 
@@ -40,7 +40,7 @@ export default function EventPage() {
   return (
     <>
       <HeroSection />
-      <EventIntroSection />
+      {/* <EventIntroSection /> */}
       <EventHighlightSection />
       <FeaturedNewsSection />
 

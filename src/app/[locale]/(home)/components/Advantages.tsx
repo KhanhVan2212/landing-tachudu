@@ -18,7 +18,7 @@ const Advantages: React.FC = () => {
               className="relative z-10 h-[600px] w-full rounded-3xl object-cover shadow-2xl"
             />
             <div className="absolute -right-5 bottom-10 z-20 hidden max-w-xs rounded-xl bg-white p-6 shadow-xl md:block">
-              <p className="mb-2 text-4xl font-bold text-orange-600">10+</p>
+              <p className="mb-2 text-4xl font-bold text-orange-600">~10</p>
               <p className="font-medium text-gray-600">
                 Năm kinh nghiệm trong ngành du lịch & sự kiện
               </p>
@@ -26,18 +26,18 @@ const Advantages: React.FC = () => {
           </div>
 
           <div>
-            <span className="text-sm font-semibold uppercase tracking-wide text-orange-600">
+            {/* <span className="text-sm font-semibold uppercase tracking-wide text-orange-600">
               Tại sao chọn TACHUDU?
-            </span>
+            </span> */}
             <h2 className="mb-8 mt-2 text-3xl font-bold text-gray-900 sm:text-4xl">
-              Giá trị cốt lõi & Lợi thế cạnh tranh
+              Tại sao chọn <span className="text-orange-600">TACHUDU?</span>
             </h2>
 
             <div className="space-y-8">
               {ADVANTAGES.map((item) => (
                 <div key={item.id} className="flex">
                   <div className="flex-shrink-0">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-md bg-orange-500 text-white">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-md bg-orange-600 text-white">
                       <item.icon size={24} />
                     </div>
                   </div>

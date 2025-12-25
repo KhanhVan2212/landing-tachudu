@@ -17,13 +17,13 @@ const MiceHero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-center px-4 text-white sm:px-6 lg:px-8 pt-36">
-        <h1 className="animate-fade-in-up mb-6 text-4xl font-bold md:text-6xl">
+      <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-center items-center text-center px-4 text-white sm:px-6 lg:px-8 pt-[200px]">
+        <h1 className="text-3xl font-bold uppercase tracking-wide drop-shadow-md md:text-4xl">
           Du Lịch <span className="text-orange-500">MICE</span>
         </h1>
-        <p className="animate-fade-in-up mb-8 max-w-2xl text-xl leading-relaxed opacity-90 delay-100 md:text-2xl">
-          Giải pháp tổ chức sự kiện, hội nghị, hội thảo kết hợp du lịch nghỉ
-          dưỡng chuyên nghiệp và đẳng cấp.
+        <p className="mx-auto mt-4 max-w-2xl px-4 font-medium text-orange-50 drop-shadow sm:text-lg">
+          Giải pháp tổ chức sự kiện, hội nghị, hội thảo kết hợp
+          du lịch nghỉ dưỡng chuyên nghiệp và đẳng cấp.
         </p>
       </div>
     </div>

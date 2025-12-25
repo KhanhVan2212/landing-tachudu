@@ -14,11 +14,13 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-black/50"></div>
 
       <div className="relative max-w-7xl mx-auto px-4 py-28 text-center text-white">
-        <h1 className="text-4xl md:text-5xl font-extrabold">
+        <h1 className="text-3xl md:text-5xl font-extrabold">
           Tin tức & Sự kiện
         </h1>
         <p className="mt-4 text-lg opacity-90">
-          Cập nhật hoạt động, sự kiện & hành trình của Tachudu
+          Bên cạnh các chương trình du lịch trong và ngoài
+          nước, Tachudu còn là đơn vị chuyên tổ chức sự
+          kiện chuyên nghiệp.
         </p>
       </div>
     </section>

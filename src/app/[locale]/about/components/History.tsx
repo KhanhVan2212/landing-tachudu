@@ -22,21 +22,21 @@ const History = () => {
               của một doanh nghiệp trẻ, tiên phong trong lĩnh vực du lịch và tổ
               chức sự kiện.
             </p>
-            <div className="mt-8 flex items-start">
+            <div className="mt-8 flex items-center">
               <div className="mr-4 rounded-full bg-orange-100 p-3">
                 <Globe className="h-8 w-8 text-orange-600" />
               </div>
               <div>
-                <h3 className="mb-2 text-xl font-bold text-gray-900">
+                <h3 className="text-3xl font-bold text-gray-900">
                   Phạm vi hoạt động
                 </h3>
-                <p className="text-gray-600">
-                  Chúng tôi cung cấp dịch vụ rộng khắp trên toàn lãnh thổ{" "}
-                  <strong>Việt Nam</strong> và <strong>Quốc tế</strong>, kết nối
-                  bạn với mọi miền văn hóa.
-                </p>
               </div>
             </div>
+            <p className="my-6 text-justify text-lg text-gray-600">
+              Chúng tôi cung cấp dịch vụ rộng khắp trên toàn lãnh thổ{" "}
+              <strong>Việt Nam</strong> và <strong>Quốc tế</strong>, kết nối
+              bạn với mọi miền văn hóa.
+            </p>
           </div>
           <div className="relative mt-10 lg:mt-0">
             <Image
