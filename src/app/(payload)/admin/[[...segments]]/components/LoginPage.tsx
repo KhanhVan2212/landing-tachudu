@@ -247,7 +247,6 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
               onClick={() => setIsRegisterMode(true)}
               className="text-sm text-blue-600 hover:text-blue-800"
             >
-              Chưa có tài khoản? Đăng ký ngay
             </button>
           </div>
         )}
