@@ -1,31 +1,36 @@
 import React from "react";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
-const ContactInfo = () => {
+interface ContactInfoProps {
+  companyInfo: any;
+}
+
+const ContactInfo = ({ companyInfo }: ContactInfoProps) => {
   return (
     <div className="mb-20 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4">
       {[
         {
           icon: Phone,
           title: "Hotline (24/7)",
-          info: "024.39351122",
+          info: companyInfo?.hotline || "024.39351122",
           subInfo: "Hỗ trợ đặt tour & vé",
           color: "bg-orange-50 text-orange-600",
-          href: "tel:02439351122",
+          href: `tel:${companyInfo?.hotline?.replace(/\./g, "") || "02439351122"}`,
         },
         {
           icon: Mail,
           title: "Email liên hệ",
-          info: "tachuduvn@gmail.com",
+          info: companyInfo?.email || "tachuduvn@gmail.com",
           subInfo: "Phản hồi trong 24h",
           color: "bg-orange-50 text-orange-600",
-          href: "mailto:tachuduvn@gmail.com",
+          href: `mailto:${companyInfo?.email || "tachuduvn@gmail.com"}`,
         },
         {
           icon: MapPin,
           title: "Trụ sở chính",
           info: "Quận Hoàng Mai, HN",
-          subInfo: "Số 4 ngõ 230/31 Phố Định Công Thượng",
+          subInfo:
+            companyInfo?.address || "Số 4 ngõ 230/31 Phố Định Công Thượng",
           color: "bg-orange-50 text-orange-600",
         },
         {

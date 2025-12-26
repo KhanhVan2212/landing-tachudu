@@ -1,3 +1,5 @@
+"use client";
+// Force rebuild
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
@@ -43,13 +45,14 @@ const airlinePartners = [
 
 const corporateCustomers = [
   { name: "BIDV", logo: "/images/bidv.png", scale: 1.5 },
-  { name: "Vietinbank", logo: "/images/viet-tin-bank.png"},
+  { name: "Vietinbank", logo: "/images/viet-tin-bank.png" },
   { name: "BIC", logo: "/images/bico.png", scale: 1.5 },
   { name: "Mobifone", logo: "/images/Mobifone.png" },
   { name: "Agribank", logo: "/images/agribank.jpg", scale: 1.5 },
   {
     name: "Trung Tâm Hội Nghị Quốc Gia",
-    logo: "/images/trung-tam-hoi-nghi-quoc-gia.jpg", scale: 1.5 
+    logo: "/images/trung-tam-hoi-nghi-quoc-gia.jpg",
+    scale: 1.5,
   },
   { name: "Crystal Bay", logo: "/images/Crystal-Bay.jpg" },
   { name: "Arysta Life Science", logo: "/images/Arysta-Life-Science.png" },
@@ -81,7 +84,9 @@ const AirlinePartners = () => {
           className="mb-10"
         >
           <div className="mb-6 text-center">
-            <h3 className="text-xl font-bold text-slate-800">Đối tác hàng không</h3>
+            <h3 className="text-xl font-bold text-slate-800">
+              Đối tác hàng không
+            </h3>
           </div>
 
           <div className="relative">

@@ -11,13 +11,7 @@ import {
 import { COMPANY_NAME, SLOGAN, CONTACT_INFO } from "../../../constants";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
-
-const socialLinks = [
-  { icon: Facebook, href: "https://www.facebook.com/Tachudu.vn" },
-  { icon: MessageCircle, href: "https://zalo.me/02439351122" },
-  { icon: Phone, href: "tel:02439351122" },
-  { icon: Mail, href: "mailto:tachuduvn@gmail.com" },
-];
+import { getCompanyInfo } from "@/utils/getCompanyInfo";
 
 const serviceLinks = [
   { label: "Du lịch trong nước", href: "/domestic-tours" },
@@ -45,7 +39,19 @@ const bottomLinks = [
   { label: "Terms of Service", href: "/policy" },
 ];
 
-const Footer: React.FC = () => {
+const Footer = async () => {
+  const companyInfo = await getCompanyInfo();
+
+  const socialLinks = [
+    { icon: Facebook, href: companyInfo.facebook || "#" },
+    { icon: MessageCircle, href: companyInfo.zalo || "#" },
+    {
+      icon: Phone,
+      href: `tel:${companyInfo.hotline?.replace(/\./g, "") || ""}`,
+    },
+    { icon: Mail, href: `mailto:${companyInfo.email}` },
+  ];
+
   return (
     <footer className="relative overflow-hidden bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white">
       {/* Decorative background elements */}
@@ -72,19 +78,19 @@ const Footer: React.FC = () => {
               <div className="flex items-center text-sm text-gray-300">
                 <Phone size={16} className="mr-2 text-orange-500" />
                 <Link
-                  href={`tel:${CONTACT_INFO.hotlineUrl}`}
+                  href={`tel:${companyInfo.hotline?.replace(/\./g, "") || ""}`}
                   className="transition-colors hover:text-orange-500"
                 >
-                  {CONTACT_INFO.hotline}
+                  {companyInfo.hotline}
                 </Link>
               </div>
               <div className="flex items-center text-sm text-gray-300">
                 <Mail size={16} className="mr-2 text-orange-500" />
                 <Link
-                  href={`mailto:${CONTACT_INFO.email}`}
+                  href={`mailto:${companyInfo.email}`}
                   className="transition-colors hover:text-orange-500"
                 >
-                  {CONTACT_INFO.email}
+                  {companyInfo.email}
                 </Link>
               </div>
               <div className="flex items-start text-sm text-gray-300">
@@ -92,10 +98,7 @@ const Footer: React.FC = () => {
                   size={16}
                   className="mr-2 mt-1 flex-shrink-0 text-orange-500"
                 />
-                <span>
-                  Số 4 ngõ 230/31 Phố Định Công Thượng, Phường Định Công, Quận
-                  Hoàng Mai, HN
-                </span>
+                <span>{companyInfo.address}</span>
               </div>
             </div>
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Inter } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const vietnamPro = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
@@ -100,15 +101,16 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-                                     children,
-                                   }: Readonly<{
+  children,
+}: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html className={`${vietnamPro.variable} ${inter.variable}`}>
-    <body className={`${vietnamPro.className} antialiased`}>
-    {children}
-    </body>
+      <body className={`${vietnamPro.className} antialiased`}>
+        <Toaster richColors position="top-right" />
+        {children}
+      </body>
     </html>
   );
 }

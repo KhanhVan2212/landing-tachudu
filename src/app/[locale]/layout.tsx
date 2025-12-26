@@ -9,14 +9,17 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+import { getCompanyInfo } from "@/utils/getCompanyInfo";
+
 export default async function LocaleLayout({
-                                             children,
-                                             params,
-                                           }: Readonly<{
+  children,
+  params,
+}: Readonly<{
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
+  const companyInfo = await getCompanyInfo();
 
   return (
     <NextIntlClientProvider locale={locale}>
@@ -24,7 +27,7 @@ export default async function LocaleLayout({
         <div className="min-h-screen bg-slate-50 selection:bg-orange-100 selection:text-orange-900">
           <Header />
           <main>{children}</main>
-          <FloatingContact />
+          <FloatingContact companyInfo={companyInfo} />
           <Footer />
         </div>
       </AppProvider>

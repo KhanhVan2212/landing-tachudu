@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useEffect } from "react";
+import React from "react";
 import MiceHero from "./components/MiceHero";
 import MiceIntro from "./components/MiceIntro";
 import MiceServices from "./components/MiceServices";
@@ -9,11 +7,10 @@ import MiceProcess from "./components/MiceProcess";
 import { JourneyDiary } from "./components/JourneyDiary";
 import Contact from "../(home)/components/Contact";
 import AirlinePartners from "../(home)/components/AirlinePartners";
+import { getCompanyInfo } from "@/utils/getCompanyInfo";
 
-export default function MICEPage() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+export default async function MICEPage() {
+  const companyInfo = await getCompanyInfo();
 
   return (
     <div className="bg-white">
@@ -21,10 +18,10 @@ export default function MICEPage() {
       <MiceIntro />
       {/* <MiceServices /> */}
       <MiceAdvantages />
-      <JourneyDiary />  
+      <JourneyDiary />
       {/* <MiceProcess /> */}
       <AirlinePartners />
-      <Contact />
+      <Contact companyInfo={companyInfo} />
     </div>
   );
 }

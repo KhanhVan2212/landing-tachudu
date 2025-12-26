@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { SLOGAN } from "../../../../../constants";
 import Image from "next/image";

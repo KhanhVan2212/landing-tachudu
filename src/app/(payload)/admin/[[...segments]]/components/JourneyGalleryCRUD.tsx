@@ -273,7 +273,7 @@ export default function JourneyGalleryCRUD({ onStatsUpdate }: Props) {
     <div className="p-6">
       {/* Header */}
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="text-2xl font-bold">Quản lý Journey Gallery</h2>
+        <h2 className="text-2xl font-bold">Quản lý thư viện ảnh</h2>
         <button
           onClick={handleCreate}
           className="flex items-center gap-2 rounded-lg bg-orange-600 px-4 py-2 text-white hover:bg-orange-700"
@@ -406,7 +406,7 @@ export default function JourneyGalleryCRUD({ onStatsUpdate }: Props) {
           <div className="max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-xl bg-white shadow-2xl">
             <div className="sticky top-0 flex items-center justify-between border-b bg-white p-6">
               <h3 className="text-xl font-bold">
-                {editingItem ? "Chỉnh sửa" : "Thêm mới"} Journey Gallery
+                {editingItem ? "Chỉnh sửa" : "Thêm mới"} Thư viện ảnh
               </h3>
               <button
                 onClick={() => setShowModal(false)}

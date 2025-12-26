@@ -1,6 +1,4 @@
-"use client";
-import React, { useEffect } from "react";
-import { Briefcase, Globe, Award, Users, Plane, Building2 } from "lucide-react";
+import React from "react";
 import Hero from "./components/Hero";
 import History from "./components/History";
 import CoreValues from "./components/CoreValues";
@@ -9,11 +7,10 @@ import Contact from "../(home)/components/Contact";
 import AirlinePartners from "../(home)/components/AirlinePartners";
 import MissionVision from "./components/MissionVision";
 import { DreamDestination } from "./components/DreamDestination";
+import { getCompanyInfo } from "@/utils/getCompanyInfo";
 
-const Page: React.FC = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+const Page = async () => {
+  const companyInfo = await getCompanyInfo();
 
   return (
     <div className="bg-white pt-20">
@@ -29,7 +26,7 @@ const Page: React.FC = () => {
       {/* Partners List */}
       <DreamDestination />
       <AirlinePartners />
-      <Contact />
+      <Contact companyInfo={companyInfo} />
     </div>
   );
 };

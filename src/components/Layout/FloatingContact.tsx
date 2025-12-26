@@ -10,7 +10,11 @@ import {
   FaHeadset,
 } from "react-icons/fa6";
 
-const FloatingContact = () => {
+interface FloatingContactProps {
+  companyInfo: any;
+}
+
+const FloatingContact = ({ companyInfo }: FloatingContactProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -42,10 +46,10 @@ const FloatingContact = () => {
             <div>
               <p className="text-sm font-medium text-white/90">Hotline</p>
               <Link
-                href="tel:02439351122"
+                href={`tel:${companyInfo?.hotline?.replace(/\./g, "") || "02439351122"}`}
                 className="block text-lg font-bold leading-tight text-white hover:underline"
               >
-                024.39351122
+                {companyInfo?.hotline || "024.39351122"}
               </Link>
               <span className="text-xs text-white/80">Hỗ trợ 24/7</span>
             </div>
@@ -59,10 +63,10 @@ const FloatingContact = () => {
             <div>
               <p className="text-sm font-medium text-white/90">Email</p>
               <Link
-                href="mailto:tachuduvn@gmail.com"
+                href={`mailto:${companyInfo?.email || "tachuduvn@gmail.com"}`}
                 className="block break-all text-sm font-bold leading-tight text-white transition hover:text-white/90"
               >
-                tachuduvn@gmail.com
+                {companyInfo?.email || "tachuduvn@gmail.com"}
               </Link>
               <span className="text-xs text-white/80">
                 Phản hồi trong vòng 24h
@@ -78,16 +82,39 @@ const FloatingContact = () => {
             <div>
               <p className="text-sm font-medium text-white/90">Facebook</p>
               <Link
-                href="https://www.facebook.com/Tachudu.vn"
+                href={
+                  companyInfo?.facebook || "https://www.facebook.com/Tachudu.vn"
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block break-all text-sm font-bold leading-tight text-white transition hover:text-white/90"
               >
-                facebook.com/Tachudu.vn
+                {companyInfo?.facebook}
               </Link>
               <span className="text-xs text-white/80">Theo dõi fanpage</span>
             </div>
           </div>
+
+          {/* Zalo - Adding it since user mentioned it */}
+          {companyInfo?.zalo && (
+            <div className="flex items-start gap-4">
+              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-white text-orange-600">
+                <p className="font-bold">Z</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-white/90">Zalo</p>
+                <Link
+                  href={companyInfo.zalo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block break-all text-sm font-bold leading-tight text-white transition hover:text-white/90"
+                >
+                  Chat Zalo
+                </Link>
+                <span className="text-xs text-white/80">Tư vấn trực tuyến</span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

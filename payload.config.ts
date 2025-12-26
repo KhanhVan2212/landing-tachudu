@@ -10,6 +10,7 @@ import Posts from "./src/collections/Posts";
 import Tours from "./src/collections/Tours";
 import JourneyGallery from "./src/collections/JourneyGallery";
 import Events from "./src/collections/Events";
+import CompanyInfo from "./src/globals/CompanyInfo";
 
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || "http://localhost:3000",
@@ -32,6 +33,8 @@ export default buildConfig({
     JourneyGallery,
     Events, // THÊM DÒNG NÀY
   ],
+
+  globals: [CompanyInfo],
 
   secret: process.env.PAYLOAD_SECRET || "",
 

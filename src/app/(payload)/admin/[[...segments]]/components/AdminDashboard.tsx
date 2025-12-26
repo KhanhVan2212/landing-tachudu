@@ -5,8 +5,15 @@ import { useRouter } from "next/navigation";
 import ToursCRUD from "./ToursCRUD";
 import JourneyGalleryCRUD from "./JourneyGalleryCRUD";
 import EventsCRUD from "./EventsCRUD";
+import CompanyInfoCRUD from "./CompanyInfoCRUD";
+import Image from "next/image";
 
-type Tab = "dashboard" | "tours" | "journey-gallery" | "events";
+type Tab =
+  | "dashboard"
+  | "tours"
+  | "journey-gallery"
+  | "events"
+  | "company-info";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<Tab>("dashboard");
@@ -62,14 +69,20 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
       <header className="border-b bg-white shadow-sm">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            <h1 className="text-xl font-bold text-gray-900">
-              TACHUDU CMS Admin
-            </h1>
+            <Image
+              src="/images/logo.png"
+              alt="Logo"
+              width={150}
+              height={100}
+              className="w-[100px] sm:w-[150px]"
+            />
             <div className="flex items-center gap-4">
               {user && (
-                <span className="text-sm text-gray-600">{user.email}</span>
+                <span className="hidden text-sm text-gray-600 sm:block">
+                  {user.email}
+                </span>
               )}
               <button
                 onClick={handleLogout}
@@ -94,7 +107,7 @@ export default function AdminDashboard() {
                   : "text-gray-500 hover:text-gray-700"
               }`}
             >
-              Dashboard
+              Bảng điều khiển
             </button>
             <button
               onClick={() => setActiveTab("tours")}
@@ -114,7 +127,7 @@ export default function AdminDashboard() {
                   : "text-gray-500 hover:text-gray-700"
               }`}
             >
-              Journey Gallery
+              Thư viện ảnh
             </button>
             <button
               onClick={() => setActiveTab("events")}
@@ -124,7 +137,17 @@ export default function AdminDashboard() {
                   : "text-gray-500 hover:text-gray-700"
               }`}
             >
-              Events & News
+              Tin tức & Sự kiện
+            </button>
+            <button
+              onClick={() => setActiveTab("company-info")}
+              className={`whitespace-nowrap px-6 py-3 text-sm font-medium ${
+                activeTab === "company-info"
+                  ? "border-b-2 border-orange-500 text-orange-600"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Thông tin công ty
             </button>
           </nav>
         </div>
@@ -133,7 +156,7 @@ export default function AdminDashboard() {
         <div className="rounded-lg bg-white shadow">
           {activeTab === "dashboard" && (
             <div className="p-6">
-              <h2 className="mb-6 text-2xl font-bold">Dashboard Overview</h2>
+              <h2 className="mb-6 text-2xl font-bold">Tổng quan</h2>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {/* Tours Stats */}
                 <div className="rounded-xl bg-gradient-to-br from-orange-50 to-orange-100 p-6 shadow-sm">
@@ -167,7 +190,7 @@ export default function AdminDashboard() {
                 <div className="rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 p-6 shadow-sm">
                   <div className="mb-2 flex items-center justify-between">
                     <div className="text-sm font-medium text-blue-600">
-                      Journey Gallery
+                      Thư viện ảnh
                     </div>
                     <svg
                       className="h-8 w-8 text-blue-400"
@@ -195,7 +218,7 @@ export default function AdminDashboard() {
                 <div className="rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 p-6 shadow-sm">
                   <div className="mb-2 flex items-center justify-between">
                     <div className="text-sm font-medium text-purple-600">
-                      Events & News
+                      Tin tức & Sự kiện
                     </div>
                     <svg
                       className="h-8 w-8 text-purple-400"
@@ -301,20 +324,17 @@ export default function AdminDashboard() {
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">Thêm Event</p>
-                      <p className="text-xs text-gray-500">
-                        Đăng tin tức mới
-                      </p>
+                      <p className="text-xs text-gray-500">Đăng tin tức mới</p>
                     </div>
                   </button>
 
-                  <a
-                    href="/admin"
-                    target="_blank"
-                    className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-4 text-left transition hover:border-green-500 hover:bg-green-50"
+                  <button
+                    onClick={() => setActiveTab("company-info")}
+                    className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-4 text-left transition hover:border-blue-500 hover:bg-blue-50"
                   >
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
                       <svg
-                        className="h-5 w-5 text-green-600"
+                        className="h-5 w-5 text-blue-600"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -323,19 +343,19 @@ export default function AdminDashboard() {
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth={2}
-                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
                         />
                       </svg>
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">
-                        Payload Admin
+                        Thông tin công ty
                       </p>
                       <p className="text-xs text-gray-500">
-                        Quản lý nâng cao
+                        Sửa hotline, email, địa chỉ
                       </p>
                     </div>
-                  </a>
+                  </button>
                 </div>
               </div>
 
@@ -355,8 +375,8 @@ export default function AdminDashboard() {
                       </p>
                       <p className="text-xs text-gray-600">
                         Vào tab &quot;Tours&quot; để thêm, sửa, xóa và quản lý
-                        các tour du lịch. Upload ảnh từ máy và quản lý thông
-                        tin chi tiết.
+                        các tour du lịch. Upload ảnh từ máy và quản lý thông tin
+                        chi tiết.
                       </p>
                     </div>
                   </div>
@@ -366,7 +386,7 @@ export default function AdminDashboard() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-900">
-                        Quản lý Journey Gallery
+                        Quản lý Thư viện ảnh
                       </p>
                       <p className="text-xs text-gray-600">
                         Upload album ảnh hành trình của khách hàng. Có thể chọn
@@ -380,7 +400,7 @@ export default function AdminDashboard() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-900">
-                        Quản lý Events & News
+                        Quản lý Tin tức & Sự kiện
                       </p>
                       <p className="text-xs text-gray-600">
                         Đăng tin tức và sự kiện. Có thể đánh dấu &quot;Tin nổi
@@ -412,8 +432,8 @@ export default function AdminDashboard() {
                         Xem trước nội dung
                       </p>
                       <p className="text-xs text-gray-600">
-                        Click icon mắt để xem nội dung trên website. Tất cả
-                        thay đổi hiển thị real-time sau khi lưu.
+                        Click icon mắt để xem nội dung trên website. Tất cả thay
+                        đổi hiển thị real-time sau khi lưu.
                       </p>
                     </div>
                   </div>
@@ -459,6 +479,7 @@ export default function AdminDashboard() {
             <JourneyGalleryCRUD onStatsUpdate={fetchStats} />
           )}
           {activeTab === "events" && <EventsCRUD onStatsUpdate={fetchStats} />}
+          {activeTab === "company-info" && <CompanyInfoCRUD />}
         </div>
       </div>
     </div>

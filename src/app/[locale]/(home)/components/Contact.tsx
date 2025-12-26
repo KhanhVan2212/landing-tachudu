@@ -1,6 +1,7 @@
+"use client";
 import React, { useState } from "react";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
-import { CONTACT_INFO } from "../../../../../constants";
+// import { CONTACT_INFO } from "../../../../../constants"; // Removed
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -9,8 +10,14 @@ import {
 } from "@/lib/schemas/contact-schema";
 import { toast } from "sonner";
 
-const Contact: React.FC = () => {
+interface ContactProps {
+  companyInfo: any;
+}
+
+const Contact: React.FC<ContactProps> = ({ companyInfo }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // ... form setup
 
   const {
     register,
@@ -83,8 +90,8 @@ const Contact: React.FC = () => {
                 <div>
                   <h4 className="text-lg font-bold text-gray-900">Địa chỉ</h4>
                   <p className="text-gray-600">
-                    Số 4 ngõ 230/31 Phố Định Công Thượng, Phường Định Công, Quận
-                    Hoàng Mai, HN
+                    {companyInfo?.address ||
+                      "Số 4 ngõ 230/31 Phố Định Công Thượng, Phường Định Công, Quận Hoàng Mai, HN"}
                   </p>
                 </div>
               </div>
@@ -96,10 +103,10 @@ const Contact: React.FC = () => {
                 <div>
                   <h4 className="text-lg font-bold text-gray-900">Hotline</h4>
                   <a
-                    href={`tel:${CONTACT_INFO.hotlineUrl}`}
+                    href={`tel:${companyInfo?.hotline?.replace(/\./g, "") || "02439351122"}`}
                     className="text-gray-600 hover:text-orange-600"
                   >
-                    {CONTACT_INFO.hotline}
+                    {companyInfo?.hotline || "024.39351122"}
                   </a>
                 </div>
               </div>
@@ -111,10 +118,10 @@ const Contact: React.FC = () => {
                 <div>
                   <h4 className="text-lg font-bold text-gray-900">Email</h4>
                   <a
-                    href={`mailto:${CONTACT_INFO.email}`}
+                    href={`mailto:${companyInfo?.email || "tachuduvn@gmail.com"}`}
                     className="text-gray-600 hover:text-orange-600"
                   >
-                    {CONTACT_INFO.email}
+                    {companyInfo?.email || "tachuduvn@gmail.com"}
                   </a>
                 </div>
               </div>

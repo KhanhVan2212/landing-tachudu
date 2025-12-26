@@ -1,5 +1,4 @@
-"use client";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server"; // Use server version
 import Hero from "./components/Hero";
 import Services from "./components/Services";
 import Advantages from "./components/Advantages";
@@ -7,9 +6,12 @@ import Testimonials from "./components/Testimonials";
 import Contact from "./components/Contact";
 import AirlinePartners from "./components/AirlinePartners";
 import FeaturedTours from "./components/FeaturedTours";
+import { getCompanyInfo } from "@/utils/getCompanyInfo";
 
-const Page = () => {
-  const t = useTranslations();
+const Page = async ({ params }: { params: Promise<{ locale: string }> }) => {
+  const { locale } = await params;
+  const companyInfo = await getCompanyInfo();
+
   return (
     <div>
       <Hero />
@@ -18,7 +20,7 @@ const Page = () => {
       <Advantages />
       <Testimonials />
       <AirlinePartners />
-      <Contact />
+      <Contact companyInfo={companyInfo} />
     </div>
   );
 };
