@@ -3,41 +3,72 @@ import { CollectionConfig } from "payload";
 
 const Media: CollectionConfig = {
   slug: "media",
+  labels: {
+    singular: "Media",
+    plural: "Media",
+  },
   access: {
     read: () => true,
-  },
-  upload: {
-    staticDir: "media",
-    imageSizes: [
-      {
-        name: "thumbnail",
-        width: 400,
-        height: 300,
-        position: "centre",
-      },
-      {
-        name: "card",
-        width: 768,
-        height: 1024,
-        position: "centre",
-      },
-      {
-        name: "tablet",
-        width: 1024,
-        height: undefined,
-        position: "centre",
-      },
-    ],
-    adminThumbnail: "thumbnail",
-    mimeTypes: ["image/*"],
+    create: () => true,
+    update: () => true,
+    delete: () => true,
   },
   fields: [
     {
       name: "alt",
       type: "text",
       required: true,
+      label: "Alt Text",
+    },
+    {
+      name: "cloudinaryUrl",
+      type: "text",
+      required: true,
+      label: "Cloudinary URL",
+      admin: {
+        readOnly: true,
+      },
+    },
+    {
+      name: "cloudinaryId",
+      type: "text",
+      label: "Cloudinary ID",
+      admin: {
+        readOnly: true,
+      },
+    },
+    {
+      name: "width",
+      type: "number",
+      admin: {
+        readOnly: true,
+      },
+    },
+    {
+      name: "height",
+      type: "number",
+      admin: {
+        readOnly: true,
+      },
+    },
+    {
+      name: "mimeType",
+      type: "text",
+      admin: {
+        readOnly: true,
+      },
+    },
+    {
+      name: "filesize",
+      type: "number",
+      admin: {
+        readOnly: true,
+      },
     },
   ],
+  admin: {
+    useAsTitle: "alt",
+  },
 };
 
 export default Media;

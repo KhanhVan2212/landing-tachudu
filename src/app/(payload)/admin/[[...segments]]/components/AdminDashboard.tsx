@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ToursCRUD from ".//ToursCRUD";
+import JourneyGalleryCRUD from "./JourneyGalleryCRUD";
 
-type Tab = "dashboard" | "destinations" | "tours";
+
+type Tab = "dashboard" | "destinations" | "tours" | "journey-gallery";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<Tab>("dashboard");
@@ -99,14 +101,14 @@ export default function AdminDashboard() {
               Tours
             </button>
             <button
-              onClick={() => setActiveTab("destinations")}
+              onClick={() => setActiveTab("journey-gallery")}
               className={`whitespace-nowrap px-6 py-3 text-sm font-medium ${
-                activeTab === "destinations"
+                activeTab === "journey-gallery"
                   ? "border-b-2 border-orange-500 text-orange-600"
                   : "text-gray-500 hover:text-gray-700"
               }`}
             >
-              Destinations
+              Journey Gallery
             </button>
           </nav>
         </div>
@@ -251,29 +253,10 @@ export default function AdminDashboard() {
           )}
 
           {activeTab === "tours" && <ToursCRUD onStatsUpdate={fetchStats} />}
-
-          {activeTab === "destinations" && (
-            <div className="p-6">
-              <h2 className="mb-4 text-2xl font-bold">Quản lý Destinations</h2>
-              <p className="text-gray-600">
-                Tính năng quản lý destinations sẽ được phát triển tương tự như
-                Tours.
-              </p>
-              <div className="mt-4 rounded-lg border border-gray-200 bg-gray-50 p-4">
-                <p className="text-sm text-gray-600">
-                  Hiện tại bạn có thể truy cập Payload Admin để quản lý
-                  destinations:
-                </p>
-                <a
-                  href="/admin/collections/destinations"
-                  target="_blank"
-                  className="mt-2 inline-block text-sm font-semibold text-orange-600 hover:underline"
-                >
-                  Mở Payload Admin →
-                </a>
-              </div>
-            </div>
+          {activeTab === "journey-gallery" && (
+            <JourneyGalleryCRUD onStatsUpdate={fetchStats} />
           )}
+
         </div>
       </div>
     </div>
