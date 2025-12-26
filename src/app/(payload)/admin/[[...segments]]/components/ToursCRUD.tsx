@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Pencil, Trash2, Plus, Search, Eye, X, PlusCircle } from "lucide-react";
+import { toast } from "sonner";
 
 interface Tour {
   id: string;
@@ -43,7 +44,9 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [editingTour, setEditingTour] = useState<Tour | null>(null);
-  const [tourLocation, setTourLocation] = useState<"domestic" | "foreign">("domestic");
+  const [tourLocation, setTourLocation] = useState<"domestic" | "foreign">(
+    "domestic",
+  );
   const [formData, setFormData] = useState<Partial<Tour>>({
     title: "",
     slug: "",
@@ -126,7 +129,9 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
@@ -146,7 +151,7 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
 
   const handleArrayChange = (
     field: "highlights" | "included" | "excluded",
-    value: string
+    value: string,
   ) => {
     if (!value.trim()) {
       setFormData((prev) => ({ ...prev, [field]: [] }));
@@ -179,7 +184,7 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
   const updateItineraryDay = (
     index: number,
     field: "day" | "title" | "desc",
-    value: string
+    value: string,
   ) => {
     const newItems = [...itineraryItems];
     newItems[index][field] = value;
@@ -196,9 +201,10 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
         image: formData.imageUrl,
         imageUrl: formData.imageUrl,
         itinerary: itineraryItems.filter(
-          (item) => item.day?.trim() && item.title?.trim() && item.desc?.trim()
+          (item) => item.day?.trim() && item.title?.trim() && item.desc?.trim(),
         ),
-        highlights: formData.highlights?.filter((h) => h.highlight?.trim()) || [],
+        highlights:
+          formData.highlights?.filter((h) => h.highlight?.trim()) || [],
         included: formData.included?.filter((s) => s.service?.trim()) || [],
         excluded: formData.excluded?.filter((s) => s.service?.trim()) || [],
       };
@@ -227,18 +233,20 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
       const data = await response.json();
 
       if (data.success) {
-        alert(editingTour ? "Cập nhật tour thành công!" : "Tạo tour thành công!");
+        toast.success(
+          editingTour ? "Cập nhật tour thành công!" : "Tạo tour thành công!",
+        );
         setShowModal(false);
         setEditingTour(null);
         resetForm();
         fetchTours();
       } else {
-        alert("Có lỗi xảy ra: " + (data.error || "Unknown error"));
+        toast.error("Có lỗi xảy ra: " + (data.error || "Unknown error"));
         console.error("Error details:", data);
       }
     } catch (error) {
       console.error("Error saving tour:", error);
-      alert("Có lỗi xảy ra khi lưu tour");
+      toast.error("Có lỗi xảy ra khi lưu tour");
     }
     setLoading(false);
   };
@@ -258,7 +266,8 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
       subRegion: tour.subRegion,
       type: tour.type,
       location: tour.location,
-      imageUrl: tour.imageUrl || (typeof tour.image === "string" ? tour.image : ""),
+      imageUrl:
+        tour.imageUrl || (typeof tour.image === "string" ? tour.image : ""),
       description: tour.description,
       price: tour.price,
       originalPrice: tour.originalPrice,
@@ -279,21 +288,34 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
     setShowModal(true);
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Bạn có chắc chắn muốn xóa tour này?")) return;
+  const handleDelete = (id: string) => {
+    toast("Bạn có chắc chắn muốn xóa tour này?", {
+      action: {
+        label: "Xóa",
+        onClick: async () => {
+          try {
+            const response = await fetch(`/api/tours/${id}`, {
+              method: "DELETE",
+            });
+            const data = await response.json();
 
-    try {
-      const response = await fetch(`/api/tours/${id}`, { method: "DELETE" });
-      const data = await response.json();
-
-      if (data.success) {
-        alert("Xóa tour thành công!");
-        fetchTours();
-      }
-    } catch (error) {
-      console.error("Error deleting tour:", error);
-      alert("Có lỗi xảy ra khi xóa tour");
-    }
+            if (data.success) {
+              toast.success("Xóa tour thành công!");
+              fetchTours();
+            } else {
+              toast.error("Có lỗi xảy ra khi xóa tour");
+            }
+          } catch (error) {
+            console.error("Error deleting tour:", error);
+            toast.error("Có lỗi xảy ra khi xóa tour");
+          }
+        },
+      },
+      cancel: {
+        label: "Hủy",
+        onClick: () => {},
+      },
+    });
   };
 
   const resetForm = () => {
@@ -329,7 +351,7 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
   const filteredTours = tours.filter(
     (tour) =>
       tour.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tour.location.toLowerCase().includes(searchQuery.toLowerCase())
+      tour.location.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -349,7 +371,7 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
         </button>
       </div>
 
-      <div className="mb-4 relative">
+      <div className="relative mb-4">
         <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
         <input
           type="text"
@@ -368,66 +390,93 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50">
-            <tr>
-              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Tiêu đề</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Danh mục</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Địa điểm</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Giá</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Trạng thái</th>
-              <th className="px-4 py-3 text-right text-sm font-semibold text-gray-900">Thao tác</th>
-            </tr>
+              <tr>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">
+                  Tiêu đề
+                </th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">
+                  Danh mục
+                </th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">
+                  Địa điểm
+                </th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">
+                  Giá
+                </th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">
+                  Trạng thái
+                </th>
+                <th className="px-4 py-3 text-right text-sm font-semibold text-gray-900">
+                  Thao tác
+                </th>
+              </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-            {filteredTours.map((tour) => (
-              <tr key={tour.id} className="hover:bg-gray-50">
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <div className="font-medium text-gray-900">{tour.title}</div>
-                    {tour.featured && (
-                      <span className="rounded bg-yellow-100 px-2 py-0.5 text-xs font-semibold text-yellow-800">
+              {filteredTours.map((tour) => (
+                <tr key={tour.id} className="hover:bg-gray-50">
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <div className="font-medium text-gray-900">
+                        {tour.title}
+                      </div>
+                      {tour.featured && (
+                        <span className="rounded bg-yellow-100 px-2 py-0.5 text-xs font-semibold text-yellow-800">
                           Nổi bật
                         </span>
-                    )}
-                  </div>
-                </td>
-                <td className="px-4 py-3 text-sm text-gray-600">{tour.category}</td>
-                <td className="px-4 py-3 text-sm text-gray-600">{tour.location}</td>
-                <td className="px-4 py-3 text-sm font-semibold text-orange-600">{tour.price}</td>
-                <td className="px-4 py-3">
-                    <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${
-                      tour.status === "active" ? "bg-green-100 text-green-800" :
-                        tour.status === "paused" ? "bg-yellow-100 text-yellow-800" :
-                          "bg-red-100 text-red-800"
-                    }`}>
-                      {tour.status === "active" ? "Đang bán" :
-                        tour.status === "paused" ? "Tạm dừng" : "Hết hạn"}
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-600">
+                    {tour.category}
+                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-600">
+                    {tour.location}
+                  </td>
+                  <td className="px-4 py-3 text-sm font-semibold text-orange-600">
+                    {tour.price}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${
+                        tour.status === "active"
+                          ? "bg-green-100 text-green-800"
+                          : tour.status === "paused"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-red-100 text-red-800"
+                      }`}
+                    >
+                      {tour.status === "active"
+                        ? "Đang bán"
+                        : tour.status === "paused"
+                          ? "Tạm dừng"
+                          : "Hết hạn"}
                     </span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center justify-end gap-2">
-                    <a
-                      href={`/deals/${tour.slug || tour.id}`}
-                      target="_blank"
-                      className="rounded p-1 text-blue-600 hover:bg-blue-50"
-                    >
-                      <Eye size={16} />
-                    </a>
-                    <button
-                      onClick={() => handleEdit(tour)}
-                      className="rounded p-1 text-orange-600 hover:bg-orange-50"
-                    >
-                      <Pencil size={16} />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(tour.id)}
-                      className="rounded p-1 text-red-600 hover:bg-red-50"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center justify-end gap-2">
+                      <a
+                        href={`/deals/${tour.slug || tour.id}`}
+                        target="_blank"
+                        className="rounded p-1 text-blue-600 hover:bg-blue-50"
+                      >
+                        <Eye size={16} />
+                      </a>
+                      <button
+                        onClick={() => handleEdit(tour)}
+                        className="rounded p-1 text-orange-600 hover:bg-orange-50"
+                      >
+                        <Pencil size={16} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(tour.id)}
+                        className="rounded p-1 text-red-600 hover:bg-red-50"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -501,7 +550,9 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
 
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div className="md:col-span-2">
-                  <h4 className="mb-4 text-lg font-semibold">Thông tin cơ bản</h4>
+                  <h4 className="mb-4 text-lg font-semibold">
+                    Thông tin cơ bản
+                  </h4>
                 </div>
 
                 <div className="md:col-span-2">
@@ -552,7 +603,8 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
                         alt="Preview"
                         className="h-32 w-full rounded-lg object-cover"
                         onError={(e) => {
-                          (e.target as HTMLImageElement).src = "https://via.placeholder.com/400x300?text=Invalid+URL";
+                          (e.target as HTMLImageElement).src =
+                            "https://via.placeholder.com/400x300?text=Invalid+URL";
                         }}
                       />
                     </div>
@@ -590,7 +642,9 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
                       className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange-500 focus:outline-none"
                     >
                       {domesticRegions.map((region) => (
-                        <option key={region.id} value={region.id}>{region.label}</option>
+                        <option key={region.id} value={region.id}>
+                          {region.label}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -608,14 +662,18 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
                         className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange-500 focus:outline-none"
                       >
                         {continents.map((continent) => (
-                          <option key={continent.id} value={continent.id}>{continent.label}</option>
+                          <option key={continent.id} value={continent.id}>
+                            {continent.label}
+                          </option>
                         ))}
                       </select>
                     </div>
 
                     {formData.continent === "ASIA" && (
                       <div className="md:col-span-2">
-                        <label className="mb-2 block text-sm font-medium">Khu vực con (Châu Á)</label>
+                        <label className="mb-2 block text-sm font-medium">
+                          Khu vực con (Châu Á)
+                        </label>
                         <select
                           name="subRegion"
                           value={formData.subRegion || ""}
@@ -624,7 +682,9 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
                         >
                           <option value="">-- Chọn khu vực --</option>
                           {asiaRegions.map((region) => (
-                            <option key={region.id} value={region.id}>{region.label}</option>
+                            <option key={region.id} value={region.id}>
+                              {region.label}
+                            </option>
                           ))}
                         </select>
                       </div>
@@ -666,7 +726,9 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-medium">Thời gian</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    Thời gian
+                  </label>
                   <input
                     type="text"
                     name="duration"
@@ -726,7 +788,9 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-medium">Giảm giá</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    Giảm giá
+                  </label>
                   <input
                     type="text"
                     name="discount"
@@ -738,7 +802,9 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-medium">Thời gian còn lại</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    Thời gian còn lại
+                  </label>
                   <input
                     type="text"
                     name="timeLeft"
@@ -750,7 +816,9 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-medium">Đánh giá</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    Đánh giá
+                  </label>
                   <input
                     type="number"
                     name="rating"
@@ -764,7 +832,9 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-medium">Số đánh giá</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    Số đánh giá
+                  </label>
                   <input
                     type="number"
                     name="reviews"
@@ -800,27 +870,39 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
                     onChange={handleInputChange}
                     className="h-4 w-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500"
                   />
-                  <label className="ml-2 text-sm font-medium">Hiển thị nổi bật</label>
+                  <label className="ml-2 text-sm font-medium">
+                    Hiển thị nổi bật
+                  </label>
                 </div>
 
                 <div className="md:col-span-2">
-                  <h4 className="mb-4 text-lg font-semibold">Thông tin bổ sung</h4>
+                  <h4 className="mb-4 text-lg font-semibold">
+                    Thông tin bổ sung
+                  </h4>
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="mb-2 block text-sm font-medium">Điểm nổi bật (mỗi dòng một mục)</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    Điểm nổi bật (mỗi dòng một mục)
+                  </label>
                   <textarea
                     rows={4}
                     placeholder="Khám phá Vịnh Hạ Long tuyệt đẹp&#10;Thưởng thức hải sản tươi ngon&#10;Nghỉ dưỡng trên du thuyền 5 sao"
-                    onChange={(e) => handleArrayChange("highlights", e.target.value)}
-                    defaultValue={formData.highlights?.map((h) => h.highlight).join("\n")}
+                    onChange={(e) =>
+                      handleArrayChange("highlights", e.target.value)
+                    }
+                    defaultValue={formData.highlights
+                      ?.map((h) => h.highlight)
+                      .join("\n")}
                     className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange-500 focus:outline-none"
                   />
                 </div>
 
                 <div className="md:col-span-2">
                   <div className="mb-4 flex items-center justify-between">
-                    <label className="text-sm font-medium">Lịch trình chi tiết</label>
+                    <label className="text-sm font-medium">
+                      Lịch trình chi tiết
+                    </label>
                     <button
                       type="button"
                       onClick={addItineraryDay}
@@ -833,12 +915,17 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
 
                   <div className="space-y-4">
                     {itineraryItems.map((item, index) => (
-                      <div key={index} className="rounded-lg border border-gray-200 bg-gray-50 p-4">
+                      <div
+                        key={index}
+                        className="rounded-lg border border-gray-200 bg-gray-50 p-4"
+                      >
                         <div className="mb-3 flex items-center justify-between">
                           <input
                             type="text"
                             value={item.day}
-                            onChange={(e) => updateItineraryDay(index, "day", e.target.value)}
+                            onChange={(e) =>
+                              updateItineraryDay(index, "day", e.target.value)
+                            }
                             placeholder="Ngày 1"
                             className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-semibold focus:border-orange-500 focus:outline-none"
                           />
@@ -854,14 +941,18 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
                         <input
                           type="text"
                           value={item.title}
-                          onChange={(e) => updateItineraryDay(index, "title", e.target.value)}
+                          onChange={(e) =>
+                            updateItineraryDay(index, "title", e.target.value)
+                          }
                           placeholder="Tiêu đề ngày"
                           className="mb-2 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-orange-500 focus:outline-none"
                         />
 
                         <textarea
                           value={item.desc}
-                          onChange={(e) => updateItineraryDay(index, "desc", e.target.value)}
+                          onChange={(e) =>
+                            updateItineraryDay(index, "desc", e.target.value)
+                          }
                           placeholder="Mô tả chi tiết"
                           rows={3}
                           className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-orange-500 focus:outline-none"
@@ -871,30 +962,45 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
 
                     {itineraryItems.length === 0 && (
                       <div className="rounded-lg border-2 border-dashed border-gray-300 p-8 text-center">
-                        <p className="text-sm text-gray-500">Chưa có lịch trình nào. Nhấn &quot;Thêm ngày&quot; để bắt đầu.</p>
+                        <p className="text-sm text-gray-500">
+                          Chưa có lịch trình nào. Nhấn &quot;Thêm ngày&quot; để
+                          bắt đầu.
+                        </p>
                       </div>
                     )}
                   </div>
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="mb-2 block text-sm font-medium">Dịch vụ bao gồm (mỗi dòng một mục)</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    Dịch vụ bao gồm (mỗi dòng một mục)
+                  </label>
                   <textarea
                     rows={3}
                     placeholder="Vé máy bay khứ hồi&#10;Khách sạn 4 sao&#10;Bữa ăn theo chương trình"
-                    onChange={(e) => handleArrayChange("included", e.target.value)}
-                    defaultValue={formData.included?.map((s) => s.service).join("\n")}
+                    onChange={(e) =>
+                      handleArrayChange("included", e.target.value)
+                    }
+                    defaultValue={formData.included
+                      ?.map((s) => s.service)
+                      .join("\n")}
                     className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange-500 focus:outline-none"
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="mb-2 block text-sm font-medium">Dịch vụ không bao gồm (mỗi dòng một mục)</label>
+                  <label className="mb-2 block text-sm font-medium">
+                    Dịch vụ không bao gồm (mỗi dòng một mục)
+                  </label>
                   <textarea
                     rows={3}
                     placeholder="Chi phí cá nhân&#10;Bảo hiểm du lịch&#10;Thuế VAT"
-                    onChange={(e) => handleArrayChange("excluded", e.target.value)}
-                    defaultValue={formData.excluded?.map((s) => s.service).join("\n")}
+                    onChange={(e) =>
+                      handleArrayChange("excluded", e.target.value)
+                    }
+                    defaultValue={formData.excluded
+                      ?.map((s) => s.service)
+                      .join("\n")}
                     className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange-500 focus:outline-none"
                   />
                 </div>
@@ -917,7 +1023,11 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
                   disabled={loading}
                   className="rounded-lg bg-orange-600 px-6 py-2 font-semibold text-white hover:bg-orange-700 disabled:opacity-50"
                 >
-                  {loading ? "Đang lưu..." : editingTour ? "Cập nhật" : "Tạo mới"}
+                  {loading
+                    ? "Đang lưu..."
+                    : editingTour
+                      ? "Cập nhật"
+                      : "Tạo mới"}
                 </button>
               </div>
             </form>

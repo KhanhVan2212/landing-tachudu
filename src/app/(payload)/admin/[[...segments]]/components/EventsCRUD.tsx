@@ -15,11 +15,9 @@ import {
   Star,
   Calendar,
 } from "lucide-react";
+import { toast } from "sonner";
 
-const TiptapEditor = dynamic(
-  () => import("./TiptapEditor"),
-  { ssr: false }
-);
+const TiptapEditor = dynamic(() => import("./TiptapEditor"), { ssr: false });
 
 interface Event {
   id: string;
@@ -126,7 +124,7 @@ export default function EventsCRUD({ onStatsUpdate }: Props) {
       }
     } catch (error) {
       console.error("Error uploading:", error);
-      alert("Có lỗi khi upload ảnh");
+      toast.error("Có lỗi khi upload ảnh");
       return null;
     } finally {
       setUploadingImage(false);
@@ -198,7 +196,10 @@ export default function EventsCRUD({ onStatsUpdate }: Props) {
       date: event.date,
       excerpt: event.excerpt,
       coverImage: coverImageId,
-      content: typeof event.content === "string" ? event.content : JSON.stringify(event.content),
+      content:
+        typeof event.content === "string"
+          ? event.content
+          : JSON.stringify(event.content),
       featured: event.featured,
       highlight: event.highlight,
       status: event.status,
@@ -213,7 +214,7 @@ export default function EventsCRUD({ onStatsUpdate }: Props) {
 
     // Validate coverImage ID
     if (!formData.coverImage) {
-      alert("Vui lòng chọn ảnh bìa");
+      toast.error("Vui lòng chọn ảnh bìa");
       return;
     }
 
@@ -248,40 +249,51 @@ export default function EventsCRUD({ onStatsUpdate }: Props) {
       const data = await response.json();
 
       if (data.success) {
-        alert(editingEvent ? "Cập nhật thành công!" : "Thêm mới thành công!");
+        toast.success(
+          editingEvent ? "Cập nhật thành công!" : "Thêm mới thành công!",
+        );
         setShowModal(false);
         fetchEvents();
         onStatsUpdate?.();
       } else {
-        alert("Có lỗi xảy ra: " + (data.error || "Unknown error"));
+        toast.error("Có lỗi xảy ra: " + (data.error || "Unknown error"));
       }
     } catch (error) {
       console.error("Error saving:", error);
-      alert("Có lỗi xảy ra khi lưu dữ liệu");
+      toast.error("Có lỗi xảy ra khi lưu dữ liệu");
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Bạn có chắc chắn muốn xóa event này?")) return;
+  const handleDelete = (id: string) => {
+    toast("Bạn có chắc chắn muốn xóa event này?", {
+      action: {
+        label: "Xóa",
+        onClick: async () => {
+          try {
+            const response = await fetch(`/api/events/${id}`, {
+              method: "DELETE",
+            });
 
-    try {
-      const response = await fetch(`/api/events/${id}`, {
-        method: "DELETE",
-      });
+            const data = await response.json();
 
-      const data = await response.json();
-
-      if (data.success) {
-        alert("Xóa thành công!");
-        fetchEvents();
-        onStatsUpdate?.();
-      } else {
-        alert("Có lỗi xảy ra khi xóa");
-      }
-    } catch (error) {
-      console.error("Error deleting:", error);
-      alert("Có lỗi xảy ra khi xóa");
-    }
+            if (data.success) {
+              toast.success("Xóa thành công!");
+              fetchEvents();
+              onStatsUpdate?.();
+            } else {
+              toast.error("Có lỗi xảy ra khi xóa");
+            }
+          } catch (error) {
+            console.error("Error deleting:", error);
+            toast.error("Có lỗi xảy ra khi xóa");
+          }
+        },
+      },
+      cancel: {
+        label: "Hủy",
+        onClick: () => {},
+      },
+    });
   };
 
   const selectMedia = (mediaId: string) => {
@@ -481,7 +493,7 @@ export default function EventsCRUD({ onStatsUpdate }: Props) {
                         setFormData({
                           ...formData,
                           title: e.target.value,
-                          slug: generateSlug(e.target.value)
+                          slug: generateSlug(e.target.value),
                         });
                       }}
                       className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange-500 focus:outline-none"

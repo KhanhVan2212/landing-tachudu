@@ -12,6 +12,7 @@ import {
   Save,
   ImagePlus,
 } from "lucide-react";
+import { toast } from "sonner";
 
 interface JourneyGalleryItem {
   id: string;
@@ -46,10 +47,14 @@ export default function JourneyGalleryCRUD({ onStatsUpdate }: Props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
   const [showModal, setShowModal] = useState(false);
-  const [editingItem, setEditingItem] = useState<JourneyGalleryItem | null>(null);
+  const [editingItem, setEditingItem] = useState<JourneyGalleryItem | null>(
+    null,
+  );
   const [mediaFiles, setMediaFiles] = useState<any[]>([]);
   const [showMediaPicker, setShowMediaPicker] = useState(false);
-  const [mediaPickerMode, setMediaPickerMode] = useState<"featured" | "gallery">("featured");
+  const [mediaPickerMode, setMediaPickerMode] = useState<
+    "featured" | "gallery"
+  >("featured");
   const [uploadingImage, setUploadingImage] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -113,14 +118,14 @@ export default function JourneyGalleryCRUD({ onStatsUpdate }: Props) {
 
       if (data.success) {
         await fetchMediaFiles();
-        alert("Upload thành công!");
+        toast.success("Upload thành công!");
         return data.doc.id;
       } else {
         throw new Error(data.error || "Upload failed");
       }
     } catch (error) {
       console.error("Error uploading:", error);
-      alert("Có lỗi khi upload ảnh");
+      toast.error("Có lỗi khi upload ảnh");
       return null;
     } finally {
       setUploadingImage(false);
@@ -155,9 +160,10 @@ export default function JourneyGalleryCRUD({ onStatsUpdate }: Props) {
         typeof item.featuredImage === "object"
           ? item.featuredImage.id
           : item.featuredImage,
-      gallery: item.gallery?.map((g: any) =>
-        typeof g.image === "object" ? g.image.id : g.image
-      ) || [],
+      gallery:
+        item.gallery?.map((g: any) =>
+          typeof g.image === "object" ? g.image.id : g.image,
+        ) || [],
       description: item.description || "",
       status: item.status,
       featured: item.featured,
@@ -189,40 +195,51 @@ export default function JourneyGalleryCRUD({ onStatsUpdate }: Props) {
       const data = await response.json();
 
       if (data.success) {
-        alert(editingItem ? "Cập nhật thành công!" : "Thêm mới thành công!");
+        toast.success(
+          editingItem ? "Cập nhật thành công!" : "Thêm mới thành công!",
+        );
         setShowModal(false);
         fetchItems();
         onStatsUpdate?.();
       } else {
-        alert("Có lỗi xảy ra: " + (data.error || "Unknown error"));
+        toast.error("Có lỗi xảy ra: " + (data.error || "Unknown error"));
       }
     } catch (error) {
       console.error("Error saving:", error);
-      alert("Có lỗi xảy ra khi lưu dữ liệu");
+      toast.error("Có lỗi xảy ra khi lưu dữ liệu");
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Bạn có chắc chắn muốn xóa mục này?")) return;
+  const handleDelete = (id: string) => {
+    toast("Bạn có chắc chắn muốn xóa mục này?", {
+      action: {
+        label: "Xóa",
+        onClick: async () => {
+          try {
+            const response = await fetch(`/api/journey-gallery/${id}`, {
+              method: "DELETE",
+            });
 
-    try {
-      const response = await fetch(`/api/journey-gallery/${id}`, {
-        method: "DELETE",
-      });
+            const data = await response.json();
 
-      const data = await response.json();
-
-      if (data.success) {
-        alert("Xóa thành công!");
-        fetchItems();
-        onStatsUpdate?.();
-      } else {
-        alert("Có lỗi xảy ra khi xóa");
-      }
-    } catch (error) {
-      console.error("Error deleting:", error);
-      alert("Có lỗi xảy ra khi xóa");
-    }
+            if (data.success) {
+              toast.success("Xóa thành công!");
+              fetchItems();
+              onStatsUpdate?.();
+            } else {
+              toast.error("Có lỗi xảy ra khi xóa");
+            }
+          } catch (error) {
+            console.error("Error deleting:", error);
+            toast.error("Có lỗi xảy ra khi xóa");
+          }
+        },
+      },
+      cancel: {
+        label: "Hủy",
+        onClick: () => {},
+      },
+    });
   };
 
   const selectMedia = (mediaId: string) => {
@@ -316,7 +333,10 @@ export default function JourneyGalleryCRUD({ onStatsUpdate }: Props) {
           let imageUrl = "";
           if (item.featuredImage) {
             if (typeof item.featuredImage === "object") {
-              imageUrl = item.featuredImage.cloudinaryUrl || item.featuredImage.url || "";
+              imageUrl =
+                item.featuredImage.cloudinaryUrl ||
+                item.featuredImage.url ||
+                "";
             } else if (typeof item.featuredImage === "string") {
               imageUrl = getMediaUrl(item.featuredImage);
             }
@@ -669,7 +689,8 @@ export default function JourneyGalleryCRUD({ onStatsUpdate }: Props) {
             {/* Upload Section */}
             <div className="border-b bg-gray-50 p-6">
               <label className="mb-2 block text-sm font-medium">
-                Upload ảnh mới {mediaPickerMode === "gallery" && "(Chọn nhiều ảnh)"}
+                Upload ảnh mới{" "}
+                {mediaPickerMode === "gallery" && "(Chọn nhiều ảnh)"}
               </label>
               <input
                 type="file"
@@ -717,7 +738,8 @@ export default function JourneyGalleryCRUD({ onStatsUpdate }: Props) {
               )}
               {mediaPickerMode === "gallery" && (
                 <p className="mt-2 text-xs text-gray-500">
-                  💡 Tip: Giữ Ctrl (Windows) hoặc Cmd (Mac) để chọn nhiều ảnh cùng lúc
+                  💡 Tip: Giữ Ctrl (Windows) hoặc Cmd (Mac) để chọn nhiều ảnh
+                  cùng lúc
                 </p>
               )}
             </div>
