@@ -9,6 +9,7 @@ import Media from "./src/collections/Media";
 import Pages from "./src/collections/Pages";
 import Posts from "./src/collections/Posts";
 import Tours from "./src/collections/Tours";
+import JourneyGallery from "./src/collections/JourneyGallery";
 
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || "http://localhost:3000",
@@ -22,7 +23,7 @@ export default buildConfig({
     admin: "/admin",
   },
 
-  collections: [Users, Media, Pages, Posts, Tours], // Thêm Tours vào đây
+  collections: [Users, Media, Pages, Posts, Tours, JourneyGallery],
 
   secret: process.env.PAYLOAD_SECRET || "",
 

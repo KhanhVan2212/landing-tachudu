@@ -2,12 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   ChevronLeft,
   ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
   Camera,
   X,
   Calendar,
@@ -20,13 +18,9 @@ import {
   Dialog,
   DialogContent,
   DialogTrigger,
-  DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
-import { journeyImages } from "../../about/components/journey-diary";
 
 const categories = [
   "Tất cả",
@@ -38,21 +32,68 @@ const categories = [
   "Tour Châu Phi",
 ];
 
+interface JourneyImage {
+  id: string;
+  alt: string;
+  category: string;
+  tourName: string;
+  date: string;
+  src: string;
+  gallery: string[];
+  description?: string;
+  featured: boolean;
+}
+
 export function JourneyDiary() {
-  const [selectedTourId, setSelectedTourId] = useState<number | null>(null);
+  const [journeyImages, setJourneyImages] = useState<JourneyImage[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedTourId, setSelectedTourId] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("Tất cả");
   const [currentPage, setCurrentPage] = useState(0);
 
   const ITEMS_PER_PAGE = 6;
 
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const response = await fetch("/api/journey-gallery");
+        const data = await response.json();
+        if (data.success) {
+          // Transform data to match component format
+          const transformed = data.docs.map((doc: any) => ({
+            id: doc.id,
+            alt: doc.alt,
+            category: doc.category,
+            tourName: doc.tourName,
+            date: doc.date,
+            src: typeof doc.featuredImage === "object"
+              ? doc.featuredImage.cloudinaryUrl
+              : doc.featuredImage,
+            gallery: doc.gallery?.map((g: any) =>
+              typeof g.image === "object" ? g.image.cloudinaryUrl : g.image
+            ) || [],
+            description: doc.description,
+            featured: doc.featured,
+          }));
+          setJourneyImages(transformed);
+        }
+      } catch (error) {
+        console.error("Error fetching gallery:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGallery();
+  }, []);
+
   const filteredImages = useMemo(() => {
-    // Reset page when filter changes
     setCurrentPage(0);
     return selectedCategory === "Tất cả"
       ? journeyImages
       : journeyImages.filter((img) => img.category === selectedCategory);
-  }, [selectedCategory]);
+  }, [selectedCategory, journeyImages]);
 
   const totalPages = Math.ceil(filteredImages.length / ITEMS_PER_PAGE);
 
@@ -86,6 +127,39 @@ export function JourneyDiary() {
       prev === 0 ? selectedTour.gallery.length - 1 : prev - 1,
     );
   };
+
+  if (loading) {
+    return (
+      <section className="relative overflow-hidden bg-[#fafaf9] py-24">
+        <div className="container relative mx-auto max-w-7xl px-4">
+          <div className="flex items-center justify-center py-20">
+            <div className="flex flex-col items-center gap-4">
+              <div className="h-12 w-12 animate-spin rounded-full border-4 border-orange-500 border-t-transparent"></div>
+              <p className="text-gray-600">Đang tải thư viện ảnh...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (journeyImages.length === 0) {
+    return (
+      <section className="relative overflow-hidden bg-[#fafaf9] py-24">
+        <div className="container relative mx-auto max-w-7xl px-4">
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <Camera className="mb-4 h-16 w-16 text-gray-400" />
+            <h3 className="mb-2 text-2xl font-bold text-gray-900">
+              Chưa có ảnh nào
+            </h3>
+            <p className="text-gray-600">
+              Thư viện ảnh đang được cập nhật. Vui lòng quay lại sau.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="relative overflow-hidden bg-[#fafaf9] py-24">
@@ -318,9 +392,8 @@ export function JourneyDiary() {
                             </div>
 
                             <p className="mb-6 text-sm leading-relaxed text-slate-500">
-                              Hình ảnh thực tế từ đoàn khách tham gia hành
-                              trình. Chúng tôi cam kết chất lượng dịch vụ và
-                              những trải nghiệm chân thực nhất.
+                              {selectedTour?.description ||
+                                "Hình ảnh thực tế từ đoàn khách tham gia hành trình. Chúng tôi cam kết chất lượng dịch vụ và những trải nghiệm chân thực nhất."}
                             </p>
 
                             <div className="grid grid-cols-4 gap-2">
@@ -375,6 +448,13 @@ export function JourneyDiary() {
               />
             ))}
           </div>
+
+          {/* No results */}
+          {filteredImages.length === 0 && (
+            <div className="py-12 text-center text-gray-500">
+              Không có ảnh nào trong danh mục này
+            </div>
+          )}
         </div>
       </div>
     </section>
