@@ -2,18 +2,19 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import ToursCRUD from ".//ToursCRUD";
+import ToursCRUD from "./ToursCRUD";
 import JourneyGalleryCRUD from "./JourneyGalleryCRUD";
+import EventsCRUD from "./EventsCRUD";
 
-
-type Tab = "dashboard" | "destinations" | "tours" | "journey-gallery";
+type Tab = "dashboard" | "tours" | "journey-gallery" | "events";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<Tab>("dashboard");
   const [user, setUser] = useState<any>(null);
   const [stats, setStats] = useState({
-    destinations: 0,
     tours: 0,
+    journeyGallery: 0,
+    events: 0,
   });
   const router = useRouter();
 
@@ -28,20 +29,23 @@ export default function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
-      // Fetch destinations stats
-      const destResponse = await fetch("/api/destinations");
-      const destData = await destResponse.json();
-
       // Fetch tours stats
       const toursResponse = await fetch("/api/tours?limit=1");
       const toursData = await toursResponse.json();
 
-      if (destData.success && toursData.success) {
-        setStats({
-          destinations: destData.totalDocs || 0,
-          tours: toursData.totalDocs || 0,
-        });
-      }
+      // Fetch journey gallery stats
+      const journeyResponse = await fetch("/api/journey-gallery?limit=1");
+      const journeyData = await journeyResponse.json();
+
+      // Fetch events stats
+      const eventsResponse = await fetch("/api/events?limit=1");
+      const eventsData = await eventsResponse.json();
+
+      setStats({
+        tours: toursData.totalDocs || 0,
+        journeyGallery: journeyData.totalDocs || 0,
+        events: eventsData.totalDocs || 0,
+      });
     } catch (error) {
       console.error("Error fetching stats:", error);
     }
@@ -61,10 +65,12 @@ export default function AdminDashboard() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <h1 className="text-xl font-bold text-gray-900">
-              Hà Anh Travel CMS Admin
+              TACHUDU CMS Admin
             </h1>
             <div className="flex items-center gap-4">
-              {user && <span className="text-sm text-gray-600">{user.email}</span>}
+              {user && (
+                <span className="text-sm text-gray-600">{user.email}</span>
+              )}
               <button
                 onClick={handleLogout}
                 className="px-4 py-2 text-sm text-red-600 hover:text-red-700"
@@ -110,6 +116,16 @@ export default function AdminDashboard() {
             >
               Journey Gallery
             </button>
+            <button
+              onClick={() => setActiveTab("events")}
+              className={`whitespace-nowrap px-6 py-3 text-sm font-medium ${
+                activeTab === "events"
+                  ? "border-b-2 border-orange-500 text-orange-600"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Events & News
+            </button>
           </nav>
         </div>
 
@@ -147,11 +163,11 @@ export default function AdminDashboard() {
                   </p>
                 </div>
 
-                {/* Destinations Stats */}
+                {/* Journey Gallery Stats */}
                 <div className="rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 p-6 shadow-sm">
                   <div className="mb-2 flex items-center justify-between">
                     <div className="text-sm font-medium text-blue-600">
-                      Destinations
+                      Journey Gallery
                     </div>
                     <svg
                       className="h-8 w-8 text-blue-400"
@@ -163,49 +179,171 @@ export default function AdminDashboard() {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                       />
                     </svg>
                   </div>
                   <div className="text-3xl font-bold text-blue-600">
-                    {stats.destinations}
+                    {stats.journeyGallery}
                   </div>
                   <p className="mt-2 text-xs text-blue-600">
-                    Điểm đến phổ biến
+                    Hành trình đã lưu giữ
                   </p>
                 </div>
 
-                {/* Quick Actions Card */}
-                <div className="rounded-xl bg-gradient-to-br from-green-50 to-green-100 p-6 shadow-sm">
-                  <div className="mb-2 text-sm font-medium text-green-600">
-                    Quick Actions
-                  </div>
-                  <div className="space-y-2">
-                    <button
-                      onClick={() => setActiveTab("tours")}
-                      className="w-full rounded-lg bg-white px-4 py-2 text-left text-sm font-medium text-green-700 shadow-sm hover:bg-green-50"
+                {/* Events Stats */}
+                <div className="rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 p-6 shadow-sm">
+                  <div className="mb-2 flex items-center justify-between">
+                    <div className="text-sm font-medium text-purple-600">
+                      Events & News
+                    </div>
+                    <svg
+                      className="h-8 w-8 text-purple-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
                     >
-                      + Thêm Tour mới
-                    </button>
-                    <button
-                      onClick={() => setActiveTab("destinations")}
-                      className="w-full rounded-lg bg-white px-4 py-2 text-left text-sm font-medium text-green-700 shadow-sm hover:bg-green-50"
-                    >
-                      + Thêm Destination
-                    </button>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                      />
+                    </svg>
                   </div>
+                  <div className="text-3xl font-bold text-purple-600">
+                    {stats.events}
+                  </div>
+                  <p className="mt-2 text-xs text-purple-600">
+                    Tổng số sự kiện & tin tức
+                  </p>
                 </div>
               </div>
 
-              {/* Recent Activity */}
+              {/* Quick Actions */}
               <div className="mt-8">
-                <h3 className="mb-4 text-lg font-semibold">Hướng dẫn sử dụng</h3>
+                <h3 className="mb-4 text-lg font-semibold">Quick Actions</h3>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+                  <button
+                    onClick={() => setActiveTab("tours")}
+                    className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-4 text-left transition hover:border-orange-500 hover:bg-orange-50"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100">
+                      <svg
+                        className="h-5 w-5 text-orange-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">Thêm Tour</p>
+                      <p className="text-xs text-gray-500">
+                        Tạo tour du lịch mới
+                      </p>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab("journey-gallery")}
+                    className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-4 text-left transition hover:border-blue-500 hover:bg-blue-50"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
+                      <svg
+                        className="h-5 w-5 text-blue-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">
+                        Thêm Gallery
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        Upload ảnh hành trình
+                      </p>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab("events")}
+                    className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-4 text-left transition hover:border-purple-500 hover:bg-purple-50"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-100">
+                      <svg
+                        className="h-5 w-5 text-purple-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">Thêm Event</p>
+                      <p className="text-xs text-gray-500">
+                        Đăng tin tức mới
+                      </p>
+                    </div>
+                  </button>
+
+                  <a
+                    href="/admin"
+                    target="_blank"
+                    className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-4 text-left transition hover:border-green-500 hover:bg-green-50"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
+                      <svg
+                        className="h-5 w-5 text-green-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">
+                        Payload Admin
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        Quản lý nâng cao
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              {/* Guide */}
+              <div className="mt-8">
+                <h3 className="mb-4 text-lg font-semibold">
+                  Hướng dẫn sử dụng
+                </h3>
                 <div className="space-y-3 rounded-lg bg-gray-50 p-4">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-orange-100 text-xs font-bold text-orange-600">
@@ -216,8 +354,9 @@ export default function AdminDashboard() {
                         Quản lý Tours
                       </p>
                       <p className="text-xs text-gray-600">
-                        Vào tab &quot;Tours&quot; để thêm, sửa, xóa và quản lý các tour du
-                        lịch
+                        Vào tab &quot;Tours&quot; để thêm, sửa, xóa và quản lý
+                        các tour du lịch. Upload ảnh từ máy và quản lý thông
+                        tin chi tiết.
                       </p>
                     </div>
                   </div>
@@ -227,10 +366,11 @@ export default function AdminDashboard() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-900">
-                        Quản lý Destinations
+                        Quản lý Journey Gallery
                       </p>
                       <p className="text-xs text-gray-600">
-                        Vào tab &quot;Destinations&quot; để quản lý các điểm đến
+                        Upload album ảnh hành trình của khách hàng. Có thể chọn
+                        nhiều ảnh cùng lúc và phân loại theo danh mục.
                       </p>
                     </div>
                   </div>
@@ -240,12 +380,74 @@ export default function AdminDashboard() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-900">
+                        Quản lý Events & News
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        Đăng tin tức và sự kiện. Có thể đánh dấu &quot;Tin nổi
+                        bật&quot; hoặc &quot;Sự kiện nổi bật&quot; để hiển thị
+                        ưu tiên.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-orange-100 text-xs font-bold text-orange-600">
+                      4
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">
+                        Upload ảnh từ máy
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        Tất cả ảnh được upload tự động lên Cloudinary. Giữ Ctrl
+                        (Windows) hoặc Cmd (Mac) để chọn nhiều ảnh cùng lúc.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-orange-100 text-xs font-bold text-orange-600">
+                      5
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">
                         Xem trước nội dung
                       </p>
                       <p className="text-xs text-gray-600">
-                        Click icon mắt để xem tour trên website
+                        Click icon mắt để xem nội dung trên website. Tất cả
+                        thay đổi hiển thị real-time sau khi lưu.
                       </p>
                     </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* System Info */}
+              <div className="mt-8 rounded-lg border border-blue-200 bg-blue-50 p-4">
+                <div className="flex items-start gap-3">
+                  <svg
+                    className="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <div>
+                    <p className="text-sm font-semibold text-blue-900">
+                      Thông tin hệ thống
+                    </p>
+                    <p className="mt-1 text-xs text-blue-700">
+                      • Database: MongoDB Atlas
+                      <br />
+                      • Storage: Cloudinary (10GB miễn phí)
+                      <br />
+                      • CMS: Payload 3.0 + Next.js 15
+                      <br />• Mọi thay đổi được lưu trữ an toàn trên cloud
+                    </p>
                   </div>
                 </div>
               </div>
@@ -256,7 +458,7 @@ export default function AdminDashboard() {
           {activeTab === "journey-gallery" && (
             <JourneyGalleryCRUD onStatsUpdate={fetchStats} />
           )}
-
+          {activeTab === "events" && <EventsCRUD onStatsUpdate={fetchStats} />}
         </div>
       </div>
     </div>
