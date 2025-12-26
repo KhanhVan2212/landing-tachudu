@@ -1,4 +1,3 @@
-// payload.config.ts
 import { buildConfig } from "payload";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import path from "path";
@@ -10,6 +9,7 @@ import Pages from "./src/collections/Pages";
 import Posts from "./src/collections/Posts";
 import Tours from "./src/collections/Tours";
 import JourneyGallery from "./src/collections/JourneyGallery";
+import Events from "./src/collections/Events";
 
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || "http://localhost:3000",
@@ -23,7 +23,15 @@ export default buildConfig({
     admin: "/admin",
   },
 
-  collections: [Users, Media, Pages, Posts, Tours, JourneyGallery],
+  collections: [
+    Users,
+    Media,
+    Pages,
+    Posts,
+    Tours,
+    JourneyGallery,
+    Events, // THÊM DÒNG NÀY
+  ],
 
   secret: process.env.PAYLOAD_SECRET || "",
 

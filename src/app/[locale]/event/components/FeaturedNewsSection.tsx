@@ -1,52 +1,67 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const featuredPost = {
-  slug: "dai-hoi-hoi-nong-dan-ha-noi-lan-thu-xi",
-  title:
-    "Đại hội đại biểu Hội Nông dân Thành phố Hà Nội lần thứ XI diễn ra thành công tốt đẹp",
-  date: "25/11/2025",
-  excerpt:
-    "Đại hội đại biểu Hội Nông dân Thành phố Hà Nội lần thứ XI, nhiệm kỳ 2025–2030 đã diễn ra trang trọng với sự tham gia của 288 đại biểu chính thức, đại diện cho hơn 400.000 hội viên nông dân Thủ đô.",
-  image:
-    "/images/events/1.jpg",
-};
-
-const sidePosts = [
-  {
-    slug: "le-tuyen-duong-thu-khoa-xuat-sac-2025",
-    title: "Lễ tuyên dương thủ khoa xuất sắc 2025: Hành trình tri thức rực rỡ",
-    date: "14/11/2025",
-  },
-  {
-    slug: "vinh-danh-80-guong-mat-thap-lua-thi-dua-yeu-nuoc",
-    title:
-      "Vinh danh 80 gương mặt tiêu biểu “Thắp lửa” phong trào thi đua yêu nước",
-    date: "26/10/2025",
-  },
-  {
-    slug: "weilaiya-hanh-trinh-ruc-ro-2025",
-    title: "Weilaiya - Hành trình rực rỡ: Dấu ấn 2025",
-    date: "23/02/2025",
-  },
-];
+interface Event {
+  id: string;
+  slug: string;
+  title: string;
+  date: string;
+  excerpt: string;
+  cover: string;
+}
 
 const FeaturedNewsSection = () => {
+  const [featuredPost, setFeaturedPost] = useState<Event | null>(null);
+  const [sidePosts, setSidePosts] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("/api/events?featured=true&limit=4");
+        const data = await response.json();
+
+        if (data.success && data.docs.length > 0) {
+          setFeaturedPost(data.docs[0]);
+          setSidePosts(data.docs.slice(1, 4));
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-4 text-center">
+          <div className="py-20 text-gray-500">Đang tải...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!featuredPost) return null;
+
   return (
     <section className="bg-white py-20">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 md:grid-cols-3">
         {/* LEFT – FEATURED */}
         <Link
-          href={`/event/${featuredPost.slug}`}
+          href={`/event/${featuredPost.id}`}
           className="group block md:col-span-2"
         >
           <div className="mb-6 overflow-hidden rounded-xl">
             <Image
               width={600}
-              height={600}
-              src={featuredPost.image}
+              height={360}
+              src={featuredPost.cover}
               alt={featuredPost.title}
               className="h-[360px] w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
@@ -73,8 +88,8 @@ const FeaturedNewsSection = () => {
         <div className="space-y-6">
           {sidePosts.map((post) => (
             <Link
-              key={post.slug}
-              href={`/event/${post.slug}`}
+              key={post.id}
+              href={`/event/${post.id}`}
               className="block rounded-md border-b px-1 pb-4 transition hover:bg-gray-50"
             >
               <p className="text-sm text-gray-500">{post.date}</p>
