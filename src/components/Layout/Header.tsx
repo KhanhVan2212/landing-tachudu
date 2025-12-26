@@ -130,39 +130,47 @@ const Header: React.FC = () => {
         <div className="bg-white shadow-xl lg:hidden">
           <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
             {navLinks.map((link) => {
-              if (link.type === "link") {
-                return (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {link.name}
-                  </Link>
-                );
-              }
+              const isActive =
+                location === link.href ||
+                location === `/en${link.href}` ||
+                location === `/vi${link.href}`;
+
+              const activeClass =
+                "bg-orange-50 text-orange-600 font-semibold border-l-4 border-orange-500";
+              const normalClass =
+                "text-gray-700 hover:text-orange-600";
+
               return (
                 <Link
                   key={link.name}
-                  href={getLink(link.href)}
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600"
+                  href={link.href}
                   onClick={() => setIsOpen(false)}
+                  className={`block rounded-md px-3 py-2 text-base transition-all duration-200 ${
+              isActive ? activeClass : normalClass
+            }`}
                 >
                   {link.name}
                 </Link>
               );
             })}
-            <Link
-              href="/contact"
-              className="block rounded-md px-3 py-2 text-base font-bold text-orange-600"
-              onClick={() => setIsOpen(false)}
-            >
-              Đặt ngay
-            </Link>
-          </div>
-        </div>
-      )}
+
+      {/* CTA */}
+      <Link
+        href="/contact"
+        onClick={() => setIsOpen(false)}
+        className={`block rounded-md px-3 py-2 text-base font-bold ${
+          location === "/contact" ||
+          location === "/en/contact" ||
+          location === "/vi/contact"
+            ? "bg-orange-500 text-white"
+            : "text-orange-600"
+        }`}
+      >
+        Đặt ngay
+      </Link>
+    </div>
+  </div>
+)}
     </nav>
   );
 };
