@@ -85,7 +85,7 @@ export function DreamDestination() {
   };
 
   return (
-    <section className="overflow-hidden bg-white py-24">
+    <section className="bg-white py-24">
       <div className="container mx-auto px-4">
         <div className="mb-16 text-center">
           <span className="text-secondary text-sm font-bold uppercase tracking-widest text-orange-600">
@@ -98,11 +98,13 @@ export function DreamDestination() {
 
         <div className="relative mx-auto max-w-6xl">
           {/* Side Arrows (Desktop) */}
-          <div className="hidden xl:block">
+          <div className="hidden md:block">
             <button
               onClick={handlePrevPage}
               disabled={currentPage === 0}
-              className="group absolute -left-28 top-1/2 z-20 -translate-y-1/2 transition-transform active:scale-95 disabled:cursor-not-allowed disabled:opacity-30"
+              className="group absolute left-2 lg:-left-28 top-1/2 z-20 -translate-y-1/2
+                transition-transform active:scale-95
+                disabled:cursor-not-allowed disabled:opacity-30"
               aria-label="Previous page"
             >
               <div className="relative h-24 w-24">
@@ -113,7 +115,9 @@ export function DreamDestination() {
             <button
               onClick={handleNextPage}
               disabled={currentPage === totalPages - 1}
-              className="group absolute -right-28 top-1/2 z-20 -translate-y-1/2 transition-transform active:scale-95 disabled:cursor-not-allowed disabled:opacity-30"
+              className="group absolute right-2 lg:-right-28 top-1/2 z-20 -translate-y-1/2
+                transition-transform active:scale-95
+                disabled:cursor-not-allowed disabled:opacity-30"
               aria-label="Next page"
             >
               <div className="relative h-24 w-24">
