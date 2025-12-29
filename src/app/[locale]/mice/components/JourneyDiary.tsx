@@ -223,11 +223,13 @@ export function JourneyDiary() {
         {/* Masonry Grid with Pagination */}
         <div className="relative mx-auto max-w-7xl">
           {/* Pagination Controls (Desktop) */}
-          <div className="hidden xl:block">
+          <div className="hidden md:block">
             <button
               onClick={handlePrevPage}
               disabled={currentPage === 0}
-              className="group absolute -left-28 top-1/2 z-20 -translate-y-1/2 transition-transform active:scale-95 disabled:cursor-not-allowed disabled:opacity-30"
+              className="group absolute left-2 lg:-left-28 top-1/2 z-20 -translate-y-1/2
+               transition-transform active:scale-95
+               disabled:cursor-not-allowed disabled:opacity-30"
               aria-label="Previous page"
             >
               <div className="relative h-24 w-24">
@@ -238,7 +240,9 @@ export function JourneyDiary() {
             <button
               onClick={handleNextPage}
               disabled={currentPage === totalPages - 1}
-              className="group absolute -right-28 top-1/2 z-20 -translate-y-1/2 transition-transform active:scale-95 disabled:cursor-not-allowed disabled:opacity-30"
+              className="group absolute right-2 lg:-right-28 top-1/2 z-20 -translate-y-1/2
+               transition-transform active:scale-95
+               disabled:cursor-not-allowed disabled:opacity-30"
               aria-label="Next page"
             >
               <div className="relative h-24 w-24">
