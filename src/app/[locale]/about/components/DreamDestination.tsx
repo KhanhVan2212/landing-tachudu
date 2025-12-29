@@ -15,6 +15,9 @@ export function DreamDestination() {
     alt: string;
   } | null>(null);
 
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
   const [galleryItems, setGalleryItems] = useState<any[]>([]);
 
   useEffect(() => {
@@ -121,7 +124,30 @@ export function DreamDestination() {
           </div>
 
           {/* Grid Layout */}
-          <div className="grid h-[600px] grid-cols-2 grid-rows-3 gap-4 md:h-[500px] md:grid-cols-4 md:grid-rows-2">
+          <div
+            className="grid h-[600px] grid-cols-2 grid-rows-3 gap-4 md:h-[500px] md:grid-cols-4 md:grid-rows-2"
+            onTouchStart={(e) => {
+              setTouchStart(e.targetTouches[0].clientX);
+            }}
+            onTouchMove={(e) => {
+              setTouchEnd(e.targetTouches[0].clientX);
+            }}
+            onTouchEnd={() => {
+              if (!touchStart || !touchEnd) return;
+              const distance = touchStart - touchEnd;
+              const isLeftSwipe = distance > 50;
+              const isRightSwipe = distance < -50;
+              if (isLeftSwipe) {
+                handleNextPage();
+              }
+              if (isRightSwipe) {
+                handlePrevPage();
+              }
+              // Reset
+              setTouchStart(null);
+              setTouchEnd(null);
+            }}
+          >
             {currentItems.map((item, index) => {
               // Determine span based on index for the bento effect
               // First item is large (2x2)

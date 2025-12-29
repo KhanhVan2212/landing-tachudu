@@ -14,11 +14,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -51,6 +47,8 @@ export function JourneyDiary() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("Tất cả");
   const [currentPage, setCurrentPage] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const ITEMS_PER_PAGE = 6;
 
@@ -67,12 +65,14 @@ export function JourneyDiary() {
             category: doc.category,
             tourName: doc.tourName,
             date: doc.date,
-            src: typeof doc.featuredImage === "object"
-              ? doc.featuredImage.cloudinaryUrl
-              : doc.featuredImage,
-            gallery: doc.gallery?.map((g: any) =>
-              typeof g.image === "object" ? g.image.cloudinaryUrl : g.image
-            ) || [],
+            src:
+              typeof doc.featuredImage === "object"
+                ? doc.featuredImage.cloudinaryUrl
+                : doc.featuredImage,
+            gallery:
+              doc.gallery?.map((g: any) =>
+                typeof g.image === "object" ? g.image.cloudinaryUrl : g.image,
+              ) || [],
             description: doc.description,
             featured: doc.featured,
           }));
@@ -251,6 +251,27 @@ export function JourneyDiary() {
           <motion.div
             layout
             className="columns-1 gap-6 space-y-6 sm:columns-2 lg:columns-3"
+            onTouchStart={(e) => {
+              setTouchStart(e.targetTouches[0].clientX);
+            }}
+            onTouchMove={(e) => {
+              setTouchEnd(e.targetTouches[0].clientX);
+            }}
+            onTouchEnd={() => {
+              if (!touchStart || !touchEnd) return;
+              const distance = touchStart - touchEnd;
+              const isLeftSwipe = distance > 50;
+              const isRightSwipe = distance < -50;
+              if (isLeftSwipe) {
+                handleNextPage();
+              }
+              if (isRightSwipe) {
+                handlePrevPage();
+              }
+              // Reset
+              setTouchStart(null);
+              setTouchEnd(null);
+            }}
           >
             <AnimatePresence mode="popLayout">
               {paginatedImages.map((image) => (

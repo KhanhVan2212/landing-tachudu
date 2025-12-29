@@ -20,9 +20,9 @@ const Advantages: React.FC = () => {
               className="relative z-10 h-[600px] w-full rounded-3xl object-cover shadow-2xl"
             />
             <div className="absolute -right-5 bottom-10 z-20 hidden max-w-xs rounded-xl bg-white p-6 shadow-xl md:block">
-              <p className="mb-2 text-4xl font-bold text-orange-600">~10</p>
-              <p className="font-medium text-gray-600">
-                Năm kinh nghiệm trong ngành du lịch & sự kiện
+              <p className="mb-2 text-4xl font-bold text-orange-600">~10 Năm </p>
+              <p className=" font-medium text-gray-600">
+                Kinh nghiệm trong ngành du lịch & sự kiện
               </p>
             </div>
           </div>
