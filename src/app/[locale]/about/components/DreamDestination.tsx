@@ -5,6 +5,7 @@ import { useState, useMemo, useEffect } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { motion, AnimatePresence } from "framer-motion";
 
 const ITEMS_PER_PAGE = 7; // Customize based on grid slots
 
@@ -96,39 +97,35 @@ export function DreamDestination() {
           </h2>
         </div>
 
-        <div className="relative mx-auto max-w-6xl">
-          {/* Side Arrows (Desktop) */}
+        <div className="relative mx-auto max-w-6xl md:px-16">
+          {/* Side Arrows (Desktop only) */}
           <div className="hidden md:block">
             <button
               onClick={handlePrevPage}
               disabled={currentPage === 0}
-              className="group absolute left-2 lg:-left-28 top-1/2 z-20 -translate-y-1/2
-                transition-transform active:scale-95
-                disabled:cursor-not-allowed disabled:opacity-30"
+              className="group absolute left-2 top-1/2 z-20 -translate-y-1/2 transition-transform active:scale-95 disabled:cursor-not-allowed disabled:opacity-30"
               aria-label="Previous page"
             >
               <div className="relative h-24 w-24">
-                <ChevronLeft className="absolute left-2 top-0 h-full w-full text-gray-300" />
-                <ChevronLeft className="relative z-10 h-full w-full text-red-500 transition-transform group-hover:-translate-x-1" />
+                <ChevronLeft className="absolute -left-12 top-0 h-full w-full text-red-500 transition-transform group-hover:-translate-x-1" />
               </div>
             </button>
             <button
               onClick={handleNextPage}
               disabled={currentPage === totalPages - 1}
-              className="group absolute right-2 lg:-right-28 top-1/2 z-20 -translate-y-1/2
-                transition-transform active:scale-95
-                disabled:cursor-not-allowed disabled:opacity-30"
+              className="group absolute right-2 top-1/2 z-20 -translate-y-1/2 transition-transform active:scale-95 disabled:cursor-not-allowed disabled:opacity-30"
               aria-label="Next page"
             >
               <div className="relative h-24 w-24">
-                <ChevronRight className="absolute right-2 top-0 h-full w-full text-gray-300" />
-                <ChevronRight className="relative z-10 h-full w-full text-red-500 transition-transform group-hover:translate-x-1" />
+                <ChevronRight className="absolute -right-12 top-0 h-full w-full text-red-500 transition-transform group-hover:translate-x-1" />
               </div>
             </button>
           </div>
 
           {/* Grid Layout */}
-          <div
+          {/* Grid Layout */}
+          <motion.div
+            layout
             className="grid h-[600px] grid-cols-2 grid-rows-3 gap-4 md:h-[500px] md:grid-cols-4 md:grid-rows-2"
             onTouchStart={(e) => {
               setTouchStart(e.targetTouches[0].clientX);
@@ -152,38 +149,47 @@ export function DreamDestination() {
               setTouchEnd(null);
             }}
           >
-            {currentItems.map((item, index) => {
-              // Determine span based on index for the bento effect
-              // First item is large (2x2)
-              const isLarge = index === 0;
+            <AnimatePresence mode="popLayout">
+              {currentItems.map((item, index) => {
+                // Determine span based on index for the bento effect
+                // First item is large (2x2)
+                const isLarge = index === 0;
 
-              return (
-                <div
-                  key={index}
-                  onClick={() => setSelectedImage(item)}
-                  className={cn(
-                    "group relative cursor-pointer overflow-hidden rounded-3xl",
-                    isLarge ? "col-span-2 row-span-2" : "col-span-1 row-span-1",
-                  )}
-                >
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <span className="text-lg font-bold text-white">
-                      {item.alt}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                return (
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.4 }}
+                    key={`${currentPage}-${index}`} // Combined key to force re-render on page change
+                    onClick={() => setSelectedImage(item)}
+                    className={cn(
+                      "group relative cursor-pointer overflow-hidden rounded-3xl",
+                      isLarge
+                        ? "col-span-2 row-span-2"
+                        : "col-span-1 row-span-1",
+                    )}
+                  >
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      <span className="text-lg font-bold text-white">
+                        {item.alt}
+                      </span>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </motion.div>
 
           {/* Mobile Pagination Dots */}
-          <div className="mt-8 flex justify-center gap-2 xl:hidden">
+          <div className="mt-8 flex justify-center gap-2 md:hidden">
             {Array.from({ length: totalPages }).map((_, idx) => (
               <button
                 key={idx}

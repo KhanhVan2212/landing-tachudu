@@ -70,7 +70,7 @@ const ForeignTourList = ({
                   </span> */}
                   <span className="flex items-center text-xs font-medium text-gray-500">
                     <Clock size={14} className="mr-1 text-orange-500" />{" "}
-                    {deal.timeLeft}
+                    {deal.duration}
                   </span>
                 </div>
                 <h3 className="mb-3 line-clamp-2 h-14 text-lg font-bold text-gray-900 transition-colors group-hover:text-orange-600">

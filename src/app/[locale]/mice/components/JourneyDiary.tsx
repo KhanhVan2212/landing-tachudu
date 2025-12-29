@@ -221,40 +221,34 @@ export function JourneyDiary() {
         </div>
 
         {/* Masonry Grid with Pagination */}
-        <div className="relative mx-auto max-w-7xl">
-          {/* Pagination Controls (Desktop) */}
+        <div className="relative mx-auto max-w-7xl md:px-16">
+          {/* Pagination Controls (Desktop only) */}
           <div className="hidden md:block">
             <button
               onClick={handlePrevPage}
               disabled={currentPage === 0}
-              className="group absolute left-2 lg:-left-28 top-1/2 z-20 -translate-y-1/2
-               transition-transform active:scale-95
-               disabled:cursor-not-allowed disabled:opacity-30"
+              className="group absolute left-2 top-1/2 z-20 -translate-y-1/2 transition-transform active:scale-95 disabled:cursor-not-allowed disabled:opacity-30"
               aria-label="Previous page"
             >
               <div className="relative h-24 w-24">
-                <ChevronLeft className="absolute left-2 top-0 h-full w-full text-gray-300" />
-                <ChevronLeft className="relative z-10 h-full w-full text-orange-500 transition-transform group-hover:-translate-x-1" />
+                <ChevronLeft className="absolute -left-12 top-0 h-full w-full text-orange-500 transition-transform group-hover:-translate-x-1" />
               </div>
             </button>
             <button
               onClick={handleNextPage}
               disabled={currentPage === totalPages - 1}
-              className="group absolute right-2 lg:-right-28 top-1/2 z-20 -translate-y-1/2
-               transition-transform active:scale-95
-               disabled:cursor-not-allowed disabled:opacity-30"
+              className="group absolute right-2 top-1/2 z-20 -translate-y-1/2 transition-transform active:scale-95 disabled:cursor-not-allowed disabled:opacity-30"
               aria-label="Next page"
             >
               <div className="relative h-24 w-24">
-                <ChevronRight className="absolute right-2 top-0 h-full w-full text-gray-300" />
-                <ChevronRight className="relative z-10 h-full w-full text-orange-500 transition-transform group-hover:translate-x-1" />
+                <ChevronRight className="absolute -right-12 top-0 h-full w-full text-orange-500 transition-transform group-hover:translate-x-1" />
               </div>
             </button>
           </div>
 
           <motion.div
             layout
-            className="columns-1 gap-6 space-y-6 sm:columns-2 lg:columns-3"
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
             onTouchStart={(e) => {
               setTouchStart(e.targetTouches[0].clientX);
             }}
@@ -296,19 +290,17 @@ export function JourneyDiary() {
                   >
                     <DialogTrigger asChild>
                       <div className="group relative cursor-pointer overflow-hidden rounded-3xl bg-slate-200 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-                        <div className="relative w-full overflow-hidden">
+                        <div className="relative aspect-[4/3] w-full overflow-hidden">
                           <Image
                             src={image.src}
                             alt={image.alt}
-                            width={600}
-                            height={800}
-                            className="w-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover transition-transform duration-1000 group-hover:scale-110"
                           />
-                          {/* Overlay khi hover */}
                           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                         </div>
 
-                        {/* Content Overlay */}
                         <div className="absolute inset-x-0 bottom-0 translate-y-4 p-6 text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                           <div className="mb-2 flex items-center gap-2">
                             <Badge className="border-none bg-orange-500 px-2 py-0 text-[10px] hover:bg-orange-600">
@@ -334,9 +326,9 @@ export function JourneyDiary() {
                       </div>
                     </DialogTrigger>
 
+                    {/* Dialog Content giữ nguyên */}
                     <DialogContent className="h-[90vh] max-w-[95vw] overflow-hidden rounded-3xl border-none p-0 lg:max-w-[85vw]">
                       <div className="flex h-full flex-col lg:flex-row">
-                        {/* Left: Image Viewer */}
                         <div className="relative flex flex-1 items-center justify-center bg-black p-4">
                           <Button
                             variant="ghost"
@@ -367,7 +359,6 @@ export function JourneyDiary() {
                             </motion.div>
                           </AnimatePresence>
 
-                          {/* Nav Buttons */}
                           <div className="pointer-events-none absolute inset-x-4 top-1/2 flex -translate-y-1/2 justify-between">
                             <Button
                               variant="ghost"
@@ -388,7 +379,6 @@ export function JourneyDiary() {
                           </div>
                         </div>
 
-                        {/* Right: Info Sidebar */}
                         <div className="flex w-full flex-col bg-white p-8 lg:w-[380px]">
                           <div className="flex-1">
                             <Badge
@@ -459,28 +449,27 @@ export function JourneyDiary() {
               ))}
             </AnimatePresence>
           </motion.div>
-
-          {/* Mobile Pagination Dots */}
-          <div className="mt-8 flex justify-center gap-2 xl:hidden">
-            {Array.from({ length: totalPages }).map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentPage(idx)}
-                className={cn(
-                  "h-3 w-3 rounded-full transition-all",
-                  currentPage === idx ? "w-8 bg-orange-500" : "bg-gray-300",
-                )}
-              />
-            ))}
-          </div>
-
-          {/* No results */}
-          {filteredImages.length === 0 && (
-            <div className="py-12 text-center text-gray-500">
-              Không có ảnh nào trong danh mục này
-            </div>
-          )}
         </div>
+
+        <div className="mt-8 flex justify-center gap-2 md:hidden">
+          {Array.from({ length: totalPages }).map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentPage(idx)}
+              className={cn(
+                "h-3 rounded-full transition-all duration-300",
+                currentPage === idx ? "w-8 bg-red-500" : "w-3 bg-gray-300",
+              )}
+            />
+          ))}
+        </div>
+
+        {/* No results message */}
+        {filteredImages.length === 0 && (
+          <div className="py-12 text-center text-gray-500">
+            Không có ảnh nào trong danh mục này
+          </div>
+        )}
       </div>
     </section>
   );

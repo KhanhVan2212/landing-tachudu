@@ -6,7 +6,7 @@ export interface Deal {
   originalPrice: string;
   discount: string;
   image: string;
-  timeLeft: string;
+  duration: string;
   type: string;
   description?: string;
   highlights?: string[];
@@ -60,7 +60,7 @@ const createDeal = (
   originalPrice,
   discount,
   image: image ?? "/images/deals/default.jpg",
-  timeLeft: `${Math.floor(Math.random() * 10) + 1} ngày`,
+  duration: `${Math.floor(Math.random() * 10) + 1} ngày`,
   type,
   location,
   rating: 4.5 + Math.random() * 0.5,
@@ -240,7 +240,7 @@ export const dealsData: Deal[] = [
     "Tour Trọn Gói",
     "Huế - Đà Nẵng - Hội An",
     "Central",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     202,
@@ -252,7 +252,7 @@ export const dealsData: Deal[] = [
     "Tour Ghép",
     "Sapa, Lào Cai",
     "North",
-    "/images/deals/domestic/sapa.jpg"
+    "/images/deals/domestic/sapa.jpg",
   ),
   createDeal(
     203,
@@ -264,7 +264,7 @@ export const dealsData: Deal[] = [
     "Tour Trọn Gói",
     "Quy Nhơn - Phú Yên",
     "Central",
-    "/images/deals/domestic/quy-nhon.jpg"
+    "/images/deals/domestic/quy-nhon.jpg",
   ),
   createDeal(
     204,
@@ -276,7 +276,7 @@ export const dealsData: Deal[] = [
     "Du Thuyền",
     "Hạ Long, Quảng Ninh",
     "North",
-    "/images/deals/domestic/ha-long.jpg"
+    "/images/deals/domestic/ha-long.jpg",
   ),
   createDeal(
     205,
@@ -288,7 +288,7 @@ export const dealsData: Deal[] = [
     "Tour Ghép",
     "Đà Lạt, Lâm Đồng",
     "Highlands",
-    "/images/deals/domestic/dalat.jpg"
+    "/images/deals/domestic/dalat.jpg",
   ),
   createDeal(
     206,
@@ -300,7 +300,7 @@ export const dealsData: Deal[] = [
     "Tour Khám Phá",
     "Mù Cang Chải, Yên Bái",
     "North",
-    "/images/deals/domestic/mucangchai.jpg"
+    "/images/deals/domestic/mucangchai.jpg",
   ),
   createDeal(
     207,
@@ -312,7 +312,7 @@ export const dealsData: Deal[] = [
     "Tour Trọn Gói",
     "Phú Quốc, Kiên Giang",
     "South",
-    "/images/deals/domestic/phuquoc.jpg"
+    "/images/deals/domestic/phuquoc.jpg",
   ),
   createDeal(
     208,
@@ -324,7 +324,7 @@ export const dealsData: Deal[] = [
     "Tour Trải Nghiệm",
     "Cần Thơ - Sóc Trăng",
     "South",
-    "/images/deals/domestic/mientay.jpg"
+    "/images/deals/domestic/mientay.jpg",
   ),
   createDeal(
     209,
@@ -336,7 +336,7 @@ export const dealsData: Deal[] = [
     "Tour Quốc Tế",
     "Bangkok - Pattaya",
     "Southeast Asia",
-    "/images/deals/international/thailand.jpg"
+    "/images/deals/international/thailand.jpg",
   ),
   createDeal(
     210,
@@ -348,7 +348,7 @@ export const dealsData: Deal[] = [
     "Tour Quốc Tế",
     "Seoul - Nami",
     "Northeast Asia",
-    "/images/deals/international/korea.jpg"
+    "/images/deals/international/korea.jpg",
   ),
   createDeal(
     211,
@@ -360,7 +360,7 @@ export const dealsData: Deal[] = [
     "Tour Cao Cấp",
     "Tokyo - Osaka - Kyoto",
     "Northeast Asia",
-    "/images/deals/international/japan.jpg"
+    "/images/deals/international/japan.jpg",
   ),
   createDeal(
     212,
@@ -372,7 +372,7 @@ export const dealsData: Deal[] = [
     "Tour Liên Tuyến",
     "Singapore - Malaysia",
     "Southeast Asia",
-    "/images/deals/international/singapore.jpg"
+    "/images/deals/international/singapore.jpg",
   ),
   createDeal(
     213,
@@ -384,7 +384,7 @@ export const dealsData: Deal[] = [
     "Tour Khám Phá",
     "Hồ Nam, Trung Quốc",
     "China",
-    "/images/deals/international/phuonghoangcotran.jpg"
+    "/images/deals/international/phuonghoangcotran.jpg",
   ),
   createDeal(
     214,
@@ -396,7 +396,7 @@ export const dealsData: Deal[] = [
     "Tour Truyền Thống",
     "Trung Quốc",
     "China",
-    "/images/deals/international/china.jpg"
+    "/images/deals/international/china.jpg",
   ),
   createDeal(
     215,
@@ -408,7 +408,7 @@ export const dealsData: Deal[] = [
     "Tour Sang Trọng",
     "Dubai, UAE",
     "Middle East",
-    "/images/deals/international/dubai.jpg"
+    "/images/deals/international/dubai.jpg",
   ),
   createDeal(
     216,
@@ -420,7 +420,7 @@ export const dealsData: Deal[] = [
     "Tour Châu Âu",
     "Châu Âu",
     "Europe",
-    "/images/deals/international/paris.jpg"
+    "/images/deals/international/paris.jpg",
   ),
   createDeal(
     217,
@@ -432,7 +432,7 @@ export const dealsData: Deal[] = [
     "Tour Châu Úc",
     "Úc",
     "Australia",
-    "/images/deals/international/uc.jpg"
+    "/images/deals/international/uc.jpg",
   ),
   createDeal(
     218,
@@ -444,7 +444,7 @@ export const dealsData: Deal[] = [
     "Tour Châu Mỹ",
     "Mỹ",
     "Americas",
-    "/images/deals/international/my.jpg"
+    "/images/deals/international/my.jpg",
   ),
 
   // Khách sạn data
@@ -458,7 +458,7 @@ export const dealsData: Deal[] = [
     "Resort 5 Sao",
     "Nha Trang",
     "Central",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     302,
@@ -470,7 +470,7 @@ export const dealsData: Deal[] = [
     "Resort 5 Sao",
     "Đà Nẵng",
     "Central",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     303,
@@ -482,7 +482,7 @@ export const dealsData: Deal[] = [
     "Khách sạn 5 Sao",
     "Sapa",
     "North",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     304,
@@ -494,7 +494,7 @@ export const dealsData: Deal[] = [
     "Resort Biển",
     "Hồ Tràm",
     "South",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     305,
@@ -506,7 +506,7 @@ export const dealsData: Deal[] = [
     "Resort Sang Trọng",
     "Phú Quốc",
     "South",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     306,
@@ -518,7 +518,7 @@ export const dealsData: Deal[] = [
     "Resort Núi",
     "Yên Tử",
     "North",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     307,
@@ -530,7 +530,7 @@ export const dealsData: Deal[] = [
     "Khách sạn Trung Tâm",
     "TP. Hồ Chí Minh",
     "South",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     308,
@@ -542,7 +542,7 @@ export const dealsData: Deal[] = [
     "Khách sạn 5 Sao",
     "Vũng Tàu",
     "South",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     309,
@@ -554,7 +554,7 @@ export const dealsData: Deal[] = [
     "Villa Cổ",
     "Đà Lạt",
     "Highlands",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     310,
@@ -566,7 +566,7 @@ export const dealsData: Deal[] = [
     "Villa Gia Đình",
     "Đà Nẵng",
     "Central",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     311,
@@ -578,7 +578,7 @@ export const dealsData: Deal[] = [
     "Resort Nghỉ Dưỡng",
     "Vĩnh Phúc",
     "North",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     312,
@@ -590,7 +590,7 @@ export const dealsData: Deal[] = [
     "Khách sạn 6 Sao",
     "TP. Hồ Chí Minh",
     "South",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
 
   // Combo tiết kiệm data
@@ -604,7 +604,7 @@ export const dealsData: Deal[] = [
     "Combo",
     "Phú Quốc",
     "South",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     402,
@@ -616,7 +616,7 @@ export const dealsData: Deal[] = [
     "Combo",
     "Đà Lạt",
     "Highlands",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     403,
@@ -628,7 +628,7 @@ export const dealsData: Deal[] = [
     "Combo Vip",
     "Nha Trang",
     "Central",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     404,
@@ -640,7 +640,7 @@ export const dealsData: Deal[] = [
     "Combo Giá Rẻ",
     "Sapa",
     "North",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     405,
@@ -652,7 +652,7 @@ export const dealsData: Deal[] = [
     "Combo Biển",
     "Quy Nhơn",
     "Central",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     406,
@@ -664,7 +664,7 @@ export const dealsData: Deal[] = [
     "Combo Du Thuyền",
     "Hạ Long",
     "North",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     407,
@@ -676,7 +676,7 @@ export const dealsData: Deal[] = [
     "Combo Sang Chảnh",
     "Đà Nẵng",
     "Central",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     408,
@@ -688,7 +688,7 @@ export const dealsData: Deal[] = [
     "Combo Di Sản",
     "Huế",
     "Central",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
   createDeal(
     409,
@@ -700,7 +700,7 @@ export const dealsData: Deal[] = [
     "Combo Cuối Tuần",
     "Mũi Né",
     "Central",
-    "/images/deals/domestic/mien-trung.jpg"
+    "/images/deals/domestic/mien-trung.jpg",
   ),
 ];
 

@@ -154,10 +154,10 @@ const DealDetail = () => {
                       {tour.location}
                     </div>
                   )}
-                  {tour.timeLeft && (
+                  {tour.duration && (
                     <div className="flex items-center">
                       <Clock className="mr-2 h-5 w-5 text-orange-400" />
-                      {tour.timeLeft}
+                      {tour.duration}
                     </div>
                   )}
                   <div className="flex items-center">
