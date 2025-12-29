@@ -71,7 +71,7 @@ const AirlinePartners = () => {
           className="mb-10 text-center"
         >
           <span className="text-sm font-bold uppercase tracking-wider text-red-600">
-            Đối tác hàng không và khách hàng doanh nghiệp
+            Đối Tác Và Khách Hàng
           </span>
         </motion.div>
 
@@ -83,11 +83,11 @@ const AirlinePartners = () => {
           transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
           className="mb-10"
         >
-          <div className="mb-6 text-center">
+          {/* <div className="mb-6 text-center">
             <h3 className="text-xl font-bold text-slate-800">
               Đối tác hàng không
             </h3>
-          </div>
+          </div> */}
 
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-white to-transparent"></div>
@@ -140,7 +140,6 @@ const AirlinePartners = () => {
         >
           <div className="mb-6 text-center">
             <h3 className="pb-6 text-xl font-bold text-slate-800">
-              Các khách hàng doanh nghiệp
             </h3>
           </div>
 

@@ -71,7 +71,7 @@ const DomesticToursPage = () => {
       if (data.success) {
         // LỌC CHỈ LẤY TOUR TRONG NƯỚC (không có continent hoặc continent = null)
         const domesticTours = data.docs.filter(
-          (tour: Tour) => !tour.continent || tour.continent === null
+          (tour: Tour) => !tour.continent || tour.continent === null,
         );
         setTours(domesticTours);
       }
@@ -94,7 +94,9 @@ const DomesticToursPage = () => {
   const getImageUrl = (tour: Tour) => {
     return (
       tour.imageUrl ||
-      (typeof tour.image === "string" ? tour.image : tour.image?.url || "/placeholder.jpg")
+      (typeof tour.image === "string"
+        ? tour.image
+        : tour.image?.url || "/placeholder.jpg")
     );
   };
 
@@ -111,6 +113,7 @@ const DomesticToursPage = () => {
       price: tour.price,
       originalPrice: tour.originalPrice,
       discount: tour.discount || "",
+      duration: tour.duration || tour.timeLeft || "",
       timeLeft: tour.timeLeft || "",
     })) as any;
 

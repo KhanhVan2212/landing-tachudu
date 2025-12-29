@@ -74,7 +74,7 @@ const DealsList: React.FC<DealsListProps> = ({ category }) => {
                         {deal.type}
                       </span>
                       <span className="flex items-center text-xs font-medium text-red-500">
-                        <Clock size={12} className="mr-1" /> {deal.timeLeft}
+                        <Clock size={12} className="mr-1" /> {deal.duration}
                       </span>
                     </div>
                     <h3 className="mb-3 line-clamp-2 h-14 text-xl font-bold text-gray-900">
