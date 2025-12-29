@@ -21,11 +21,11 @@ const serviceLinks = [
   { label: "Dịch vụ du lịch", href: "/services" },
 ];
 
-const companyLinks = [
-  { label: "Về chúng tôi", href: "/about" },
-  { label: "Ưu đãi", href: "/deals" },
-  { label: "Sự kiện", href: "/event" },
-];
+// const companyLinks = [
+//   { label: "Về chúng tôi", href: "/about" },
+//   { label: "Ưu đãi", href: "/deals" },
+//   { label: "Sự kiện", href: "/event" },
+// ];
 
 const supportLinks = [
   { label: "Trung tâm trợ giúp", href: "/policy" },
@@ -59,7 +59,7 @@ const Footer = async () => {
       <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-orange-600/5 blur-3xl"></div>
 
       <div className="relative mx-auto max-w-7xl px-4 pb-8 pt-16 sm:px-6 lg:px-8">
-        <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
           {/* Company Info */}
           <div className="lg:col-span-1">
             <Image
@@ -143,7 +143,7 @@ const Footer = async () => {
           </div>
 
           {/* Company */}
-          <div>
+          {/* <div>
             <h3 className="mb-6 border-b border-orange-500/30 pb-2 text-lg font-bold text-white">
               Công ty
             </h3>
@@ -160,7 +160,7 @@ const Footer = async () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
           {/* Support */}
           <div>
