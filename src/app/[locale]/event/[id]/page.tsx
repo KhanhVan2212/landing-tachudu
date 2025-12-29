@@ -1,5 +1,8 @@
+// src/app/[locale]/event/[id]/page.tsx
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { getPayload } from "payload";
+import config from "../../../../../payload.config";
 
 type PageProps = {
   params: Promise<{
@@ -8,25 +11,86 @@ type PageProps = {
   }>;
 };
 
+async function getEvent(id: string) {
+  try {
+    const payload = await getPayload({ config });
+
+    let doc = null;
+
+    // Try to find by ID first
+    try {
+      doc = await payload.findByID({
+        collection: "events",
+        id: id,
+        depth: 2,
+      });
+    } catch (idError) {
+      // If ID lookup fails, try to find by slug
+      const result = await payload.find({
+        collection: "events",
+        where: {
+          slug: { equals: id },
+        },
+        limit: 1,
+        depth: 2,
+      });
+
+      if (result.docs && result.docs.length > 0) {
+        doc = result.docs[0];
+      }
+    }
+
+    if (!doc || doc.status !== "published") {
+      return null;
+    }
+
+    // Transform cover image
+    let coverImageUrl = "";
+    if (doc.coverImage) {
+      if (typeof doc.coverImage === "object") {
+        coverImageUrl = doc.coverImage.cloudinaryUrl || doc.coverImage.url || "";
+      } else {
+        coverImageUrl = doc.coverImage;
+      }
+    }
+
+    // Transform gallery
+    const galleryUrls = doc.gallery?.map((g: any) => {
+      if (g.image) {
+        if (typeof g.image === "object") {
+          return {
+            url: g.image.cloudinaryUrl || g.image.url || "",
+            caption: g.caption || "",
+          };
+        }
+      }
+      return null;
+    }).filter(Boolean) || [];
+
+    return {
+      id: doc.id,
+      title: doc.title,
+      slug: doc.slug,
+      date: doc.date,
+      excerpt: doc.excerpt,
+      cover: coverImageUrl,
+      content: doc.content,
+      gallery: galleryUrls,
+      category: doc.category,
+    };
+  } catch (error) {
+    console.error("Error fetching event:", error);
+    return null;
+  }
+}
+
 export default async function EventDetailPage({ params }: PageProps) {
   const { id } = await params;
+  const post = await getEvent(id);
 
-  // Fetch event by ID from API
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/events/${id}`, {
-    cache: 'no-store', // Or use revalidate: 60 for ISR
-  });
-
-  if (!response.ok) {
+  if (!post) {
     notFound();
   }
-
-  const data = await response.json();
-
-  if (!data.success || !data.doc) {
-    notFound();
-  }
-
-  const post = data.doc;
 
   return (
     <section className="bg-white py-20">
@@ -45,7 +109,7 @@ export default async function EventDetailPage({ params }: PageProps) {
 
         {/* META */}
         <p className="mb-2 text-sm text-gray-500">
-          {post.date} · {post.category}
+          {post.date} {post.category && `· ${post.category}`}
         </p>
 
         {/* TITLE */}
