@@ -11,11 +11,36 @@ export async function GET(
     const { id } = await params;
     const payload = await getPayload({ config });
 
-    const doc = await payload.findByID({
-      collection: "events",
-      id: id,
-      depth: 2,
-    });
+    let doc = null;
+
+    // Try to find by ID first
+    try {
+      doc = await payload.findByID({
+        collection: "events",
+        id: id,
+        depth: 2,
+      });
+    } catch (idError: any) {
+      // If ID lookup fails, try to find by slug
+      console.log(`ID lookup failed for ${id}, trying slug...`);
+
+      try {
+        const result = await payload.find({
+          collection: "events",
+          where: {
+            slug: { equals: id },
+          },
+          limit: 1,
+          depth: 2,
+        });
+
+        if (result.docs && result.docs.length > 0) {
+          doc = result.docs[0];
+        }
+      } catch (slugError) {
+        console.error("Slug lookup also failed:", slugError);
+      }
+    }
 
     if (!doc) {
       return NextResponse.json(
@@ -24,14 +49,15 @@ export async function GET(
       );
     }
 
-    // Check if published (optional - remove if you want to show all statuses)
+    // Check if published
     if (doc.status !== "published") {
       return NextResponse.json(
-        { success: false, error: "Event not found" },
+        { success: false, error: "Event not published" },
         { status: 404 }
       );
     }
 
+    // Transform cover image
     let coverImageUrl = "";
     if (doc.coverImage) {
       if (typeof doc.coverImage === "object") {
@@ -41,6 +67,7 @@ export async function GET(
       }
     }
 
+    // Transform gallery
     const galleryUrls = doc.gallery?.map((g: any) => {
       if (g.image) {
         if (typeof g.image === "object") {
@@ -65,6 +92,7 @@ export async function GET(
       featured: doc.featured,
       highlight: doc.highlight,
       category: doc.category,
+      status: doc.status,
     };
 
     return NextResponse.json({
