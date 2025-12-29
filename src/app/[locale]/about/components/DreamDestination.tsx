@@ -1,11 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { journeyImages } from "./journey-diary";
 
 const ITEMS_PER_PAGE = 7; // Customize based on grid slots
 
@@ -16,22 +15,55 @@ export function DreamDestination() {
     alt: string;
   } | null>(null);
 
-  // Flatten all images from journeyImages (main + gallery)
-  const allDestinations = useMemo(() => {
-    return journeyImages.flatMap((tour) => {
-      // Main image
-      const mainImage = {
-        src: tour.src,
-        alt: tour.tourName || tour.alt, // Prefer simpler name if available
-      };
-      // Gallery images
-      const galleryImages = tour.gallery.map((imgSrc) => ({
-        src: imgSrc,
-        alt: tour.tourName || tour.alt,
-      }));
-      return [mainImage, ...galleryImages];
-    });
+  const [galleryItems, setGalleryItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/api/journey-gallery?limit=50");
+        const data = await res.json();
+        if (data.success) {
+          setGalleryItems(data.docs);
+        }
+      } catch (error) {
+        console.error("Error fetching dream destinations:", error);
+      }
+    };
+    fetchData();
   }, []);
+
+  // Flatten all images from API data (main + gallery)
+  const allDestinations = useMemo(() => {
+    return galleryItems.flatMap((tour) => {
+      const items: { src: string; alt: string }[] = [];
+
+      // Main image
+      if (tour.featuredImage) {
+        const src = tour.featuredImage.cloudinaryUrl || tour.featuredImage.url;
+        if (src) {
+          items.push({
+            src,
+            alt: tour.tourName || tour.alt,
+          });
+        }
+      }
+
+      // Gallery images
+      if (tour.gallery && Array.isArray(tour.gallery)) {
+        tour.gallery.forEach((g: any) => {
+          const src = g.image?.cloudinaryUrl || g.image?.url;
+          if (src) {
+            items.push({
+              src,
+              alt: tour.tourName || tour.alt,
+            });
+          }
+        });
+      }
+
+      return items;
+    });
+  }, [galleryItems]);
 
   const totalPages = Math.ceil(allDestinations.length / ITEMS_PER_PAGE);
 

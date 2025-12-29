@@ -40,7 +40,7 @@ const History = () => {
           </div>
           <div className="relative mt-10 lg:mt-0">
             <Image
-              src="/images/about.jpg"
+              src="/images/gen-n-about1.jpg"
               alt="History"
               width={600}
               height={400}
