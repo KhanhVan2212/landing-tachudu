@@ -122,10 +122,6 @@ const DealDetail = () => {
               Trang chủ
             </Link>
             <span className="mx-2">/</span>
-            <Link href="/deals" className="hover:text-orange-600">
-              Ưu đãi
-            </Link>
-            <span className="mx-2">/</span>
             <span className="max-w-xs truncate font-medium text-gray-900">
               {tour.title}
             </span>

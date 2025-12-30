@@ -81,7 +81,7 @@ const FeaturedTours = () => {
             </p>
           </div>
           <Link
-            href="/domestic-tours"
+            href="/foreign-tours"
             className="group flex items-center font-semibold text-orange-600 transition-colors hover:text-orange-700"
           >
             Xem tất cả
