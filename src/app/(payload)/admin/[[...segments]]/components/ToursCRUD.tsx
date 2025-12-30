@@ -1,7 +1,16 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Pencil, Trash2, Plus, Search, Eye, X, PlusCircle } from "lucide-react";
+import {
+  Pencil,
+  Trash2,
+  Plus,
+  Search,
+  Eye,
+  X,
+  Upload,
+  PlusCircle,
+} from "lucide-react";
 import { toast } from "sonner";
 
 interface Tour {
@@ -76,6 +85,8 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
   const [itineraryItems, setItineraryItems] = useState<
     Array<{ day: string; title: string; desc: string }>
   >([]);
+
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   const continents = [
     { id: "ASIA", label: "Châu Á" },
@@ -189,6 +200,42 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
     const newItems = [...itineraryItems];
     newItems[index][field] = value;
     setItineraryItems(newItems);
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    const formDataUpload = new FormData();
+    formDataUpload.append("file", file);
+    formDataUpload.append("alt", file.name.replace(/\.[^/.]+$/, ""));
+
+    try {
+      const response = await fetch("/api/upload-cloudinary", {
+        method: "POST",
+        body: formDataUpload,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setFormData((prev) => ({
+          ...prev,
+          imageUrl: data.doc.cloudinaryUrl || data.doc.url,
+        }));
+        toast.success("Upload ảnh thành công!");
+      } else {
+        toast.error("Upload thất bại: " + (data.error || "Unknown error"));
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast.error("Có lỗi xảy ra khi upload ảnh");
+    } finally {
+      setUploadingImage(false);
+      // Reset input value to allow selecting same file again
+      e.target.value = "";
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -415,12 +462,12 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
               {filteredTours.map((tour) => (
                 <tr key={tour.id} className="hover:bg-gray-50">
                   <td className="px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <div className="font-medium text-gray-900">
+                    <div className="flex items-start gap-2">
+                      <div className="min-w-0 flex-1 font-medium text-gray-900">
                         {tour.title}
                       </div>
                       {tour.featured && (
-                        <span className="rounded bg-yellow-100 px-2 py-0.5 text-xs font-semibold text-yellow-800">
+                        <span className="mt-0.5 shrink-0 whitespace-nowrap rounded bg-yellow-100 px-2 py-0.5 text-xs font-semibold text-yellow-800">
                           Nổi bật
                         </span>
                       )}
@@ -609,6 +656,34 @@ export default function ToursCRUD({ onStatsUpdate }: ToursCRUDProps) {
                       />
                     </div>
                   )}
+                  <div className="mt-2">
+                    <input
+                      type="file"
+                      id="image-upload"
+                      accept="image/*"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                      disabled={uploadingImage}
+                    />
+                    <label
+                      htmlFor="image-upload"
+                      className={`inline-flex cursor-pointer items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50 ${
+                        uploadingImage ? "cursor-not-allowed opacity-50" : ""
+                      }`}
+                    >
+                      {uploadingImage ? (
+                        <>
+                          <div className="h-4 w-4 animate-spin rounded-full border-2 border-orange-600 border-t-transparent"></div>
+                          Đang upload...
+                        </>
+                      ) : (
+                        <>
+                          <Upload size={16} />
+                          Tải ảnh lên từ máy
+                        </>
+                      )}
+                    </label>
+                  </div>
                 </div>
 
                 <div>
