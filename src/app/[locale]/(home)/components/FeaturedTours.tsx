@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { MapPin, Star, Clock, ArrowRight } from "lucide-react";
@@ -11,10 +12,12 @@ interface Tour {
   slug: string;
   category: string;
   location: string;
-  image: {
-    url: string;
-    alt?: string;
-  } | string;
+  image:
+    | {
+        url: string;
+        alt?: string;
+      }
+    | string;
   imageUrl?: string;
   price: string;
   originalPrice: string;
@@ -26,35 +29,29 @@ interface Tour {
 }
 
 const FeaturedTours = () => {
-  const [tours, setTours] = useState<Tour[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchFeaturedTours();
-  }, []);
-
   const fetchFeaturedTours = async () => {
-    try {
-      const response = await fetch(
-        "/api/tours?featured=true&category=Tour du lịch&limit=4&status=active"
-      );
-      const data = await response.json();
-
-      if (data.success) {
-        setTours(data.docs);
-      }
-    } catch (error) {
-      console.error("Error fetching featured tours:", error);
-    } finally {
-      setLoading(false);
-    }
+    const response = await fetch(
+      "/api/tours?featured=true&category=Tour du lịch&limit=4&status=active",
+    );
+    if (!response.ok) throw new Error("Network response was not ok");
+    return response.json();
   };
 
-  if (loading) {
+  const { data, isLoading } = useQuery({
+    queryKey: ["featured-tours"],
+    queryFn: fetchFeaturedTours,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+  });
+
+  const tours = data?.docs || [];
+
+  if (isLoading) {
     return (
       <section className="bg-white pb-24 pt-[100px]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-gray-500">Đang tải...</div>
+          <div className="flex justify-center">
+            <div className="h-12 w-12 animate-spin rounded-full border-4 border-orange-600 border-t-transparent"></div>
+          </div>
         </div>
       </section>
     );
@@ -91,7 +88,7 @@ const FeaturedTours = () => {
 
         {/* Grid */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {tours.map((tour) => (
+          {tours.map((tour: Tour) => (
             <div
               key={tour.id}
               className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"

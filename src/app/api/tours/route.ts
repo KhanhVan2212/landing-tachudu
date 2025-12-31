@@ -17,8 +17,24 @@ export async function GET(req: NextRequest) {
     const region = searchParams.get("region");
     const continent = searchParams.get("continent");
     const subRegion = searchParams.get("subRegion");
+    const search = searchParams.get("search");
+    const scope = searchParams.get("scope");
 
-    const where: any = { status: { equals: status } };
+    const where: any = {
+      status: { equals: status },
+    };
+
+    if (scope === "domestic") {
+      where.continent = { equals: null };
+    } else if (scope === "foreign") {
+      if (!continent) {
+        where.continent = { not_equals: null };
+      }
+    }
+
+    if (search) {
+      where.or = [{ title: { like: search } }, { location: { like: search } }];
+    }
 
     if (category) where.category = { equals: category };
     if (featured === "true") where.featured = { equals: true };
@@ -52,7 +68,7 @@ export async function GET(req: NextRequest) {
     console.error("Error fetching tours:", error);
     return NextResponse.json(
       { success: false, error: "Failed to fetch tours" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -94,34 +110,41 @@ export async function POST(req: NextRequest) {
     // Xử lý hình ảnh
     if (body.imageUrl) {
       cleanData.imageUrl = body.imageUrl;
-    } else if (body.image && typeof body.image === "string" && body.image.length === 24) {
+    } else if (
+      body.image &&
+      typeof body.image === "string" &&
+      body.image.length === 24
+    ) {
       cleanData.image = body.image;
     }
 
     // Xử lý arrays
     if (Array.isArray(body.highlights)) {
       cleanData.highlights = body.highlights.filter(
-        (h: any) => h?.highlight && h.highlight.trim()
+        (h: any) => h?.highlight && h.highlight.trim(),
       );
     }
     if (Array.isArray(body.itinerary)) {
       cleanData.itinerary = body.itinerary.filter(
         (item: any) =>
-          item?.day?.trim() && item?.title?.trim() && item?.desc?.trim()
+          item?.day?.trim() && item?.title?.trim() && item?.desc?.trim(),
       );
     }
     if (Array.isArray(body.included)) {
       cleanData.included = body.included.filter(
-        (s: any) => s?.service && s.service.trim()
+        (s: any) => s?.service && s.service.trim(),
       );
     }
     if (Array.isArray(body.excluded)) {
       cleanData.excluded = body.excluded.filter(
-        (s: any) => s?.service && s.service.trim()
+        (s: any) => s?.service && s.service.trim(),
       );
     }
 
-    console.log("Creating tour with cleaned data:", JSON.stringify(cleanData, null, 2));
+    console.log(
+      "Creating tour with cleaned data:",
+      JSON.stringify(cleanData, null, 2),
+    );
 
     const tour = await payload.create({
       collection: "tours",
@@ -136,7 +159,7 @@ export async function POST(req: NextRequest) {
         success: false,
         error: error.message || "Failed to create tour",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

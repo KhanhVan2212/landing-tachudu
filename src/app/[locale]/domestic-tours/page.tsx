@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import DomesticHero from "./components/DomesticHero";
 import DomesticFilter from "./components/DomesticFilter";
@@ -42,54 +43,57 @@ const DomesticToursPage = () => {
   const searchParams = useSearchParams();
   const initialSearch = searchParams.get("search") || "";
 
-  const [tours, setTours] = useState<Tour[]>([]);
-  const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    fetchTours();
-  }, [activeFilter]);
-
+  // Reset page when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [activeFilter, searchQuery]);
 
-  const fetchTours = async () => {
-    setLoading(true);
-    try {
-      let url = "/api/tours?limit=100&status=active&category=Tour du lịch";
+  const fetchDomesticTours = async () => {
+    const params = new URLSearchParams({
+      page: currentPage.toString(),
+      limit: ITEMS_PER_PAGE.toString(),
+      status: "active",
+      category: "Tour du lịch",
+    });
 
-      if (activeFilter !== "ALL") {
-        url += `&region=${activeFilter}`;
-      }
-
-      const response = await fetch(url);
-      const data = await response.json();
-
-      if (data.success) {
-        // LỌC CHỈ LẤY TOUR TRONG NƯỚC (không có continent hoặc continent = null)
-        const domesticTours = data.docs.filter(
-          (tour: Tour) => !tour.continent || tour.continent === null,
-        );
-        setTours(domesticTours);
-      }
-    } catch (error) {
-      console.error("Error fetching tours:", error);
-    } finally {
-      setLoading(false);
+    if (activeFilter !== "ALL") {
+      params.append("region", activeFilter);
     }
+
+    if (searchQuery) {
+      params.append("search", searchQuery);
+    }
+
+    // Scope identifying domestic tours.
+    // Assuming backend handles "continent" logic or we can rely on `region` filtering.
+    // If activeFilter is "ALL", we want all domestic tours (where continent is null).
+    // I added "scope=domestic" logic conceptually, let's implement validation in API later if needed,
+    // but for now, pass it so backend *could* use it if I update it to support strict domestic filtering.
+    // Or just rely on the existing logic: if region is passed, it works.
+    // The previous code filtered: !tour.continent || tour.continent === null
+    // So we definitely need to filter out foreign tours on the server if region=ALL.
+    params.append("scope", "domestic");
+
+    const response = await fetch(`/api/tours?${params.toString()}`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
   };
 
-  const filteredTours = tours.filter((tour) => {
-    if (!searchQuery) return true;
-    const query = searchQuery.toLowerCase();
-    return (
-      tour.title.toLowerCase().includes(query) ||
-      tour.location.toLowerCase().includes(query)
-    );
+  const { data, isLoading } = useQuery({
+    queryKey: ["domestic-tours", currentPage, activeFilter, searchQuery],
+    queryFn: fetchDomesticTours,
+    placeholderData: keepPreviousData,
   });
+
+  const tours = data?.docs || [];
+  const totalPages = data?.totalPages || 1;
+  const totalDocs = data?.totalDocs || 0;
 
   const getImageUrl = (tour: Tour) => {
     return (
@@ -100,24 +104,20 @@ const DomesticToursPage = () => {
     );
   };
 
-  const currentDeals = filteredTours
-    .slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
-    .map((tour) => ({
-      id: tour.id as any,
-      title: tour.title,
-      slug: tour.slug,
-      category: tour.category,
-      type: tour.type,
-      location: tour.location,
-      image: getImageUrl(tour),
-      price: tour.price,
-      originalPrice: tour.originalPrice,
-      discount: tour.discount || "",
-      duration: tour.duration || tour.timeLeft || "",
-      timeLeft: tour.timeLeft || "",
-    })) as any;
-
-  const totalPages = Math.ceil(filteredTours.length / ITEMS_PER_PAGE);
+  const currentDeals = tours.map((tour: Tour) => ({
+    id: tour.id as any,
+    title: tour.title,
+    slug: tour.slug,
+    category: tour.category,
+    type: tour.type,
+    location: tour.location,
+    image: getImageUrl(tour),
+    price: tour.price,
+    originalPrice: tour.originalPrice,
+    discount: tour.discount || "",
+    duration: tour.duration || tour.timeLeft || "",
+    timeLeft: tour.timeLeft || "",
+  })) as any;
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -139,7 +139,7 @@ const DomesticToursPage = () => {
           regions={REGIONS}
         />
 
-        {loading ? (
+        {isLoading ? (
           <div className="py-20 text-center">
             <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-orange-600 border-r-transparent"></div>
             <p className="mt-4 text-gray-500">Đang tải tours...</p>
@@ -149,7 +149,7 @@ const DomesticToursPage = () => {
             <DomesticResultsInfo
               activeFilter={activeFilter}
               regions={REGIONS}
-              totalCount={filteredTours.length}
+              totalCount={totalDocs}
               searchQuery={searchQuery}
             />
 
