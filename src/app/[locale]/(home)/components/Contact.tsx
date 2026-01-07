@@ -91,7 +91,7 @@ const Contact: React.FC<ContactProps> = ({ companyInfo }) => {
                   <h4 className="text-lg font-bold text-gray-900">Địa chỉ</h4>
                   <p className="text-gray-600">
                     {companyInfo?.address ||
-                      "Số 4 ngõ 230/31 Phố Định Công Thượng, Phường Định Công, Quận Hoàng Mai, HN"}
+                      "Số 2 Tông Đản, Hoàn Kiếm, Hà Nội"}
                   </p>
                 </div>
               </div>

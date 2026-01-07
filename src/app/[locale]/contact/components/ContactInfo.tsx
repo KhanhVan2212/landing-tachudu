@@ -6,6 +6,13 @@ interface ContactInfoProps {
 }
 
 const ContactInfo = ({ companyInfo }: ContactInfoProps) => {
+  const fullAddress = companyInfo?.address || "Số 2 Tông Đản, Hoàn Kiếm, Hà Nội";
+
+  const addressParts = fullAddress.split(',');
+  const shortAddress = addressParts.length >= 2
+    ? addressParts.slice(-2).join(', ').trim() 
+    : fullAddress;
+
   return (
     <div className="mb-20 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4">
       {[
@@ -28,9 +35,8 @@ const ContactInfo = ({ companyInfo }: ContactInfoProps) => {
         {
           icon: MapPin,
           title: "Trụ sở chính",
-          info: "Quận Hoàng Mai, HN",
-          subInfo:
-            companyInfo?.address || "Số 4 ngõ 230/31 Phố Định Công Thượng",
+          info: shortAddress,
+          subInfo: fullAddress, 
           color: "bg-orange-50 text-orange-600",
         },
         {
