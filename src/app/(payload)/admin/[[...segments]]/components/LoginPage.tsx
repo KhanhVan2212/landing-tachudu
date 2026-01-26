@@ -15,6 +15,7 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [checkingUsers, setCheckingUsers] = useState(true);
   const [debugInfo, setDebugInfo] = useState("");
+  const [registrationKey, setRegistrationKey] = useState("");
 
   useEffect(() => {
     checkIfUsersExist();
@@ -40,7 +41,9 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
       }
     } catch (error) {
       console.error("Error checking users:", error);
-      setDebugInfo(`Lỗi kết nối API: ${error instanceof Error ? error.message : String(error)}`);
+      setDebugInfo(
+        `Lỗi kết nối API: ${error instanceof Error ? error.message : String(error)}`,
+      );
       // Nếu API lỗi, cho phép đăng ký
       setIsRegisterMode(true);
     } finally {
@@ -75,7 +78,10 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
         setError(data.error || "Đăng nhập thất bại");
       }
     } catch (err) {
-      setError("Có lỗi xảy ra khi đăng nhập: " + (err instanceof Error ? err.message : String(err)));
+      setError(
+        "Có lỗi xảy ra khi đăng nhập: " +
+          (err instanceof Error ? err.message : String(err)),
+      );
       console.error("Login error:", err);
     } finally {
       setLoading(false);
@@ -92,6 +98,7 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-registration-secret": registrationKey,
         },
         body: JSON.stringify({
           email,
@@ -126,7 +133,10 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
         setError(data.error || "Đăng ký thất bại");
       }
     } catch (err) {
-      setError("Có lỗi xảy ra khi đăng ký: " + (err instanceof Error ? err.message : String(err)));
+      setError(
+        "Có lỗi xảy ra khi đăng ký: " +
+          (err instanceof Error ? err.message : String(err)),
+      );
       console.error("Register error:", err);
     } finally {
       setLoading(false);
@@ -135,12 +145,12 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
 
   if (checkingUsers) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
+      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+        <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
           <div className="text-center">
-            <div className="text-lg mb-2">Đang kiểm tra hệ thống...</div>
+            <div className="mb-2 text-lg">Đang kiểm tra hệ thống...</div>
             {debugInfo && (
-              <div className="text-sm text-gray-600 mt-4 p-3 bg-gray-100 rounded">
+              <div className="mt-4 rounded bg-gray-100 p-3 text-sm text-gray-600">
                 {debugInfo}
               </div>
             )}
@@ -151,22 +161,28 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-        <h1 className="text-2xl font-bold text-center mb-6">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
+        <h1 className="mb-6 text-center text-2xl font-bold">
           {isRegisterMode ? "Tạo tài khoản Admin đầu tiên" : "Đăng nhập Admin"}
         </h1>
 
         {isRegisterMode && (
-          <div className="mb-4 bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded">
+          <div className="mb-4 rounded border border-blue-200 bg-blue-50 px-4 py-3 text-blue-700">
             ℹ️ Chưa có tài khoản nào. Hãy tạo tài khoản admin đầu tiên.
           </div>
         )}
 
-        <form onSubmit={isRegisterMode ? handleRegister : handleLogin} className="space-y-4">
+        <form
+          onSubmit={isRegisterMode ? handleRegister : handleLogin}
+          className="space-y-4"
+        >
           {isRegisterMode && (
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="name"
+                className="mb-1 block text-sm font-medium text-gray-700"
+              >
                 Họ tên
               </label>
               <input
@@ -175,14 +191,36 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="mb-4 w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Nguyễn Văn A"
               />
+
+              <label
+                htmlFor="regKey"
+                className="mb-1 block text-sm font-medium text-gray-700"
+              >
+                Mã bảo mật (Registration Key)
+              </label>
+              <input
+                id="regKey"
+                type="password"
+                value={registrationKey}
+                onChange={(e) => setRegistrationKey(e.target.value)}
+                required
+                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Nhập mã bảo mật từ .env"
+              />
+              <p className="mb-2 mt-1 text-xs text-gray-500">
+                * Yêu cầu nhập đúng key từ file .env để đăng ký
+              </p>
             </div>
           )}
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="email"
+              className="mb-1 block text-sm font-medium text-gray-700"
+            >
               Email
             </label>
             <input
@@ -191,13 +229,16 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="admin@example.com"
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="password"
+              className="mb-1 block text-sm font-medium text-gray-700"
+            >
               Mật khẩu
             </label>
             <input
@@ -207,18 +248,16 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="••••••••"
             />
             {isRegisterMode && (
-              <p className="text-xs text-gray-500 mt-1">
-                Tối thiểu 6 ký tự
-              </p>
+              <p className="mt-1 text-xs text-gray-500">Tối thiểu 6 ký tự</p>
             )}
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded text-sm">
+            <div className="rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
               {error}
             </div>
           )}
@@ -226,12 +265,15 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading
-              ? (isRegisterMode ? "Đang tạo tài khoản..." : "Đang đăng nhập...")
-              : (isRegisterMode ? "Tạo tài khoản Admin" : "Đăng nhập")
-            }
+              ? isRegisterMode
+                ? "Đang tạo tài khoản..."
+                : "Đang đăng nhập..."
+              : isRegisterMode
+                ? "Tạo tài khoản Admin"
+                : "Đăng nhập"}
           </button>
         </form>
 
@@ -241,6 +283,7 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
               onClick={() => setIsRegisterMode(true)}
               className="text-sm text-blue-600 hover:text-blue-800"
             >
+              Chưa có tài khoản? Đăng ký
             </button>
           </div>
         )}
