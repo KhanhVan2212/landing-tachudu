@@ -51,6 +51,37 @@ const ServicesPage: React.FC = () => {
       image: "/images/sevices/hotel.jpg",
       color: "blue", // Keeping variety but will style with orange theme predominantly
     },
+
+    {
+      id: "visa",
+      title: "Làm Visa",
+      description:
+        "Dịch vụ làm visa du lịch, công tác cho tất cả các quốc gia. Tư vấn hồ sơ miễn phí, tỷ lệ đậu cao.",
+      features: [
+        "Tư vấn miễn phí",
+        "Tỷ lệ đậu cao",
+        "Xử lý nhanh",
+        "Hỗ trợ toàn diện",
+      ],
+      icon: FileCheck,
+      image: "/images/sevices/visa.webp",
+      color: "red",
+    },
+    {
+      id: "custom-tour",
+      title: "Tour Theo Yêu Cầu",
+      description:
+        "Thiết kế tour riêng theo yêu cầu của khách hàng. Lịch trình linh hoạt, trải nghiệm độc đáo, phù hợp mọi ngân sách.",
+      features: [
+        "Lịch trình tùy chỉnh",
+        "Hướng dẫn riêng",
+        "Linh hoạt thời gian",
+        "Trải nghiệm độc đáo",
+      ],
+      icon: Map,
+      image: "/images/sevices/tour.jpg",
+      color: "indigo",
+    },
     {
       id: "car",
       title: "Thuê Xe Du Lịch",
@@ -81,21 +112,7 @@ const ServicesPage: React.FC = () => {
       image: "/images/sevices/ticket.webp",
       color: "purple",
     },
-    {
-      id: "visa",
-      title: "Làm Visa",
-      description:
-        "Dịch vụ làm visa du lịch, công tác cho tất cả các quốc gia. Tư vấn hồ sơ miễn phí, tỷ lệ đậu cao.",
-      features: [
-        "Tư vấn miễn phí",
-        "Tỷ lệ đậu cao",
-        "Xử lý nhanh",
-        "Hỗ trợ toàn diện",
-      ],
-      icon: FileCheck,
-      image: "/images/sevices/visa.webp",
-      color: "red",
-    },
+
     {
       id: "photo",
       title: "Chụp Ảnh Du Lịch",
@@ -126,21 +143,7 @@ const ServicesPage: React.FC = () => {
       image: "/images/sevices/bao-hiem.webp",
       color: "teal",
     },
-    {
-      id: "custom-tour",
-      title: "Tour Theo Yêu Cầu",
-      description:
-        "Thiết kế tour riêng theo yêu cầu của khách hàng. Lịch trình linh hoạt, trải nghiệm độc đáo, phù hợp mọi ngân sách.",
-      features: [
-        "Lịch trình tùy chỉnh",
-        "Hướng dẫn riêng",
-        "Linh hoạt thời gian",
-        "Trải nghiệm độc đáo",
-      ],
-      icon: Map,
-      image: "/images/sevices/tour.jpg",
-      color: "indigo",
-    },
+    
   ];
 
   return (
@@ -157,13 +160,12 @@ const ServicesPage: React.FC = () => {
           />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
-        <div className="relative z-10 px-4 text-center text-white pt-10">
+        <div className="relative z-10 px-4 pt-10 text-center text-white">
           <h1 className="text-3xl font-bold capitalize tracking-wide drop-shadow-md md:text-5xl">
             Dịch Vụ Du Lịch
           </h1>
           <p className="mx-auto mt-4 max-w-3xl px-4 font-medium text-orange-50 drop-shadow sm:text-lg">
-            Tachudu cung cấp các dịch vụ đi kèm cho
-            cả khách lẻ và khách đoàn
+            Tachudu cung cấp các dịch vụ đi kèm cho cả khách lẻ và khách đoàn
           </p>
         </div>
       </div>

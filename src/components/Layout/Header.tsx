@@ -64,23 +64,34 @@ const Header: React.FC = () => {
           </div>
 
           <div className="hidden flex-1 lg:block">
-            <div className="flex flex-wrap items-baseline justify-center gap-6">
+            <div className="flex flex-wrap items-baseline justify-center gap-2">
               {navLinks.map((link) => {
                 const isActive =
                   location === link.href ||
-                  location === `/en${link.href}` ||
-                  location === `/vi${link.href}`;
-                const textColor =
+                  (link.href === "/"
+                    ? location === "/en" || location === "/vi"
+                    : location === `/en${link.href}` ||
+                      location === `/vi${link.href}`);
+
+                const baseClasses =
+                  "rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200";
+
+                const activeClasses = "bg-orange-500 text-white font-bold";
+                const inactiveClasses =
                   isScrolled || !isHome
                     ? "text-gray-700 hover:text-orange-600"
                     : "text-white hover:text-orange-200";
+
+                const className = `${baseClasses} ${
+                  isActive ? activeClasses : inactiveClasses
+                }`;
 
                 if (link.type === "link") {
                   return (
                     <Link
                       key={link.name}
                       href={link.href}
-                      className={`rounded-md text-sm font-medium transition-colors duration-200 ${textColor} ${isActive ? "font-bold text-orange-500" : ""}`}
+                      className={className}
                     >
                       {link.name}
                     </Link>
@@ -91,7 +102,7 @@ const Header: React.FC = () => {
                   <Link
                     key={link.name}
                     href={getLink(link.href)}
-                    className={`rounded-md text-sm font-medium transition-colors duration-200 ${textColor}`}
+                    className={className}
                   >
                     {link.name}
                   </Link>
@@ -137,8 +148,7 @@ const Header: React.FC = () => {
 
               const activeClass =
                 "bg-orange-50 text-orange-600 font-semibold border-l-4 border-orange-500";
-              const normalClass =
-                "text-gray-700 hover:text-orange-600";
+              const normalClass = "text-gray-700 hover:text-orange-600";
 
               return (
                 <Link
@@ -146,31 +156,31 @@ const Header: React.FC = () => {
                   href={link.href}
                   onClick={() => setIsOpen(false)}
                   className={`block rounded-md px-3 py-2 text-base transition-all duration-200 ${
-              isActive ? activeClass : normalClass
-            }`}
+                    isActive ? activeClass : normalClass
+                  }`}
                 >
                   {link.name}
                 </Link>
               );
             })}
 
-      {/* CTA */}
-      <Link
-        href="/contact"
-        onClick={() => setIsOpen(false)}
-        className={`block rounded-md px-3 py-2 text-base font-bold ${
-          location === "/contact" ||
-          location === "/en/contact" ||
-          location === "/vi/contact"
-            ? "bg-orange-500 text-white"
-            : "text-orange-600"
-        }`}
-      >
-        Đặt ngay
-      </Link>
-    </div>
-  </div>
-)}
+            {/* CTA */}
+            <Link
+              href="/contact"
+              onClick={() => setIsOpen(false)}
+              className={`block rounded-md px-3 py-2 text-base font-bold ${
+                location === "/contact" ||
+                location === "/en/contact" ||
+                location === "/vi/contact"
+                  ? "bg-orange-500 text-white"
+                  : "text-orange-600"
+              }`}
+            >
+              Đặt ngay
+            </Link>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

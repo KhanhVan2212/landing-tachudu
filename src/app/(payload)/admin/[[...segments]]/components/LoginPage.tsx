@@ -163,12 +163,6 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
           </div>
         )}
 
-        {debugInfo && (
-          <div className="mb-4 bg-gray-50 border border-gray-200 text-gray-600 px-4 py-2 rounded text-xs">
-            Debug: {debugInfo}
-          </div>
-        )}
-
         <form onSubmit={isRegisterMode ? handleRegister : handleLogin} className="space-y-4">
           {isRegisterMode && (
             <div>

@@ -1,11 +1,31 @@
 // src/collections/Users.ts
-import { CollectionConfig } from "payload";
+import { CollectionConfig, Access } from "payload";
+
+const adminsAndUser: Access = ({ req: { user } }) => {
+  if (user?.role === "admin") return true;
+
+  return {
+    id: {
+      equals: user?.id,
+    },
+  };
+};
+
+const admins = ({ req: { user } }: { req: { user?: any } }) => {
+  return user?.role === "admin";
+};
 
 const Users: CollectionConfig = {
   slug: "users",
   auth: true,
   admin: {
     useAsTitle: "email",
+  },
+  access: {
+    read: adminsAndUser,
+    create: admins,
+    update: adminsAndUser,
+    delete: admins,
   },
   fields: [
     {
@@ -23,6 +43,9 @@ const Users: CollectionConfig = {
         { label: "Editor", value: "editor" },
         { label: "User", value: "user" },
       ],
+      access: {
+        update: admins,
+      },
     },
   ],
 };
