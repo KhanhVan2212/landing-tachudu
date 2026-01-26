@@ -40,13 +40,21 @@ export async function POST(request: NextRequest) {
     const config = await configPromise;
     const payload = await getPayloadHMR({ config });
 
-    // Kiểm tra số lượng users
+    // Check user count
     const existingUsers = await payload.find({
       collection: "users",
       limit: 1,
     });
 
-    const isFirstUser = existingUsers.totalDocs === 0;
+    if (existingUsers.totalDocs > 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Admin account already exists. Registration is disabled.",
+        },
+        { status: 403 },
+      );
+    }
 
     // Tạo user mới
     const user = await payload.create({
@@ -55,7 +63,7 @@ export async function POST(request: NextRequest) {
         email,
         password,
         name,
-        role: isFirstUser ? "admin" : "user",
+        role: "admin",
       },
     });
 

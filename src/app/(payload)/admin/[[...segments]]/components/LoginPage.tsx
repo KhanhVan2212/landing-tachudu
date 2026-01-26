@@ -14,6 +14,7 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
   const [loading, setLoading] = useState(false);
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [checkingUsers, setCheckingUsers] = useState(true);
+  const [hasAdmin, setHasAdmin] = useState(false);
   const [debugInfo, setDebugInfo] = useState("");
   const [registrationKey, setRegistrationKey] = useState("");
 
@@ -38,7 +39,11 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
 
       if (testData.totalUsers === 0) {
         setIsRegisterMode(true);
+      } else {
+        // Prevent manual switch to register mode if admin exists
+        setIsRegisterMode(false);
       }
+      setHasAdmin(testData.totalUsers > 0);
     } catch (error) {
       console.error("Error checking users:", error);
       setDebugInfo(
@@ -277,7 +282,7 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
           </button>
         </form>
 
-        {!isRegisterMode && (
+        {!isRegisterMode && !hasAdmin && (
           <div className="mt-4 text-center">
             <button
               onClick={() => setIsRegisterMode(true)}
